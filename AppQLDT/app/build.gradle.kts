@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.nhom7.appqldt"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.nhom7.appqldt"
