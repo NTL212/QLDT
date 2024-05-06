@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_registerProject"
+        android:title="Đăng ký đề tài"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_suggestedProject"
+        android:title="Đề xuất đề tài"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_doneProject"
+        android:title="Đề tài đã làm"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_projectMember"
+        android:title="Thành viên"
+        app:showAsAction="never" />
+</menu>

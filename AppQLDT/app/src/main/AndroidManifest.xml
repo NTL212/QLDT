@@ -18,11 +18,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui_qlkh.ui.quanlydetai.ThemDeTaiActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppQLDT" />
+            android:name=".Activitys.QuanLy.ChiTietDTPheDuyetActivity"
+            android:exported="false" />
         <activity
-            android:name=".ui_qlkh.MainActivityQLKH"
+            android:name=".Activitys.QuanLy.SuaDeTaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.QuanLy.ChiTietDTQuanLyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.QuanLy.GuiThongBaoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.QuanLy.ListChuDeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.QuanLy.PheDuyetDeTaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.GiangVien.ListDeTaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.GiangVien.DanhSachTVActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.GiangVien.DeXuatDTActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.GiangVien.ChiTietDeTaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.QuanLy.QuanLyDeTaiActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
