@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvMaDeTai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ma de tai"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.214"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTenDeTai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ten de tai"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.172" />
+
+    <TextView
+        android:id="@+id/tvChuDe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chu de"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.301"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.213"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="100dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTinhTrang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tinh trang"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.534"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.213"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="300dp"
+        />
+
+</FrameLayout>

@@ -11,9 +11,11 @@ public class QuanLyDeTaiViewModel extends ViewModel {
     public QuanLyDeTaiViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is dashboard fragment");
+
     }
 
     public LiveData<String> getText() {
         return mText;
     }
+
 }

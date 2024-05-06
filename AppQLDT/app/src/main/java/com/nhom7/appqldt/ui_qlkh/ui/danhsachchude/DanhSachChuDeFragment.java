@@ -10,13 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.nhom7.appqldt.databinding.FragmentDanhachchudeBinding;
+import com.nhom7.appqldt.databinding.FragmentDanhsachchudeBinding;
 
 
 public class DanhSachChuDeFragment extends Fragment {
 
     private DanhSachChuDeViewModel mViewModel;
-    private FragmentDanhachchudeBinding binding;
+    private FragmentDanhsachchudeBinding binding;
     public static DanhSachChuDeFragment newInstance() {
         return new DanhSachChuDeFragment();
     }
@@ -26,7 +26,7 @@ public class DanhSachChuDeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         DanhSachChuDeViewModel dashboardViewModel =
                 new ViewModelProvider(this).get(DanhSachChuDeViewModel.class);
-        binding= FragmentDanhachchudeBinding.inflate(inflater, container, false);
+        binding= FragmentDanhsachchudeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
     }
