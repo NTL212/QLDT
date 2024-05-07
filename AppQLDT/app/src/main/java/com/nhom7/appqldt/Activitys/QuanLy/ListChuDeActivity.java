@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -29,6 +30,15 @@ ChuDeAdapter chuDeAdapter;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_chu_de);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);// Gắn Toolbar vào ActionBar
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // Xử lý sự kiện khi người dùng chọn một mục trong menu
+                return onOptionsItemSelected(item);
+            }
+        });
         chuDeList = new ArrayList<>();
         chuDeList.add(new ChuDe(1, "Chủ đề 1", 10, true));
         chuDeList.add(new ChuDe(2, "Chủ đề 2", 10, false));
