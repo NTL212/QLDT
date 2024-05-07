@@ -60,6 +60,19 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
+
+    <!--    button thêm chủ đề-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_chude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Thêm chủ đề"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolBar"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view_chudes"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_chudes"
         android:layout_width="match_parent"
@@ -67,9 +80,10 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@id/toolBar"
         app:layout_constraintTop_toBottomOf="@id/toolBar"
+
         tools:listitem="@layout/list_detai_item"
         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

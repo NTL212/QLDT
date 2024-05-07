@@ -51,6 +51,11 @@ ChuDeAdapter chuDeAdapter;
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
+        findViewById(R.id.btn_add_chude).setOnClickListener(v -> {
+            ThemChuDeDialogFragment themChuDeDialogFragment = new ThemChuDeDialogFragment();
+            themChuDeDialogFragment.show(getSupportFragmentManager(), "Them Chu De");
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,5 +81,10 @@ ChuDeAdapter chuDeAdapter;
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void themChuDe(String maSo, String tenChuDe) {
+        chuDeList.add(new ChuDe( 1, tenChuDe, 0, false));
+        chuDeAdapter.notifyDataSetChanged();
     }
 }
