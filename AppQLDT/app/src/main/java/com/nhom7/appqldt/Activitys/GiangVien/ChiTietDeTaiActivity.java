@@ -13,6 +13,8 @@ import com.nhom7.appqldt.R;
 
 public class ChiTietDeTaiActivity extends AppCompatActivity {
 
+    TextView tvChiTietMaDeTai, tvChiTietTenDeTai, tvChiTietNguoiDang, tvChiTietChuDe, tvChiTietNgayDang, tvChiTietNgayMoDang, tvChiTietNgayKetThucDang;
+    TextView tvChiTietNgayBatDau, tvChiTietNgayKetThuc, tvChiTietNgayNghiemThu, tvChiTietKinhPhi, tvChiTieSoThanhVien, tvChiTietMoTa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,22 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
             textView.setText(value);
         }
     }
+    private void AnhXa(){
+        tvChiTietMaDeTai = (TextView) findViewById(R.id.tvChiTietMaDeTai);
+        tvChiTietTenDeTai = (TextView) findViewById(R.id.tvChiTietTenDeTai);
+        tvChiTietChuDe = (TextView) findViewById(R.id.tvChiTietChuDe);
+        tvChiTietNgayDang = (TextView) findViewById(R.id.tvChiTietNgayDang);
+        tvChiTietNgayKetThucDang = (TextView) findViewById(R.id.tvChiTietNgayKetThucDang);
+        tvChiTietNgayBatDau = (TextView) findViewById(R.id.tvChiTietNgayBatDau);
+        tvChiTietNgayKetThuc = (TextView) findViewById(R.id.tvChiTietNgayKetThuc);
+        tvChiTietNgayNghiemThu = (TextView) findViewById(R.id.tvChiTietNgayNghiemThu);
+        tvChiTietKinhPhi = (TextView) findViewById(R.id.tvChiTietKinhPhi);
+        tvChiTieSoThanhVien = (TextView) findViewById(R.id.tvChiTieSoThanhVien);
+        tvChiTietNguoiDang = (TextView) findViewById(R.id.tvChiTietNguoiDang);
+        tvChiTietNgayMoDang = (TextView) findViewById(R.id.tvChiTietNgayMoDang);
+        tvChiTietMoTa = (TextView) findViewById(R.id.tvChiTietMoTa);
 
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
