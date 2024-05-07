@@ -59,15 +59,25 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <Button
+<!--    <Button-->
+<!--        android:id="@+id/btnThemDeTai"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:text="Thêm đề tài"-->
+<!--        app:layout_constraintStart_toEndOf="@id/toolBar"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/toolBar"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        />-->
+    <ImageView
         android:id="@+id/btnThemDeTai"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Thêm đề tài"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_add_24dp"
         app:layout_constraintStart_toEndOf="@id/toolBar"
         app:layout_constraintTop_toBottomOf="@id/toolBar"
         app:layout_constraintHorizontal_bias="0.0"
         />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_detais"
@@ -77,6 +87,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toEndOf="@id/btnThemDeTai"
         app:layout_constraintTop_toBottomOf="@id/btnThemDeTai"
-        tools:listitem="@layout/list_detai_item" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

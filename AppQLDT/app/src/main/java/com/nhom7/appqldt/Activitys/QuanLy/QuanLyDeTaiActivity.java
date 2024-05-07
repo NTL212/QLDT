@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,7 @@ import java.util.List;
 public class QuanLyDeTaiActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<DeTai> listDeTai;
-    Button btnThemDeTai;
+    ImageView btnThemDeTai;
     DeTaiAdapter deTaiAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

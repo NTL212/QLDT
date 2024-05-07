@@ -50,7 +50,7 @@ public class GuiThongBaoActivity extends AppCompatActivity {
 
 
 
-                
+
                 //Gửi thông báo
                 Toast.makeText(GuiThongBaoActivity.this, "Thông báo đã được gửi", Toast.LENGTH_SHORT).show();
             }
