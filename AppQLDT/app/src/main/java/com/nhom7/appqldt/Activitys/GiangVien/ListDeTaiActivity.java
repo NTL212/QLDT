@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
+import com.nhom7.appqldt.Helpers.DangNhapHelper;
+import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.DeTai;
 import com.nhom7.appqldt.R;
 
@@ -51,6 +55,11 @@ public class ListDeTaiActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+//Lấy giá trị được lưu giữ ra
+        TextView tvUserName = (TextView) findViewById(R.id.toolbar_username);
+        tvUserName.setText(sharedPreferences.getString("username",""));
+
         initializeData();
         AnhXa();
         loadRecyclerView();
@@ -71,21 +80,8 @@ public class ListDeTaiActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        Intent intent;
-        if (id == R.id.action_registerProject) {
-            intent = new Intent(ListDeTaiActivity.this, ListDeTaiActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_suggestedProject) {
-            intent = new Intent(ListDeTaiActivity.this, DeXuatDTActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_doneProject) {
-            return true;
-        }else if (id == R.id.action_projectMember) {
-            intent = new Intent(ListDeTaiActivity.this, DanhSachTVActivity.class);
-            startActivity(intent);
+        boolean sItem = MenuHelper.ChonItem(this, item);
+        if(sItem){
             return true;
         }
         return super.onOptionsItemSelected(item);

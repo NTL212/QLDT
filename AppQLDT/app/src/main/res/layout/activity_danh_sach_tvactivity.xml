@@ -47,7 +47,7 @@
                     android:layout_gravity="end"
                     android:layout_marginEnd="16dp"/>
                 <TextView
-                    android:id="@+id/toolbar_title2"
+                    android:id="@+id/toolbar_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Loi"

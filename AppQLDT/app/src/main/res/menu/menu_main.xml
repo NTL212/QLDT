@@ -17,4 +17,14 @@
         android:id="@+id/action_projectMember"
         android:title="Thành viên"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_profile"
+        android:title="Thông tin cá nhân"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Đăng xuất"
+        app:showAsAction="never" />
+
+
 </menu>
