@@ -5,14 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.nhom7.appqldt.Adapters.DeTaiAdapter;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,36 +12,23 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
-import com.nhom7.appqldt.Helpers.DangNhapHelper;
+import com.nhom7.appqldt.Adapters.ThongBaoAdapter;
 import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.DeTai;
+import com.nhom7.appqldt.Models.ThongBao;
 import com.nhom7.appqldt.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListDeTaiActivity extends AppCompatActivity {
+public class ThongBaoNhanActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<DeTai> listDeTai;
-
-    private void initializeData() {
-        listDeTai = new ArrayList<>();
-        listDeTai.add(new DeTai("60650", "Title 0", "Chu De 0", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60651", "Title 1", "Chu De 1", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60652", "Title 2", "Chu De 2", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60653", "Title 3", "Chu De 3", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60654", "Title 4", "Chu De 4", "Đang mở đăng ký"));
-    }
-
-    private  void AnhXa() {
-        recyclerView = findViewById(R.id.recycler_view_detais);
-    }
-
+    List<ThongBao> thongBaoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_de_tai);
+        setContentView(R.layout.activity_thong_bao_nhan);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);// Gắn Toolbar vào ActionBar
@@ -62,22 +41,31 @@ public class ListDeTaiActivity extends AppCompatActivity {
             }
         });
 
-
         SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 //Lấy giá trị được lưu giữ ra
         TextView tvUserName = (TextView) findViewById(R.id.toolbar_username);
         tvUserName.setText(sharedPreferences.getString("username",""));
 
+
         initializeData();
         AnhXa();
         loadRecyclerView();
-    }
 
+    }
+    private void initializeData() {
+        thongBaoList = new ArrayList<>();
+        thongBaoList.add(new ThongBao("Nhận xét về đề tài", "Nguyễn Văn A", "01/01/2024", "Làm tốt lắm"));
+        thongBaoList.add(new ThongBao("Phê duyệt đề tài", "Nguyễn Văn B", "05/01/2024", "Đã duyệt"));
+
+    }
+    private  void AnhXa() {
+        recyclerView = findViewById(R.id.recycler_view_thongbao);
+    }
     private void loadRecyclerView() {
-        DeTaiAdapter songAdapter = new DeTaiAdapter(this.listDeTai, this);
+        ThongBaoAdapter thongBaoAdapter = new ThongBaoAdapter(this.thongBaoList, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(songAdapter);
+        recyclerView.setAdapter(thongBaoAdapter);
     }
 
     @Override

@@ -12,6 +12,16 @@ import android.view.MenuItem;
 
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
 import com.nhom7.appqldt.Adapters.ThanhVienAdapter;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.nhom7.appqldt.Adapters.DeTaiAdapter;
+import com.nhom7.appqldt.Adapters.ThanhVienAdapter;
+import com.nhom7.appqldt.Helpers.DangNhapHelper;
+import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.DeTai;
 import com.nhom7.appqldt.Models.ThanhVien;
 import com.nhom7.appqldt.R;
@@ -61,6 +71,11 @@ public class DanhSachTVActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+//Lấy giá trị được lưu giữ ra
+        TextView tvUserName = (TextView) findViewById(R.id.toolbar_username);
+        tvUserName.setText(sharedPreferences.getString("username",""));
+
         initializeData();
         AnhXa();
         loadRecyclerView();
@@ -79,17 +94,8 @@ public class DanhSachTVActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        Intent intent;
-        if (id == R.id.action_registerProject) {
-            intent = new Intent(DanhSachTVActivity.this, ListDeTaiActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_suggestedProject) {
-            intent = new Intent(DanhSachTVActivity.this, DeXuatDTActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_doneProject) {
+        boolean sItem = MenuHelper.ChonItem(this, item);
+        if(sItem){
             return true;
         }
         return super.onOptionsItemSelected(item);

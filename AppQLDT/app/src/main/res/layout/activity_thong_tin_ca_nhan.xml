@@ -1,9 +1,10 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activitys.GiangVien.DeXuatDTActivity">
+    tools:context=".Activitys.GiangVien.ThongTinCaNhanActivity"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
@@ -22,8 +23,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <!-- Tiêu đề của Toolbar -->
             <TextView
@@ -31,36 +32,38 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Đề xuất đề tài"
+                android:text="Thông tin cá nhân"
                 android:textSize="24sp" />
 
             <!-- TextView cho phần tử bên phải -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/toolbar_right1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Xin chào"
-                    android:textSize="16sp"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp"
+                    android:text="Xin chào"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/toolbar_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Loi"
-                    android:textSize="16sp"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp"
+                    android:text="Loi"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
-        android:layout_width="413dp"
-        android:layout_height="697dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,11 +77,31 @@
             android:orientation="vertical">
 
             <TableLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="match_parent">
 
                 <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Họ và tên: " />
+
+                    <TextView
+                        android:id="@+id/tv_CN_HoTen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Nguyễn Văn A" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -89,16 +112,16 @@
                         android:padding="8dp"
                         android:text="Mã số: " />
 
-                    <EditText
-                        android:id="@+id/tvChiTietMaDeTai"
+                    <TextView
+                        android:id="@+id/tv_CN_MaSo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="1230890" />
                 </TableRow>
 
                 <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -107,19 +130,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Tên đề tài: " />
+                        android:text="Giới tính: " />
 
-                    <EditText
-                        android:id="@+id/tvChiTietTenDeTai"
+                    <TextView
+                        android:id="@+id/tv_CN_GioiTinh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="Nam" />
                 </TableRow>
 
-
                 <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -128,19 +150,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Chủ đề: " />
+                        android:text="Ngày sinh: " />
 
-                    <EditText
-                        android:id="@+id/tvChiTietChuDe"
+                    <TextView
+                        android:id="@+id/tv_CN_NgaySinh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="12/01/1987" />
                 </TableRow>
 
-
                 <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -149,18 +170,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày bắt đàu làm: " />
+                        android:text="CCCD/CMNDs: " />
 
-                    <EditText
-                        android:id="@+id/tvChiTietNgayBatDau"
+                    <TextView
+                        android:id="@+id/tv_CN_CCCD"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="1230812038" />
                 </TableRow>
 
                 <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -169,18 +190,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày kết thúc: " />
+                        android:text="Số điện thoại: " />
 
-                    <EditText
-                        android:id="@+id/tvChiTietNgayKetThuc"
+                    <TextView
+                        android:id="@+id/tv_CN_SDT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="01283712893" />
                 </TableRow>
 
                 <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -189,18 +210,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày nghiệm thu: " />
+                        android:text="Địa chỉ: " />
 
                     <TextView
-                        android:id="@+id/tvChiTietNgayNghiemThu"
+                        android:id="@+id/tv_CN_DiaChi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="Quận 9, TP HCM" />
                 </TableRow>
 
                 <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -209,18 +230,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Kinh phi dự kiến: " />
+                        android:text="Email: " />
 
-                    <EditText
-                        android:id="@+id/tvChiTietKinhPhi"
+                    <TextView
+                        android:id="@+id/tv_CN_Email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="nguyena@.gmail.com" />
                 </TableRow>
 
                 <TableRow
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -229,58 +250,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Số thành viên tối đa: " />
-
-                    <EditText
-                        android:id="@+id/tvChiTieSoThanhVien"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                        android:text="Khoa: " />
 
                     <TextView
+                        android:id="@+id/tv_CN_Khoa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Mô tả: " />
-
-                    <EditText
-                        android:id="@+id/tvChiTietMoTa"
-                        android:layout_width="250dp"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:text="Công nghệ thông tin" />
                 </TableRow>
             </TableLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnChiTietDangKy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="40dp"
-
-                    android:layout_weight="1"
-                    android:text="Đề xuất"
-                    tools:layout_editor_absoluteY="645dp" />
-
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
