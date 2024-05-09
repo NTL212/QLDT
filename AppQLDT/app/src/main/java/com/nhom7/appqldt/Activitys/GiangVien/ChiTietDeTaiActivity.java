@@ -47,6 +47,7 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
             textView.setText(value);
         }
     }
+
     private void AnhXa(){
         tvChiTietMaDeTai = (TextView) findViewById(R.id.tvChiTietMaDeTai);
         tvChiTietTenDeTai = (TextView) findViewById(R.id.tvChiTietTenDeTai);

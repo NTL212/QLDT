@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +37,7 @@ public class DeXuatDTActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 //Lấy giá trị được lưu giữ ra

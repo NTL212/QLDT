@@ -6,6 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.nhom7.appqldt.Adapters.DeTaiAdapter;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -54,6 +61,7 @@ public class ListDeTaiActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 //Lấy giá trị được lưu giữ ra
