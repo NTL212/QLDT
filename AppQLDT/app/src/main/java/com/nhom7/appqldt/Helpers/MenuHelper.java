@@ -9,6 +9,7 @@ import com.nhom7.appqldt.Activitys.GiangVien.ChiTietDTDaLamActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.DanhSachTVActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.DeXuatDTActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ListDeTaiActivity;
+import com.nhom7.appqldt.Activitys.GiangVien.ThongBaoNhanActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ThongTinCaNhanActivity;
 import com.nhom7.appqldt.R;
 
@@ -36,6 +37,11 @@ public class MenuHelper {
         }
         else if (id == R.id.action_profile) {
             intent = new Intent(context, ThongTinCaNhanActivity.class);
+            context.startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.action_inform_received) {
+            intent = new Intent(context, ThongBaoNhanActivity.class);
             context.startActivity(intent);
             return true;
         }

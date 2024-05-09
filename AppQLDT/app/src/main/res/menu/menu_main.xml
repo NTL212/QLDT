@@ -22,6 +22,10 @@
         android:title="Thông tin cá nhân"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_inform_received"
+        android:title="Thông báo đã nhận"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:title="Đăng xuất"
         app:showAsAction="never" />

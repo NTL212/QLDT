@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activitys.GiangVien.ThongBaoNhanActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activitys.GiangVien.ThongTinCaNhanActivity"
             android:exported="false" />
         <activity
