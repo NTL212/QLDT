@@ -1,23 +1,5 @@
 package Controllers;
 
-import java.io.IOException;
-
-
-
-
-
-
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import DAO.AccountDAO;
 import DAO.LecturerDAO;
 import Models.Account;
@@ -27,6 +9,17 @@ import Models.ManagementStaff;
 import DAO.ManagementStaffDAO;
 import Models.Admin;
 
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 
 @WebServlet("/admincontroller/*")
 public class AdminController extends HttpServlet {
@@ -94,7 +87,7 @@ public class AdminController extends HttpServlet {
 		    }
 	private void listmanager(HttpServletRequest request, HttpServletResponse response)
 		    throws SQLException, IOException, ServletException {
-		        List < Account > listManager = accountDAO.selectByManager("ROLE_MGT_STAFF");
+		        List< Account > listManager = accountDAO.selectByManager("ROLE_MGT_STAFF");
 		        request.setAttribute("listManager", listManager);
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/UserManggement/UserManggement.jsp");
 		        dispatcher.forward(request, response);

@@ -7,7 +7,6 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +24,7 @@ import Models.Account;
 import Models.Lecturer;
 import Models.ManagementStaff;
 import Models.Admin;
+import com.google.gson.Gson;
 
 @WebServlet("/api/login")
 public class LoginController extends HttpServlet {
@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
 	    while ((line = reader.readLine()) != null) {
 	        requestBody.append(line);
 	    }
-	    System.out.print("login call");
+
 	    Map<String, String> formData = new HashMap<>();
 	    try {
 	        String[] pairs = requestBody.toString().split("&");

@@ -14,7 +14,7 @@ import com.google.gson.stream.JsonWriter;
 public class CustomGson {
 	public Gson createGson() {
         return new GsonBuilder()
-            .registerTypeAdapter(java.time.LocalDate.class, new CustomGson.LocalDateAdapter())
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .create();
     }
 	

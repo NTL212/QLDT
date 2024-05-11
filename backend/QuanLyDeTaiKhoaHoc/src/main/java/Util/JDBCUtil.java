@@ -9,11 +9,12 @@ public class JDBCUtil {
 	public static Connection getConnection() {
 		Connection conn = null;
 		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 
-			String url = "jdbc:mysql://localhost:3306/qlkh?useSSL=false";
+			String url = "jdbc:mysql://localhost:3306/qlkh?useSSL=false&allowPublicKeyRetrieval=true";
+//			String url = "jdbc:mysql://localhost:3306/qlkh?enabledTLSProtocols=TLSv1.2";
 			String username = "root";
-			String password = "";
+			String password = "88648468";
 
 			conn = DriverManager.getConnection(url, username, password);
 

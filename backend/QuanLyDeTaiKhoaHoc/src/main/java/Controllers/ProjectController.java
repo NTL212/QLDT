@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import DAO.ProjectDAO;
 import DAO.TopicDAO;
 import Util.CustomGson;
@@ -24,6 +22,7 @@ import Models.Project;
 import Models.Topic;
 import DAO.RegistrationDAO;
 import Models.Registration;
+import com.google.gson.Gson;
 
 @WebServlet("/api/project/*")
 public class ProjectController extends HttpServlet {
@@ -56,33 +55,6 @@ public class ProjectController extends HttpServlet {
         	}
         	else {
         		switch (action) {
-        		case "/insertproject":
-                	insertProjectManager(request, response);
-                    break;
-                case "/editproject":
-                    showEditForm(request, response);
-                    break;
-                case "/shownewform":
-                	shownewProjectForm(request, response);
-                	break;
-                case "/showdetailform":
-                	ShowDetailForm(request, response);
-                	break;
-                case "/updateproject":
-                    updateProject(request, response);
-                    break;
-                case "/listproject":
-                	getAll(request, response);
-                    break;
-                case "/listapproveproject":
-                	listApproveProject(request, response);
-                    break;
-                case "/approveproject":
-                	approveProject(request, response);
-                    break;
-                case "/disagreeproject":
-                	disagreeProject(request, response);
-                    break;
 	        		default:
 			            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			            response.getWriter().write("Not Found");
@@ -174,23 +146,10 @@ public class ProjectController extends HttpServlet {
     private void ShowDetailForm(HttpServletRequest request, HttpServletResponse response)
     	    throws SQLException, IOException, ServletException {
     	String id = request.getParameter("id");
-       
-//        request.setAttribute("project", existingProject);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectManager/DetailProject/DetailProject.jsp");
-//        dispatcher.forward(request, response);
-        
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        JsonResponse<Project> jsonResponse = null;
-        try {
-        	Project existingProject = projectDAO.selectProjectByProjectCode(id);
-            jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_OK, "Thành công!", existingProject);
-        } catch (Exception e) {
-            jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-            								"Có lỗi xảy ra.", null);
-        }
-        String jsonOutput = gson.toJson(jsonResponse);
-        response.getWriter().write(jsonOutput);
+        Project existingProject = projectDAO.selectProjectByProjectCode(id);
+        request.setAttribute("project", existingProject);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectManager/DetailProject/DetailProject.jsp");
+        dispatcher.forward(request, response);
     }
     
     private void listApproveProject(HttpServletRequest request, HttpServletResponse response)
