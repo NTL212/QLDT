@@ -8,9 +8,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.view.Menu;
 import android.view.MenuItem;
 
+=======
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.nhom7.appqldt.API.APIService;
+import com.nhom7.appqldt.API.RetrofitClient;
+>>>>>>> NTL
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
 
 import android.content.SharedPreferences;
@@ -22,25 +31,25 @@ import android.widget.TextView;
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
 import com.nhom7.appqldt.Helpers.DangNhapHelper;
 import com.nhom7.appqldt.Helpers.MenuHelper;
+import com.nhom7.appqldt.Models.APIResponse;
+import com.nhom7.appqldt.Models.Account;
 import com.nhom7.appqldt.Models.DeTai;
+import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ListDeTaiActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<DeTai> listDeTai;
+    List<Project> listDeTai;
 
-    private void initializeData() {
-        listDeTai = new ArrayList<>();
-        listDeTai.add(new DeTai("60650", "Title 0", "Chu De 0", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60651", "Title 1", "Chu De 1", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60652", "Title 2", "Chu De 2", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60653", "Title 3", "Chu De 3", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60654", "Title 4", "Chu De 4", "Đang mở đăng ký"));
-    }
+
 
     private  void AnhXa() {
         recyclerView = findViewById(R.id.recycler_view_detais);
@@ -68,16 +77,33 @@ public class ListDeTaiActivity extends AppCompatActivity {
         TextView tvUserName = (TextView) findViewById(R.id.toolbar_username);
         tvUserName.setText(sharedPreferences.getString("username",""));
 
-        initializeData();
+
         AnhXa();
         loadRecyclerView();
     }
 
     private void loadRecyclerView() {
-        DeTaiAdapter songAdapter = new DeTaiAdapter(this.listDeTai, this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(songAdapter);
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        Call<APIResponse<List<Project>>> call = apiService.getAllProjectActiveProjectForLecturer();
+
+        call.enqueue(new Callback<APIResponse<List<Project>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<List<Project>>> call, Response<APIResponse<List<Project>>> response) {
+                if(response.isSuccessful()){
+                    List<Project> projects = response.body().getResult();
+                    DeTaiAdapter deTaiAdapter = new DeTaiAdapter(projects, ListDeTaiActivity.this);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDeTaiActivity.this, LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(deTaiAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<List<Project>>> call, Throwable t) {
+
+            }
+        });
+
     }
 
     @Override

@@ -1,0 +1,32 @@
+.sidebar {
+    height: 100%;
+    background-color: #9FD7F9;
+}
+
+.sidebar h2 {
+    color: white;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 8px;
+    text-align: center;
+}
+
+.sidebar a {
+    text-decoration: none;
+    text-align: left;
+    font-size: 16px;
+    color: black;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}

@@ -9,7 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit retrofit;
+<<<<<<< HEAD
     private static final String BASE_URL = "http://192.168.0.0:8080/QuanLyDeTaiKhoaHoc_tmp/";
+=======
+    private static final String BASE_URL = "http://26.162.156.25:8080/QuanLyDeTaiKhoaHoc_tmp/api/";
+>>>>>>> NTL
 //    private static final String BASE_URL = "http://10.0.2.2:8080/QuanLyDeTaiKhoaHoc_tmp/";
     // Tạo đối tượng Gson tùy chỉnh với setLenient(true)
 

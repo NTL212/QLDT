@@ -22,8 +22,16 @@
         android:title="Thông tin cá nhân"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_inform_sended"
+        android:title="Thông báo đã gửi"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_inform_received"
         android:title="Thông báo đã nhận"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_inform_send"
+        android:title="Gửi thông báo"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_logout"

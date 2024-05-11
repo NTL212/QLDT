@@ -1,9 +1,17 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
 import android.content.Intent;
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+=======
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+>>>>>>> NTL
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +47,14 @@ ChuDeAdapter chuDeAdapter;
                 return onOptionsItemSelected(item);
             }
         });
+<<<<<<< HEAD
+=======
+
+        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+//Lấy giá trị được lưu giữ ra
+        TextView tvUserName = (TextView) findViewById(R.id.toolbar_title2);
+        tvUserName.setText(sharedPreferences.getString("username",""));
+>>>>>>> NTL
         chuDeList = new ArrayList<>();
         chuDeList.add(new ChuDe(1, "Chủ đề 1", 10, true));
         chuDeList.add(new ChuDe(2, "Chủ đề 2", 10, false));
@@ -87,4 +103,11 @@ ChuDeAdapter chuDeAdapter;
         chuDeList.add(new ChuDe( 1, tenChuDe, 0, false));
         chuDeAdapter.notifyDataSetChanged();
     }
+<<<<<<< HEAD
+=======
+
+    public void loadListChuDe(){
+
+    }
+>>>>>>> NTL
 }
