@@ -8,18 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.view.Menu;
 import android.view.MenuItem;
 
-=======
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
->>>>>>> NTL
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
 
 import android.content.SharedPreferences;
