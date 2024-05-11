@@ -1,12 +1,16 @@
 package Controllers;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,11 +28,13 @@ import Models.Project;
 import Models.Registration;
 import Models.Topic;
 import Util.CustomGson;
+import Util.FormDataReader;
 import Util.JsonResponse;
 import DAO.ProjectDAO;
 import DAO.RegistrationDAO;
 import DAO.TopicDAO;
 import DTO.ProjectDTO;
+import DTO.ProjectDetailDTO;
 import DAO.FileDAO;
 import Models.FileDTO;
 
@@ -70,8 +76,14 @@ public class LecturerProjectController extends HttpServlet {
 			case "/propose":
 				ProposeProject(request, response);
 				break;
+			case "/api/propose":
+				proposeProjectAPI(request, response);
+				break;
 			case "/myproj":
 				myProject(request, response);
+				break;
+			case "/api/myProject":
+				myProjectAPI(request, response);
 				break;
 			case "/register-project":
 				regProj(request, response);
@@ -163,6 +175,42 @@ public class LecturerProjectController extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
+	
+	private void myProjectAPI(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		FormDataReader reader = new FormDataReader(request);
+	    Map<String, String> formData = reader.getData();
+	    try {
+    	    if (formData.containsKey("lecturerId")) {
+    	        String id = formData.get("lecturerId");
+    	        JsonResponse<List<ProjectDTO>> jsonResponse = null;
+    	        try {
+    	        	List <Project> listProject = projectDAO.selectProjectsByLecturerCode(id);
+    	        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
+    	        	for (int i = 0; i < listProject.size(); i++) {
+    	        		listProjectDTO.add(new ProjectDTO(listProject.get(i))) ;
+    	        	}
+    	            jsonResponse = new JsonResponse<List<ProjectDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", listProjectDTO);
+    	        } catch (Exception e) {
+    	            jsonResponse = new JsonResponse<List<ProjectDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+    	            								"Có lỗi xảy ra.", null);
+    	            e.printStackTrace();
+    	        }
+    	        String jsonOutput = gson.toJson(jsonResponse);
+    	        response.getWriter().write(jsonOutput);
+    	    }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    /*
+		if (lect != null) {
+			List<Project> myProject = projectDAO.selectProjectsByLecturerCode(lect.getLecturerCode());
+			request.setAttribute("myProject", myProject);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/List/ListProject.jsp");
+			dispatcher.forward(request, response);
+		}
+		*/
+	}
 
 	private void ProposeProject(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
@@ -194,10 +242,53 @@ public class LecturerProjectController extends HttpServlet {
 		} else {
 			request.setAttribute("errMsg", "Đề xuất thất bại");
 		}
-
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/lecturer-project/list");
 		dispatcher.forward(request, response);
 		}
+	}
+	
+	private void proposeProjectAPI(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		FormDataReader reader = new FormDataReader(request);
+	    Map<String, String> formData = reader.getData();
+	    try {
+	        String projectId = formData.get("projectId");
+			String name = formData.get("name");
+			String topicId = formData.get("topicId");
+			LocalDate startDate = LocalDate.parse(formData.get("startDate"));
+			LocalDate endDate = LocalDate.parse(formData.get("endDate"));
+			float expectedBudget = Float.parseFloat(formData.get("expectedBudget"));
+			int teamMembers = Integer.parseInt(formData.get("teamMembers"));
+			String projectDescription = formData.get("describe");
+			String lecturerId = formData.get("lecturerId");
+			Project project = new Project(projectId, name, null, projectDescription, teamMembers, null, null,
+					startDate, endDate, null, expectedBudget, null, null, topicId, lecturerId, null, true);
+	        JsonResponse<String> jsonResponse = null;
+	        try {
+	    		if (projectDAO.proposeProject(project)) {
+	    			Registration reg = new Registration(lecturerId, projectId);
+	    			if (regDAO.insertRegestration(reg)) {
+	    				jsonResponse = new JsonResponse<String>(true, HttpServletResponse.SC_OK, "Thành công!", null);
+	    			} else {
+	    				Project projTemp = projectDAO.selectProjectByProjectCode(projectId);
+	    				if (projTemp != null && projTemp.getProjectCode() == projectId) {
+	    					projectDAO.deleteProject(projTemp);
+	    				}
+	    				jsonResponse = new JsonResponse<String>(true, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đề xuất thất bại!", null);
+	    			}
+	    		} else {
+	    			jsonResponse = new JsonResponse<String>(true, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đề xuất thất bại!", null);
+	    		}
+	        } catch (Exception e) {
+	            jsonResponse = new JsonResponse<String>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+	            								"Có lỗi xảy ra.", null);
+	            e.printStackTrace();
+	        }
+	        String jsonOutput = gson.toJson(jsonResponse);
+	        response.getWriter().write(jsonOutput);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	private void regProj(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {

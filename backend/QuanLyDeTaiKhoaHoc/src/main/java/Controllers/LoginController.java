@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Util.FormDataReader;
 import Util.JsonResponse;
 import DAO.AccountDAO;
 import Models.Account;
@@ -33,28 +34,10 @@ public class LoginController extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    BufferedReader reader = request.getReader();
-	    StringBuilder requestBody = new StringBuilder();
-	    String line;
-	    while ((line = reader.readLine()) != null) {
-	        requestBody.append(line);
-	    }
 
-	    Map<String, String> formData = new HashMap<>();
-	    try {
-	        String[] pairs = requestBody.toString().split("&");
-	        for (String pair : pairs) {
-	            String[] keyValue = pair.split("=");
-	            if (keyValue.length == 2) {
-	                String key = URLDecoder.decode(keyValue[0], "UTF-8");
-	                String value = URLDecoder.decode(keyValue[1], "UTF-8");
-	                formData.put(key, value);
-	            }
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-
+	    FormDataReader reader = new FormDataReader(request);
+	    Map<String, String> formData = reader.getData();
+	    
 	    if (formData.containsKey("username") && formData.containsKey("password")) {
 	        String username = formData.get("username");
 	        String password = formData.get("password");

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import DTO.ProjectDTO;
 import DTO.ProjectDetailDTO;
 import DTO.ShowLecturerDTO;
 import Util.CustomGson;
+import Util.FormDataReader;
 import Util.JsonResponse;
 import Models.Lecturer;
 import Models.ManagementStaff;
@@ -66,9 +68,8 @@ public class ProjectController extends HttpServlet {
         	else if (action.equals("/api/getPendingApproval")) {
         		getPendingApproval(request, response);
         	}
-        	else if (action.contains("/api/getById/")) {
-        		String projectId = action.split("/")[2];
-        		getById(request, response, projectId);
+        	else if (action.equals("/api/getById/")) {
+        		getById(request, response);
         	} else if (action.equals("/api/createProject")) {
         		insertProjectManagerAPI(request, response);
         	} else if (action.equals("/api/updateProject")) {
@@ -161,22 +162,28 @@ public class ProjectController extends HttpServlet {
     }
     */
     
-    private void getById(HttpServletRequest request, HttpServletResponse response, String projectId)
+    private void getById(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
-        JsonResponse<ProjectDetailDTO> jsonResponse = null;
-		try {
-            Project project = projectDAO.selectProjectByProjectCode(projectId);
-            if (project == null) {
-                jsonResponse = new JsonResponse<>(false, HttpServletResponse.SC_NOT_FOUND, "Đề tài không tồn tại", null);            
+	    FormDataReader reader = new FormDataReader(request);
+	    Map<String, String> formData = reader.getData();
+	    
+	    if (formData.containsKey("projectId")) {
+	        String projectId = formData.get("projectId");
+	        JsonResponse<ProjectDetailDTO> jsonResponse = null;
+			try {
+	            Project project = projectDAO.selectProjectByProjectCode(projectId);
+	            if (project == null) {
+	                jsonResponse = new JsonResponse<>(false, HttpServletResponse.SC_NOT_FOUND, "Đề tài không tồn tại", null);            
 
-            } else {
-                jsonResponse = new JsonResponse<>(true, HttpServletResponse.SC_OK, "Thành công", new ProjectDetailDTO(project));            
-            }
-        } catch (Exception e) {
-        	jsonResponse = new JsonResponse<>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra", null);
-        	e.printStackTrace();
-        }
-		response.getWriter().write(gson.toJson(jsonResponse));
+	            } else {
+	                jsonResponse = new JsonResponse<>(true, HttpServletResponse.SC_OK, "Thành công", new ProjectDetailDTO(project));            
+	            }
+	        } catch (Exception e) {
+	        	jsonResponse = new JsonResponse<>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra", null);
+	        	e.printStackTrace();
+	        }
+			response.getWriter().write(gson.toJson(jsonResponse));
+	    }
     }
     
     /*
