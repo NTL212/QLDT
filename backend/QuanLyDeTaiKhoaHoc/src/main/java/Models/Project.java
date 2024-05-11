@@ -207,6 +207,16 @@ public class Project {
 		this.aCouncil = aCouncil;
 	}
 	
+	
+	
+	public Boolean getIsProposed() {
+		return isProposed;
+	}
+
+	public void setIsProposed(Boolean isProposed) {
+		this.isProposed = isProposed;
+	}
+
 	public String getStatus() {
 		ProjectDAO temp = new ProjectDAO();
 		return temp.calcProjStatus(this.getProjectCode());
@@ -214,6 +224,9 @@ public class Project {
 	
 	public String getProjectStatusOfLecturer() {
 		LocalDate curDate = LocalDate.now();
+		if (lecturer == null) {
+			return "Chưa có chủ nhiệm";
+		}
 		if (isProposed) {
 			Registration reg = new RegistrationDAO().selectOneRegistration(lecturer.getLecturerCode(), projectCode);
 			if (reg.isAccepted() == null) {

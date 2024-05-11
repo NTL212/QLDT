@@ -35,7 +35,7 @@ public class RegistrationDAO {
 				LocalDate approveDate = rs.getDate("ngayduyet") != null ? rs.getDate("ngayduyet").toLocalDate() : null;
 				boolean status = rs.getBoolean("tinhtrang");
 				String approvePerson = rs.getString("nguoiduyet");
-				Re = new Registration(lecture,projectCode, regisDate, approveDate, status, approvePerson);
+				Re = new Registration(lecture, projectCode, regisDate, approveDate, status, approvePerson);
 				lstRe.add(Re);
 			}
 		} catch (SQLException exception) {

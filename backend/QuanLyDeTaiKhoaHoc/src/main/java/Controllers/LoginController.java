@@ -14,32 +14,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import Util.JsonResponse;
-import DAO.ManagementStaffDAO;
 import DAO.AccountDAO;
-import DAO.LecturerDAO;
-import DAO.AdminDAO;
 import Models.Account;
-import Models.Lecturer;
-import Models.ManagementStaff;
-import Models.Admin;
 
 @WebServlet("/api/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private AccountDAO accDAO;
-    private LecturerDAO lecturerDAO;
-
-    private ManagementStaffDAO mgtStaffDAO;
-    private AdminDAO adminDAO;
 	
     public void init() {
         accDAO = new AccountDAO();
-        lecturerDAO = new LecturerDAO();
-        mgtStaffDAO = new ManagementStaffDAO();
-        adminDAO = new AdminDAO();
     }
 	
     public LoginController() {
@@ -97,24 +83,10 @@ public class LoginController extends HttpServlet {
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("userRole", acc.getRole());
-                
                 jsonResponse.setSuccess(true);
                 jsonResponse.setStatusCode(HttpServletResponse.SC_OK);
                 jsonResponse.setMessage("Đăng nhập thành công!");
                 jsonResponse.setResult(acc);
-                
-                if ("ROLE_ADMIN".equals(acc.getRole())) {
-                    Admin admin = adminDAO.selectByAdCode(username);
-                    session.setAttribute("user", admin);
-                } else if ("ROLE_MGT_STAFF".equals(acc.getRole())) {
-                    ManagementStaff manager = mgtStaffDAO.selectByEmpCode(username);
-                    session.setAttribute("user", manager);
-                } else if ("ROLE_LECT".equals(acc.getRole())) {
-                    Lecturer lecturer = lecturerDAO.selectLecturerByLectCode(username);
-                    session.setAttribute("user", lecturer);
-                }
             }
 
             Gson gson = new Gson();

@@ -25,7 +25,7 @@ public class ProjectDAO {
 	private static final String CALC_PROJ_STATUS = "SELECT\r\n" 
 												 + "    CASE\r\n"
 												 + "        WHEN CURRENT_DATE < ngaymodangky THEN 'Chưa đăng ký'\r\n"
-												 + "        WHEN CURRENT_DATE >= ngaymodangky AND CURRENT_DATE <= ngayketthucdangky THEN 'Đang mở đăng ký"
+												 + "        WHEN CURRENT_DATE >= ngaymodangky AND CURRENT_DATE <= ngayketthucdangky THEN 'Đang mở đăng ký'\r\n"
 												 + "        WHEN CURRENT_DATE > ngayketthucdangky AND CURRENT_DATE < ngaybatdauthuchien THEN 'Chưa tới thời gian thực hiện'\r\n"
 												 + "        WHEN CURRENT_DATE >= ngaybatdauthuchien AND CURRENT_DATE <= ngayketthucthuchien THEN 'Đang thực hiện'\r\n"
 												 + "        WHEN CURRENT_DATE > ngayketthucthuchien AND CURRENT_DATE <= ngaynghiemthu THEN 'Đã hết hạn nộp báo cáo'\r\n"

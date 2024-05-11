@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -16,23 +17,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.google.gson.Gson;
+
 import Models.Lecturer;
 import Models.Project;
 import Models.Registration;
 import Models.Topic;
+import Util.CustomGson;
+import Util.JsonResponse;
 import DAO.ProjectDAO;
 import DAO.RegistrationDAO;
 import DAO.TopicDAO;
+import DTO.ProjectDTO;
 import DAO.FileDAO;
 import Models.FileDTO;
 
-@WebServlet("/lecturer-project/*")
+@WebServlet("/lecturerProject/*")
 public class LecturerProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProjectDAO projectDAO;
 	private RegistrationDAO regDAO;
 	private TopicDAO topicDAO;
 	private FileDAO fileDAO;
+	private Gson gson;
 	
 	public LecturerProjectController() {
 		super();
@@ -42,19 +49,23 @@ public class LecturerProjectController extends HttpServlet {
 		projectDAO = new ProjectDAO();
 		regDAO = new RegistrationDAO();
 		topicDAO = new TopicDAO();
+		CustomGson customGson = new CustomGson();
+		gson = customGson.createGson();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String action = request.getPathInfo();
+    	response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        String action = request.getPathInfo();
 		try {
 			switch (action) {
 			case "/detail":
 				showInfoProj(request, response);
 				break;
-			case "/list":
-				listProject(request, response);
+			case "/api/listActiveAPI":
+				listActiveAPI(request, response);
 				break;
 			case "/propose":
 				ProposeProject(request, response);
@@ -114,6 +125,25 @@ public class LecturerProjectController extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	private void listActiveAPI(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+        JsonResponse<List<ProjectDTO>> jsonResponse = null;
+        try {
+        	List <Project> listProject = projectDAO.selectActiveProjectForLecturer();
+        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
+        	for (int i = 0; i < listProject.size(); i++) {
+        		listProjectDTO.add(new ProjectDTO(listProject.get(i))) ;
+        	}
+            jsonResponse = new JsonResponse<List<ProjectDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", listProjectDTO);
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<List<ProjectDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            								"Có lỗi xảy ra.", null);
+            e.printStackTrace();
+        }
+        String jsonOutput = gson.toJson(jsonResponse);
+        response.getWriter().write(jsonOutput);
+	}
+	
 	private void listProject(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		List<Project> listProject = projectDAO.selectActiveProjectForLecturer();
