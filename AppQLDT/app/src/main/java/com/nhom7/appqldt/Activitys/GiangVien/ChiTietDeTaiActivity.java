@@ -3,9 +3,11 @@ package com.nhom7.appqldt.Activitys.GiangVien;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +16,11 @@ import android.widget.TextView;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Helpers.DialogHelper;
 import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Project;
+import com.nhom7.appqldt.Models.Registration;
 import com.nhom7.appqldt.R;
 
 import java.util.List;
@@ -29,7 +33,7 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
 
     TextView tvChiTietMaDeTai, tvChiTietTenDeTai, tvChiTietNguoiDang, tvChiTietChuDe, tvChiTietNgayDang, tvChiTietNgayMoDang, tvChiTietNgayKetThucDang;
     TextView tvChiTietNgayBatDau, tvChiTietNgayKetThuc, tvChiTietNgayNghiemThu, tvChiTietKinhPhi, tvChiTieSoThanhVien, tvChiTietMoTa;
-
+    String username;
     Button btnChiTietDangKy, btnChiTietHuyDangKy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,9 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 //Lấy giá trị được lưu giữ ra
+        username = sharedPreferences.getString("username","");
         TextView tvUserName = (TextView) findViewById(R.id.toolbar_username);
-        tvUserName.setText(sharedPreferences.getString("username",""));
+        tvUserName.setText(username);
 
         //Ánh xạ
         AnhXa();
@@ -79,12 +84,13 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
                         tvChiTietNguoiDang.setText(project.getResult());
                         tvChiTietNgayMoDang.setText(project.getOpenRegDate());
                         tvChiTietMoTa.setText(project.getDescription());
-                        if(!project.isProposed()){
-                            btnChiTietDangKy.setVisibility(View.GONE);
-                            btnChiTietHuyDangKy.setVisibility(View.GONE);
-                        }else {
-                            btnChiTietHuyDangKy.setVisibility(View.GONE);
-                        }
+                        btnChiTietHuyDangKy.setVisibility(View.GONE);
+                        btnChiTietDangKy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DangKyDeTai(username, project.getProjectCode());
+                            }
+                        });
                     }
                 }
 
@@ -128,5 +134,50 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void DangKyDeTai(String lectCode, String projectCode){
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        Call<APIResponse<Registration>> call = apiService.regisProjectLecture(lectCode, projectCode);
+
+        call.enqueue(new Callback<APIResponse<Registration>>() {
+            @Override
+            public void onResponse(Call<APIResponse<Registration>> call, Response<APIResponse<Registration>> response) {
+                if(response.isSuccessful()){
+                    if(response.body().isSuccess()){
+                        DialogHelper.showDialog(ChiTietDeTaiActivity.this, // Context của Activity hiện tại
+                                "Thông báo", // Tiêu đề của dialog
+                                "Đăng ký đề tài "+ projectCode+" thành công", // Nội dung của dialog
+                                "OK", // Text của nút Positive
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Xử lý sự kiện khi người dùng nhấn nút Positive
+                                        dialog.dismiss(); // Đóng dialog sau khi người dùng nhấn nút Positive (tùy chọn)
+                                        Intent intent = new Intent(ChiTietDeTaiActivity.this, ListDeTaiCuaToiActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                    }else {
+                        DialogHelper.showDialog(ChiTietDeTaiActivity.this, // Context của Activity hiện tại
+                                "Thông báo", // Tiêu đề của dialog
+                                "Đăng ký đề tài "+ projectCode+" thất bại", // Nội dung của dialog
+                                "OK", // Text của nút Positive
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Xử lý sự kiện khi người dùng nhấn nút Positive
+                                        dialog.dismiss(); // Đóng dialog sau khi người dùng nhấn nút Positive (tùy chọn)
+                                    }
+                                });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<Registration>> call, Throwable t) {
+                Log.d("API Lecture", "Fail call");
+            }
+        });
     }
 }

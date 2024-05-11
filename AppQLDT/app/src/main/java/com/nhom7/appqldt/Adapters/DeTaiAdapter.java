@@ -44,9 +44,9 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.ViewHolder> 
         holder.tvTenDeTai.setText((CharSequence) project.getName());
         holder.tvChuDe.setText((CharSequence) project.getTopic().getName());
         if(project.isProposed()){
-            holder.tvTinhTrang.setText((CharSequence) "Đang mở đăng ký");
+            holder.tvTinhTrang.setText((CharSequence) "Đang đợi phê duyệt");
         }else {
-            holder.tvTinhTrang.setText((CharSequence) "Đóng");
+            holder.tvTinhTrang.setText((CharSequence) "Đã hoàn thành");
         }
 
 

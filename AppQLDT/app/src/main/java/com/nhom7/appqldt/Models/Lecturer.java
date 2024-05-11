@@ -2,7 +2,7 @@ package com.nhom7.appqldt.Models;
 
 public class Lecturer {
     private String lecturerCode;
-    private Faculty faculty;
+    private Faculty falculity;
     private String name;
     private String birthday;
     private String address;
@@ -13,7 +13,7 @@ public class Lecturer {
 
     public Lecturer(String lecturerCode, Faculty faculty, String name, String birthday, String address, String idNum, String phoneNum, String email, String sex) {
         this.lecturerCode = lecturerCode;
-        this.faculty = faculty;
+        this.falculity = faculty;
         this.name = name;
         this.birthday = birthday;
         this.address = address;
@@ -31,7 +31,7 @@ public class Lecturer {
     }
 
     public Faculty getFaculty() {
-        return faculty;
+        return falculity;
     }
 
     public String getName() {
@@ -67,7 +67,7 @@ public class Lecturer {
     }
 
     public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
+        this.falculity = faculty;
     }
 
     public void setName(String name) {

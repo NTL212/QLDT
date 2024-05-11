@@ -4,7 +4,9 @@ import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Account;
 import com.nhom7.appqldt.Models.Lecturer;
 import com.nhom7.appqldt.Models.MessageResponse;
+import com.nhom7.appqldt.Models.Notification;
 import com.nhom7.appqldt.Models.Project;
+import com.nhom7.appqldt.Models.Registration;
 import com.nhom7.appqldt.Models.Topic;
 
 import java.util.List;
@@ -38,8 +40,24 @@ public interface APIService {
     @GET("lecturer-project/get-lecture")
     Call<APIResponse<Lecturer>> getLecturerByID(@Query("id") String id);
 
+    @GET("lecturer-project/myproj")
+    Call<APIResponse<List<Project>>> getAllMyProjectForLecturer(@Query("id") String id);
     @POST("lecturer-project/propose")
     Call<APIResponse<Project>> proposeProjectForLecturer(@Body Project project);
+
+    @POST("lecturer-project/register-project")
+    @FormUrlEncoded
+    Call<APIResponse<Registration>> regisProjectLecture(@Field("lectCode") String lectCode, @Field("projCode") String projectCode);
+
+    @GET("lecturer-notification/getSendMessage")
+    Call<APIResponse<List<Notification>>> getAllSendedMessageLecture(@Query("id") String id);
+
+    @GET("lecturer-notification/getNotify")
+    Call<APIResponse<List<Notification>>> getAllReceiveMessageLecture(@Query("id") String id);
+
+    @POST("lecturer-notification/sendMessage")
+    @FormUrlEncoded
+    Call<APIResponse<Notification>> sendMessageLecture(@Field("lectCode") String id, @Field("recieveperson") String receiveId, @Field("messagetitle") String title, @Field("messagecontent") String content);
 
     @GET("project/showdetailform")
     Call<APIResponse<Project>> getDetailProject(@Query("id") String id);
