@@ -17,11 +17,14 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface APIService {
     @GET("topic")
     Call<APIResponse> getHelloWorld();
+
+
     // Lớp phản hồi để ánh xạ dữ liệu JSON
     @POST("login")
     @FormUrlEncoded
@@ -31,6 +34,7 @@ public interface APIService {
 
     @GET("project")
     Call<APIResponse<List<Project>>> getAllProject();
+
     @GET("lecturer-project/list")
     Call<APIResponse<List<Project>>> getAllProjectActiveProjectForLecturer();
 
@@ -42,6 +46,7 @@ public interface APIService {
 
     @GET("lecturer-project/myproj")
     Call<APIResponse<List<Project>>> getAllMyProjectForLecturer(@Query("id") String id);
+
     @POST("lecturer-project/propose")
     Call<APIResponse<Project>> proposeProjectForLecturer(@Body Project project);
 
@@ -64,4 +69,10 @@ public interface APIService {
 
     @GET("topic")
     Call<APIResponse<List<Topic>>> getAllTopic();
+
+    @POST("topic")
+    @FormUrlEncoded
+    Call<APIResponse<Topic>> insertTopic(@Field("topicCode") String topicCode,
+                                         @Field("name") String name,
+                                         @Field("isEnabled") boolean isEnabled);
 }

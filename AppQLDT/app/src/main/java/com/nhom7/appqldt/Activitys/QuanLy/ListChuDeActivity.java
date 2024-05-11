@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Adapters.ChuDeAdapter;
@@ -122,8 +124,28 @@ ChuDeAdapter chuDeAdapter;
     }
 
     public void themChuDe(String maSo, String tenChuDe) {
-        chuDeList.add(new ChuDe( 1, tenChuDe, 0, false));
-        chuDeAdapter.notifyDataSetChanged();
+        chuDeList.add(new ChuDe( chuDeList.size() + 1, tenChuDe, 0, true));
+
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        apiService.insertTopic(maSo,tenChuDe,true).enqueue(new retrofit2.Callback<APIResponse<Topic>>() {
+            @Override
+            public void onResponse(retrofit2.Call<APIResponse<Topic>> call, retrofit2.Response<APIResponse<Topic>> response) {
+                if (response.body() != null) {
+                    Log.e("TAG", "onResponse: " + response.body().getMessage());
+                    Toast.makeText(ListChuDeActivity.this, "Thêm chủ đề thành công", Toast.LENGTH_SHORT).show();
+                    if (response.body().isSuccess()) {
+                        Log.e("TAG", "onResponse: " + response.body().getResult());
+                    }
+                }
+                else {
+                    Toast.makeText(ListChuDeActivity.this, "Thêm chủ đề thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(retrofit2.Call<APIResponse<Topic>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
 
