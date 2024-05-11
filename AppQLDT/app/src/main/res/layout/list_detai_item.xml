@@ -23,7 +23,7 @@
     <TextView
         android:id="@+id/tvTenDeTai"
         android:layout_width="277dp"
-        android:layout_height="21dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Ten de tai"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,12 +47,12 @@
         android:id="@+id/tvTinhTrang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
         android:layout_marginTop="32dp"
-        android:text="Tinh trang"
+        android:layout_marginEnd="36dp"
         android:layout_marginBottom="10dp"
+        android:text="Tinh trang"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvChuDe"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTenDeTai"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

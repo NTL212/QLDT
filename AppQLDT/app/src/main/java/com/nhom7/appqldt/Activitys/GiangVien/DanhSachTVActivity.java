@@ -6,6 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.nhom7.appqldt.Adapters.DeTaiAdapter;
+import com.nhom7.appqldt.Adapters.ThanhVienAdapter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;

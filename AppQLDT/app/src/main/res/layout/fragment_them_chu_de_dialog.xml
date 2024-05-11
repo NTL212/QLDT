@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activitys.QuanLy.ThemChuDeDialogFragment">
+
+<!--   table layout-->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:stretchColumns="1">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã số"
+                android:textSize="16sp"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/edtMaSo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Nhập mã số"
+                android:padding="10dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên chủ đề"
+                android:textSize="16sp"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/edtTenChuDe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tên chủ đề"
+                android:padding="10dp"/>
+        </TableRow>
+        <Button
+            android:id="@+id/btnThem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm"
+            android:layout_gravity="center"
+            android:padding="10dp"/>
+
+
+    </TableLayout>
+
+</FrameLayout>

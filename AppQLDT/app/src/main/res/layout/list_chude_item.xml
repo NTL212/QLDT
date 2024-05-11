@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/tvStt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:padding="10dp"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvChude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chủ đề"
+            android:padding="10dp"
+            android:textSize="16sp"
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/tvSoluongdetai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng đề tài"
+            android:textSize="16sp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"/>
+        <TextView
+            android:id="@+id/tvDangmodangky"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đang mở đăng ký"
+            android:gravity="end"
+            android:textSize="16sp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"/>
+    </LinearLayout>
+</LinearLayout>

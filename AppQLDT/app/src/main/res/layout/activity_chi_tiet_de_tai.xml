@@ -58,6 +58,8 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
+        android:paddingBottom="30dp"
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
@@ -108,6 +110,7 @@
                         android:text="Tên đề tài: " />
 
                     <TextView
+                        android:layout_weight="1"
                         android:id="@+id/tvChiTietTenDeTai"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -317,8 +320,10 @@
                         android:text="Mô tả: " />
 
                     <TextView
+                        android:layout_weight="1"
+                        android:paddingRight="10dp"
                         android:id="@+id/tvChiTietMoTa"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text="De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1" />

@@ -30,5 +30,4 @@
         android:title="Đăng xuất"
         app:showAsAction="never" />
 
-
 </menu>
