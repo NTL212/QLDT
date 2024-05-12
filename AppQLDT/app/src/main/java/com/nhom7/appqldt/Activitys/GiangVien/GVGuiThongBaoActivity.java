@@ -33,6 +33,7 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
     String username;
     EditText nguoigui, nguoinhan, tieude, noidung;
     Button btnGuiTB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 //Lấy giá trị được lưu giữ ra
-        username = sharedPreferences.getString("username","");
+        username = sharedPreferences.getString("username", "");
         TextView tvUserName = (TextView) findViewById(R.id.toolbar_username);
         tvUserName.setText(username);
 
@@ -70,8 +71,8 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
                 call.enqueue(new Callback<APIResponse<Notification>>() {
                     @Override
                     public void onResponse(Call<APIResponse<Notification>> call, Response<APIResponse<Notification>> response) {
-                        if(response.isSuccessful()){
-                            if(response.body().isSuccess()){
+                        if (response.isSuccessful()) {
+                            if (response.body().isSuccess()) {
                                 Notification notification = response.body().getResult();
                                 DialogHelper.showDialog(GVGuiThongBaoActivity.this, // Context của Activity hiện tại
                                         "Thông báo", // Tiêu đề của dialog
@@ -86,8 +87,7 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                             }
                                         });
-                            }
-                            else{
+                            } else {
                                 DialogHelper.showDialog(GVGuiThongBaoActivity.this, // Context của Activity hiện tại
                                         "Thông báo", // Tiêu đề của dialog
                                         "Gửi thông báo thất bại", // Nội dung của dialog
@@ -114,12 +114,13 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
 
     }
 
-    private void AnhXa(){
-        nguoinhan=findViewById(R.id.edtNguoiNhan);
-        tieude=findViewById(R.id.edtTieuDe);
-        noidung=findViewById(R.id.edtNoiDung);
-        btnGuiTB=findViewById(R.id.btnGui);
+    private void AnhXa() {
+        nguoinhan = findViewById(R.id.edtNguoiNhan);
+        tieude = findViewById(R.id.edtTieuDe);
+        noidung = findViewById(R.id.edtNoiDung);
+        btnGuiTB = findViewById(R.id.btnGui);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -129,7 +130,7 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean sItem = MenuHelper.ChonItem(this, item);
-        if(sItem){
+        if (sItem) {
             return true;
         }
         return super.onOptionsItemSelected(item);

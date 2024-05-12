@@ -1,5 +1,7 @@
 package com.nhom7.appqldt.API;
 
+import com.nhom7.appqldt.Activitys.DTO.FileDTO;
+import com.nhom7.appqldt.Activitys.DTO.ProjectDTO;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Account;
 import com.nhom7.appqldt.Models.Lecturer;
@@ -11,17 +13,21 @@ import com.nhom7.appqldt.Models.Topic;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface APIService {
     @GET("topic")
     Call<APIResponse> getHelloWorld();
+
     // Lớp phản hồi để ánh xạ dữ liệu JSON
     @POST("login")
     @FormUrlEncoded
@@ -31,6 +37,7 @@ public interface APIService {
 
     @GET("project")
     Call<APIResponse<List<Project>>> getAllProject();
+
     @GET("lecturer-project/list")
     Call<APIResponse<List<Project>>> getAllProjectActiveProjectForLecturer();
 
@@ -41,13 +48,22 @@ public interface APIService {
     Call<APIResponse<Lecturer>> getLecturerByID(@Query("id") String id);
 
     @GET("lecturer-project/myproj")
-    Call<APIResponse<List<Project>>> getAllMyProjectForLecturer(@Query("id") String id);
+    Call<APIResponse<List<ProjectDTO>>> getAllMyProjectForLecturer(@Query("id") String id);
+
     @POST("lecturer-project/propose")
     Call<APIResponse<Project>> proposeProjectForLecturer(@Body Project project);
 
     @POST("lecturer-project/register-project")
     @FormUrlEncoded
     Call<APIResponse<Registration>> regisProjectLecture(@Field("lectCode") String lectCode, @Field("projCode") String projectCode);
+
+    @POST("lecturer-project/submit")
+    @Multipart
+    Call<APIResponse<FileDTO>> submitFileLecture(
+            @Part MultipartBody.Part file,
+            @Query("projCode") String projCode,
+            @Query("lectCode") String lectCode
+    );
 
     @GET("lecturer-notification/getSendMessage")
     Call<APIResponse<List<Notification>>> getAllSendedMessageLecture(@Query("id") String id);

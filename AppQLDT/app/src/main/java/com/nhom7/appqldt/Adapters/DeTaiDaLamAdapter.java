@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nhom7.appqldt.Activitys.DTO.ProjectDTO;
+import com.nhom7.appqldt.Activitys.GiangVien.ChiTietDTDaLamActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ChiTietDeTaiActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ListDeTaiActivity;
 import com.nhom7.appqldt.Models.DeTai;
@@ -20,11 +22,11 @@ import com.nhom7.appqldt.R;
 
 import java.util.List;
 
-public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.ViewHolder> {
+public class DeTaiDaLamAdapter extends RecyclerView.Adapter<DeTaiDaLamAdapter.ViewHolder> {
 
-    List<Project> listProject;
+    List<ProjectDTO> listProject;
     Context context;
-    public DeTaiAdapter(List<Project> listProject, Context context){
+    public DeTaiDaLamAdapter(List<ProjectDTO> listProject, Context context){
         this.listProject = listProject;
         this.context = context;
     }
@@ -32,29 +34,25 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.ViewHolder> 
 
     @NonNull
     @Override
-    public DeTaiAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DeTaiDaLamAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_detai_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DeTaiAdapter.ViewHolder holder, int position) {
-        Project project = this.listProject.get(position);
-        holder.tvMaDeTai.setText((CharSequence) project.getProjectCode());
+    public void onBindViewHolder(@NonNull DeTaiDaLamAdapter.ViewHolder holder, int position) {
+        ProjectDTO project = this.listProject.get(position);
+        holder.tvMaDeTai.setText((CharSequence) project.getId());
         holder.tvTenDeTai.setText((CharSequence) project.getName());
         holder.tvChuDe.setText((CharSequence) project.getTopic().getName());
-        if(project.isProposed()){
-            holder.tvTinhTrang.setText((CharSequence) "Được đề xuất");
-        }else {
-            holder.tvTinhTrang.setText((CharSequence) "Không được đề xuất");
-        }
+        holder.tvTinhTrang.setText((CharSequence) project.getStatusForLecturer());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ChiTietDeTaiActivity.class);
-                intent.putExtra("projectCode", project.getProjectCode()); // Gắn dữ liệu vào Intent
+                Intent intent = new Intent(context, ChiTietDTDaLamActivity.class);
+                intent.putExtra("projectCode", project.getId()); // Gắn dữ liệu vào Intent
                 context.startActivity(intent);
             }
         });

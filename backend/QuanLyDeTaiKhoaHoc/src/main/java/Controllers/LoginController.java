@@ -53,7 +53,6 @@ public class LoginController extends HttpServlet {
 	    while ((line = reader.readLine()) != null) {
 	        requestBody.append(line);
 	    }
-	    System.out.print("login call");
 	    Map<String, String> formData = new HashMap<>();
 	    try {
 	        String[] pairs = requestBody.toString().split("&");

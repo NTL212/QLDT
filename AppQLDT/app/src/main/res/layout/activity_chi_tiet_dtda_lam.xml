@@ -333,8 +333,9 @@
                         android:text="Mô tả: " />
 
                     <TextView
+                        android:layout_weight="1"
                         android:id="@+id/tvChiTietMoTa"
-                        android:layout_width="250dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text="De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1" />
@@ -458,7 +459,15 @@
                         android:text="Hoàn thành" />
                 </TableRow>
             </TableLayout>
+            <Button
+                android:id="@+id/btnNopBaoCao"
+                android:layout_margin="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nộp báo cáo">
+            </Button>
         </LinearLayout>
+
     </ScrollView>
 
 

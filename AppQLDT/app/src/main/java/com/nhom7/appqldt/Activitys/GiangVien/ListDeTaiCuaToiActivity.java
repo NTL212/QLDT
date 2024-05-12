@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Activitys.DTO.ProjectDTO;
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
+import com.nhom7.appqldt.Adapters.DeTaiDaLamAdapter;
 import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Project;
@@ -28,7 +30,7 @@ import retrofit2.Response;
 
 public class ListDeTaiCuaToiActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    List<Project> listDeTai;
+    List<ProjectDTO> listDeTai;
 
     String username;
 
@@ -66,14 +68,14 @@ public class ListDeTaiCuaToiActivity extends AppCompatActivity {
 
     private void loadRecyclerView() {
         APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
-        Call<APIResponse<List<Project>>> call = apiService.getAllMyProjectForLecturer(username);
+        Call<APIResponse<List<ProjectDTO>>> call = apiService.getAllMyProjectForLecturer(username);
 
-        call.enqueue(new Callback<APIResponse<List<Project>>>() {
+        call.enqueue(new Callback<APIResponse<List<ProjectDTO>>>() {
             @Override
-            public void onResponse(Call<APIResponse<List<Project>>> call, Response<APIResponse<List<Project>>> response) {
+            public void onResponse(Call<APIResponse<List<ProjectDTO>>> call, Response<APIResponse<List<ProjectDTO>>> response) {
                 if(response.isSuccessful()){
-                    List<Project> projects = response.body().getResult();
-                    DeTaiAdapter deTaiAdapter = new DeTaiAdapter(projects, ListDeTaiCuaToiActivity.this);
+                    List<ProjectDTO> projects = response.body().getResult();
+                    DeTaiDaLamAdapter deTaiAdapter = new DeTaiDaLamAdapter(projects, ListDeTaiCuaToiActivity.this);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDeTaiCuaToiActivity.this, LinearLayoutManager.VERTICAL, false);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(deTaiAdapter);
@@ -81,7 +83,7 @@ public class ListDeTaiCuaToiActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<APIResponse<List<Project>>> call, Throwable t) {
+            public void onFailure(Call<APIResponse<List<ProjectDTO>>> call, Throwable t) {
                 Log.d("API", "fail call");
             }
         });

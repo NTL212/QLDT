@@ -15,6 +15,33 @@ public class FileDAO {
 	private static final String SELECT_FILE_BY_PROJ_CODE_UPLOADED_BY_MANAGER = "select * from file join user on nguoiup = username having madetai = ? and role = 'ROLE_MGT_STAFF';";
 	private static final String INSERT_FILE = "insert into file (data, nguoiup, madetai) values (?, ?, ?)";
 	private static final String DELETE_FILE = "delete from file where id = ?";
+	
+	private static final String SELECT_FILE_BY_PROJ_CODE_AND_LECT_CODE = "select * from file where madetai = ? and nguoiup = ?";
+	
+	public FileDTO getFileByLectIdAndProId(String projCode, String lectCode) {
+	    Connection connection = JDBCUtil.getConnection();
+	    FileDTO file = null;
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FILE_BY_PROJ_CODE_AND_LECT_CODE);
+	        preparedStatement.setString(1, projCode);
+	        preparedStatement.setString(2, lectCode);
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        if (rs.next()) {
+	            int fileId = rs.getInt("id");
+	            byte[] data = rs.getBytes("data");
+	            LocalDateTime uploadTime = rs.getTimestamp("thoigianup").toLocalDateTime();
+	            String uploaderId = rs.getString("nguoiup");
+	            file = new FileDTO(fileId, data, uploadTime, uploaderId, projCode);
+	        }
+	    } catch (SQLException exception) {
+	        HandleException.printSQLException(exception);
+	    } finally {
+	        JDBCUtil.closeConnection(connection);
+	    }
+	    return file;
+	}
+	
 	public List<FileDTO> getFilesUploadedByLecturerForProject(String projCode) {
 		Connection connection = JDBCUtil.getConnection();
 		List<FileDTO> lstFile = new ArrayList<>();

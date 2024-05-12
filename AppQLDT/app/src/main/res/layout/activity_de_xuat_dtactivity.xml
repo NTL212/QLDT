@@ -195,27 +195,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày nghiệm thu: " />
-
-                    <TextView
-                        android:id="@+id/tvChiTietNgayNghiemThu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:hint="2022-12-31"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
                         android:text="Kinh phi dự kiến: " />
 
                     <EditText

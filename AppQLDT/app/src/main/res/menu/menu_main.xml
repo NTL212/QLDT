@@ -11,7 +11,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_doneProject"
-        android:title="Đề tài đã làm"
+        android:title="Đề tài của tôi"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_projectMember"

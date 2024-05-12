@@ -45,7 +45,7 @@ import retrofit2.Response;
 public class DeXuatDTActivity extends AppCompatActivity {
 
     TextView tvChiTietMaDeTai, tvChiTietTenDeTai, tvChiTietChuDe;
-    TextView tvChiTietNgayBatDau, tvChiTietNgayKetThuc, tvChiTietNgayNghiemThu, tvChiTietKinhPhi, tvChiTieSoThanhVien, tvChiTietMoTa;
+    TextView tvChiTietNgayBatDau, tvChiTietNgayKetThuc, tvChiTietKinhPhi, tvChiTieSoThanhVien, tvChiTietMoTa;
     Button btnDeXuat;
     String username;
     Lecturer lecturer;
@@ -90,11 +90,11 @@ public class DeXuatDTActivity extends AppCompatActivity {
                 project.setMaxMember(Integer.valueOf(tvChiTieSoThanhVien.getText().toString()));
                 project.setOpenRegDate("2022-12-01");
                 project.setCloseRegDate("2022-12-31");
-                project.setStartDate("2023-01-01");
-                project.setEndDate("2023-04-01");
+                project.setStartDate("2023-05-01");
+                project.setEndDate("2023-06-01");
                 project.setAcceptanceDate("2023-04-17");
                 project.setEstBudget(Double.valueOf(tvChiTietKinhPhi.getText().toString()));
-                project.setResult("Đạt");
+                project.setResult("");
 
                 project.setTopic(topic);
                 project.setLecturer(lecturer);
@@ -137,7 +137,6 @@ public class DeXuatDTActivity extends AppCompatActivity {
         tvChiTietChuDe = (TextView) findViewById(R.id.tvChiTietChuDe);
         tvChiTietNgayBatDau = (TextView) findViewById(R.id.tvChiTietNgayBatDau);
         tvChiTietNgayKetThuc = (TextView) findViewById(R.id.tvChiTietNgayKetThuc);
-        tvChiTietNgayNghiemThu = (TextView) findViewById(R.id.tvChiTietNgayNghiemThu);
         tvChiTietKinhPhi = (TextView) findViewById(R.id.tvChiTietKinhPhi);
         tvChiTieSoThanhVien = (TextView) findViewById(R.id.tvChiTieSoThanhVien);
         tvChiTietMoTa = (TextView) findViewById(R.id.tvChiTietMoTa);

@@ -123,6 +123,14 @@ public class Project {
 		return openRegDate;
 	}
 
+	public Boolean getIsProposed() {
+		return isProposed;
+	}
+
+	public void setIsProposed(Boolean isProposed) {
+		this.isProposed = isProposed;
+	}
+
 	public void setOpenRegDate(LocalDate openRegDate) {
 		this.openRegDate = openRegDate;
 	}
