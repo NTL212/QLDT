@@ -307,6 +307,7 @@ public class ProjectController extends HttpServlet {
                 jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_CONFLICT, "Mã đề tài đã tồn tại.", null);
             }
         } catch (Exception e) {
+        	System.out.println("loi");
             jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
         }
     	response.getWriter().write(gson.toJson(jsonResponse)); 

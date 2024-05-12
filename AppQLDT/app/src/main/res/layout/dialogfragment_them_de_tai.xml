@@ -48,8 +48,14 @@
                 android:layout_height="wrap_content"
                 android:text="Chủ đề:" />
 
-            <EditText
-                android:id="@+id/editTextChuDe"
+<!--            <EditText-->
+<!--                android:id="@+id/editTextChuDe"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                />-->
+<!--            select instead -->
+            <Spinner
+                android:id="@+id/spinnerChuDe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />

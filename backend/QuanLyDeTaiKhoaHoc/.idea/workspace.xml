@@ -9,11 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c052ff3-3dc4-4f65-85fa-e8d304192da4" name="Changes" comment="" />
+    <list default="true" id="8c052ff3-3dc4-4f65-85fa-e8d304192da4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/QuanLyDeTaiKhoaHoc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyDeTaiKhoaHoc.iml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -35,6 +40,7 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Tomcat Server.Tomcat 8.5.34.executor": "Run",
+    "git-widget-placeholder": "LDT",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/github/QLDT/backend/QuanLyDeTaiKhoaHoc",
     "node.js.detected.package.eslint": "true",
@@ -164,6 +170,7 @@
       <workItem from="1715393895183" duration="1768000" />
       <workItem from="1715435727372" duration="92000" />
       <workItem from="1715438519810" duration="7718000" />
+      <workItem from="1715493461833" duration="216000" />
     </task>
     <servers />
   </component>

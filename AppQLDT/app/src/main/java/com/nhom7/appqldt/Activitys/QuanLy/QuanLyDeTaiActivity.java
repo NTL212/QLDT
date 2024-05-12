@@ -89,4 +89,8 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    void addDeTai(DeTai deTai){
+        listDeTai.add(deTai);
+        deTaiAdapter.notifyDataSetChanged();
+    }
 }
