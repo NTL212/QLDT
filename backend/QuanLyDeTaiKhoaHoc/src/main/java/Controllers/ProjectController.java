@@ -1,12 +1,9 @@
 package Controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,21 +17,15 @@ import com.google.gson.Gson;
 
 import DAO.ProjectDAO;
 import DAO.TopicDAO;
-import DTO.PendingApprovalProjectDTO;
-import DTO.ProjectDTO;
-import DTO.ProjectDetailDTO;
-import DTO.ShowLecturerDTO;
 import Util.CustomGson;
-import Util.FormDataReader;
 import Util.JsonResponse;
-import Models.Lecturer;
 import Models.ManagementStaff;
 import Models.Project;
 import Models.Topic;
 import DAO.RegistrationDAO;
 import Models.Registration;
 
-@WebServlet("/project/*")
+@WebServlet("/api/project/*")
 public class ProjectController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
@@ -58,22 +49,45 @@ public class ProjectController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
-    	response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
         String action = request.getPathInfo();
         try {
-        	if (action.equals("/api/getAll")) {
+        	if (action == null || action.isEmpty()) {
         	    getAll(request, response);
         	}
-        	else if (action.equals("/api/getPendingApproval")) {
-        		getPendingApproval(request, response);
-        	}
-        	else if (action.equals("/api/getById/")) {
-        		getById(request, response);
-        	} else if (action.equals("/api/createProject")) {
-        		insertProjectManagerAPI(request, response);
-        	} else if (action.equals("/api/updateProject")) {
-        		updateProjectAPI(request, response);
+        	else {
+        		switch (action) {
+        		case "/insertproject":
+                	insertProjectManager(request, response);
+                    break;
+                case "/editproject":
+                    showEditForm(request, response);
+                    break;
+                case "/shownewform":
+                	shownewProjectForm(request, response);
+                	break;
+                case "/showdetailform":
+                	ShowDetailForm(request, response);
+                	break;
+                case "/updateproject":
+                    updateProject(request, response);
+                    break;
+                case "/listproject":
+                	getAll(request, response);
+                    break;
+                case "/listapproveproject":
+                	listApproveProject(request, response);
+                    break;
+                case "/approveproject":
+                	approveProject(request, response);
+                    break;
+                case "/disagreeproject":
+                	disagreeProject(request, response);
+                    break;
+	        		default:
+			            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			            response.getWriter().write("Not Found");
+			            break;
+        		}
         	}
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -82,25 +96,25 @@ public class ProjectController extends HttpServlet {
         /*
         try {
             switch (action) {
-                case "/insertproject":   	done
+                case "/insertproject":
                 	insertProjectManager(request, response);
                     break;
-                case "/editproject":    	-
+                case "/editproject":
                     showEditForm(request, response);
                     break;
-                case "/shownewform":    	-
+                case "/shownewform":
                 	shownewProjectForm(request, response);
                 	break;
-                case "/showdetailform":  	done
+                case "/showdetailform":
                 	ShowDetailForm(request, response);
                 	break;
-                case "/updateproject":		done
+                case "/updateproject":
                     updateProject(request, response);
                     break;
-                case "/listproject":		done
+                case "/listproject":
                 	listProject(request, response);
                     break;
-                case "/listapproveproject": done
+                case "/listapproveproject":
                 	listApproveProject(request, response);
                     break;
                 case "/approveproject":
@@ -130,24 +144,20 @@ public class ProjectController extends HttpServlet {
     
     private void getAll(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {        
-        JsonResponse<List<ProjectDTO>> jsonResponse = null;
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<List<Project>> jsonResponse = null;
         try {
         	List <Project> listProject = projectDAO.selectAllProject();
-        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
-        	for (int i = 0; i < listProject.size(); i++) {
-        		listProjectDTO.add(new ProjectDTO(listProject.get(i))) ;
-        	}
-            jsonResponse = new JsonResponse<List<ProjectDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", listProjectDTO);
+            jsonResponse = new JsonResponse<List<Project>>(true, HttpServletResponse.SC_OK, "Thành công!", listProject);
         } catch (Exception e) {
-            jsonResponse = new JsonResponse<List<ProjectDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            jsonResponse = new JsonResponse<List<Project>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
             								"Có lỗi xảy ra.", null);
-            e.printStackTrace();
         }
         String jsonOutput = gson.toJson(jsonResponse);
         response.getWriter().write(jsonOutput);
     }
     
-    /*
     private void shownewProjectForm(HttpServletRequest request, HttpServletResponse response)
     	    throws SQLException, IOException, ServletException {
     	List < Project > listProject = projectDAO.selectAllProject();
@@ -160,59 +170,35 @@ public class ProjectController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectManager/AddProject/AddProject.jsp");
         dispatcher.forward(request, response);
     }
-    */
     
-    private void getById(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException {
-	    FormDataReader reader = new FormDataReader(request);
-	    Map<String, String> formData = reader.getData();
-	    
-	    if (formData.containsKey("projectId")) {
-	        String projectId = formData.get("projectId");
-	        JsonResponse<ProjectDetailDTO> jsonResponse = null;
-			try {
-	            Project project = projectDAO.selectProjectByProjectCode(projectId);
-	            if (project == null) {
-	                jsonResponse = new JsonResponse<>(false, HttpServletResponse.SC_NOT_FOUND, "Đề tài không tồn tại", null);            
-
-	            } else {
-	                jsonResponse = new JsonResponse<>(true, HttpServletResponse.SC_OK, "Thành công", new ProjectDetailDTO(project));            
-	            }
-	        } catch (Exception e) {
-	        	jsonResponse = new JsonResponse<>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra", null);
-	        	e.printStackTrace();
-	        }
-			response.getWriter().write(gson.toJson(jsonResponse));
-	    }
+    private void ShowDetailForm(HttpServletRequest request, HttpServletResponse response)
+    	    throws SQLException, IOException, ServletException {
+    	String id = request.getParameter("id");
+       
+//        request.setAttribute("project", existingProject);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectManager/DetailProject/DetailProject.jsp");
+//        dispatcher.forward(request, response);
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<Project> jsonResponse = null;
+        try {
+        	Project existingProject = projectDAO.selectProjectByProjectCode(id);
+            jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_OK, "Thành công!", existingProject);
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            								"Có lỗi xảy ra.", null);
+        }
+        String jsonOutput = gson.toJson(jsonResponse);
+        response.getWriter().write(jsonOutput);
     }
     
-    /*
     private void listApproveProject(HttpServletRequest request, HttpServletResponse response)
     	    throws SQLException, IOException, ServletException {
         List < Registration > listRe = registrationDAO.selectApproveRegis();
         request.setAttribute("listRe", listRe);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectManager/ApproveProject/ApproveProject.jsp");
         dispatcher.forward(request, response);
-    }
-    */
-    
-    private void getPendingApproval(HttpServletRequest request, HttpServletResponse response)
-    	    throws SQLException, IOException, ServletException {        
-        JsonResponse<List<PendingApprovalProjectDTO>> jsonResponse = null;
-        try {
-        	List <Registration> listReg = registrationDAO.selectApproveRegis();
-        	List<PendingApprovalProjectDTO> listProject = new ArrayList<PendingApprovalProjectDTO>();
-        	for (int i = 0; i < listReg.size(); i++) {
-        		listProject.add(new PendingApprovalProjectDTO(listReg.get(i)));
-        	}
-            jsonResponse = new JsonResponse<List<PendingApprovalProjectDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", listProject);
-        } catch (Exception e) {
-            jsonResponse = new JsonResponse<List<PendingApprovalProjectDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-            								"Có lỗi xảy ra.", null);
-            e.printStackTrace();
-        }
-        String jsonOutput = gson.toJson(jsonResponse);
-        response.getWriter().write(jsonOutput);
     }
     
     private void approveProject(HttpServletRequest request, HttpServletResponse response)
@@ -286,33 +272,7 @@ public class ProjectController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectManager/ProjectManagement/ProjectManagement.jsp");
         dispatcher.forward(request, response);
     }
-    
-    private void insertProjectManagerAPI(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-    	BufferedReader reader = request.getReader();
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        JsonResponse<Project> jsonResponse = null;
-    	try {
-            Project project = gson.fromJson(reader, Project.class);
-            if (projectDAO.selectProjectByProjectCode(project.getProjectCode()) == null)
-            {
-            	boolean succ = projectDAO.insertProject(project);
-            	if (succ) {
-            		jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_CREATED, "Đề tài đã được tạo thành công,", project);
-            	} else {
-                    jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
-            	}
-            }
-            else {
-                jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_CONFLICT, "Mã đề tài đã tồn tại.", null);
-            }
-        } catch (Exception e) {
-        	System.out.println("loi");
-            jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
-        }
-    	response.getWriter().write(gson.toJson(jsonResponse)); 
-    }
-    /*
+
     private void updateProject(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
     	 String projectCode = request.getParameter("projectCode");
          String projectTopic = request.getParameter("projectTopic");
@@ -344,29 +304,5 @@ public class ProjectController extends HttpServlet {
          RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectManager/ProjectManagement/ProjectManagement.jsp");
          dispatcher.forward(request, response);
     }
-	*/
-    private void updateProjectAPI(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-    	BufferedReader reader = request.getReader();
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        JsonResponse<Project> jsonResponse = null;
-    	try {
-            Project project = gson.fromJson(reader, Project.class);
-            if (projectDAO.selectProjectByProjectCode(project.getProjectCode()) != null)
-            {
-            	boolean succ = projectDAO.updateProject(project);
-            	if (succ) {
-            		jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_CREATED, "Cập nhật thành công,", project);
-            	} else {
-                    jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
-            	}
-            }
-            else {
-                jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_CONFLICT, "Mã đề tài không tồn tại.", null);
-            }
-        } catch (Exception e) {
-            jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
-        }
-    	response.getWriter().write(gson.toJson(jsonResponse)); 
-   }
+
 }

@@ -152,6 +152,8 @@ public class ProjectDAO {
 	
 	public List<Project> selectProjectsByLecturerCode(String lectCode) {
 		List<Project> lstProj = new ArrayList<Project>();
+		System.out.println(3333);
+
 		Connection connection = JDBCUtil.getConnection();
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PROJECTS_BY_LECTURER_CODE);

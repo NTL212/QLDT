@@ -99,21 +99,24 @@ public interface APIService {
 //        "aCouncil": {},
 //        "isProposed": false
 //    }
+
     @GET("project/api/createProject")
-    Call<APIResponse<Project>> createProject(@Query("projectCode") String projectCode,
-                                             @Query("name") String name,
-                                             @Query("createDate") String createDate,
-                                             @Query("description") String description,
-                                             @Query("maxMember") int maxMember,
-                                             @Query("openRegDate") String openRegDate,
-                                             @Query("closeRegDate") String closeRegDate,
-                                             @Query("startDate") String startDate,
-                                             @Query("endDate") String endDate,
-                                             @Query("acceptanceDate") String acceptanceDate,
-                                             @Query("estBudget") double estBudget,
-                                             @Query("result") String result,
-                                             @Query("topic") Topic topic,
-                                             @Query("lecturer") Lecturer lecturer,
-                                             @Query("isProposed") boolean isProposed);
+    Call<APIResponse<Project>> createProject(@Body Project project);
+//                                             @Query("isProposed") boolean isProposed);ect/api/createProject")
+//    Call<APIResponse<Project>> createProject(@Query("projectCode") String projectCode,
+//                                             @Query("name") String name,
+//                                             @Query("createDate") String createDate,
+//                                             @Query("description") String description,
+//                                             @Query("maxMember") int maxMember,
+//                                             @Query("openRegDate") String openRegDate,
+//                                             @Query("closeRegDate") String closeRegDate,
+//                                             @Query("startDate") String startDate,
+//                                             @Query("endDate") String endDate,
+//                                             @Query("acceptanceDate") String acceptanceDate,
+//                                             @Query("estBudget") double estBudget,
+//                                             @Query("result") String result,
+//                                             @Query("topic") Topic topic,
+//                                             @Query("lecturer") Lecturer lecturer,
+//                                             @Query("isProposed") boolean isProposed);
 
 }

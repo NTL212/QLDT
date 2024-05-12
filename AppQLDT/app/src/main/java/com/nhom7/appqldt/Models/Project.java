@@ -1,6 +1,8 @@
 package com.nhom7.appqldt.Models;
 
-public class Project {
+import java.io.Serializable;
+
+public class Project implements Serializable {
     private String projectCode;
     private String name;
     private String createDate;
@@ -8,6 +10,28 @@ public class Project {
     private int maxMember;
     private String openRegDate;
     private String closeRegDate;
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectCode='" + projectCode + '\'' +
+                ", name='" + name + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", description='" + description + '\'' +
+                ", maxMember=" + maxMember +
+                ", openRegDate='" + openRegDate + '\'' +
+                ", closeRegDate='" + closeRegDate + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", acceptanceDate='" + acceptanceDate + '\'' +
+                ", estBudget=" + estBudget +
+                ", result='" + result + '\'' +
+                ", topic=" + topic +
+                ", lecturer=" + lecturer +
+                ", isProposed=" + isProposed +
+                '}';
+    }
+
     private String startDate;
     private String endDate;
     private String acceptanceDate;

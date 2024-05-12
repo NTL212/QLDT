@@ -41,10 +41,9 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
         });
 
         listDeTai= new ArrayList<>();
-        listDeTai.add(new DeTai("1", "De Tai 1", "Chu De 1", "rang Thai 1"));
-        listDeTai.add(new DeTai("1", "De Tai 2", "Chu De 2", "Gng Thai 2"));
+
         recyclerView = findViewById(R.id.recycler_view_detais);
-        deTaiAdapter = new DeTaiAdapter(this, listDeTai);
+//        deTaiAdapter = new DeTaiAdapter(this, listDeTai);
         recyclerView.setAdapter(deTaiAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         deTaiAdapter.notifyDataSetChanged();

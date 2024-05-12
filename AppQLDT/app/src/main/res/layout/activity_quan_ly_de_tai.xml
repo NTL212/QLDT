@@ -87,6 +87,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toEndOf="@id/btnThemDeTai"
         app:layout_constraintTop_toBottomOf="@id/btnThemDeTai"
+        tools:listitem="@layout/list_detai_item"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

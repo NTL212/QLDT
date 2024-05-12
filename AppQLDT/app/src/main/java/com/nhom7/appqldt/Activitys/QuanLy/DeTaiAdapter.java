@@ -11,15 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom7.appqldt.Models.DeTai;
+import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.R;
 
 import java.util.List;
 
 public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHolder> {
     Context context;
-    List<DeTai> listDeTai;
+    List<Project> listDeTai;
 
-    public DeTaiAdapter(Context context, List<DeTai> listDeTai) {
+    public DeTaiAdapter(Context context, List<Project> listDeTai) {
         this.context = context;
         this.listDeTai = listDeTai;
     }
@@ -34,11 +35,14 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
 
     @Override
     public void onBindViewHolder(@NonNull DeTaiViewHolder holder, int position) {
-        DeTai deTaiModel = listDeTai.get(position);
-        holder.tvMaDeTai.setText(deTaiModel.getMaDeTai());
-        holder.tvTenDeTai.setText(deTaiModel.getTenDeTai());
-        holder.tvMaChuDe.setText(deTaiModel.getTenChuDe());
-        holder.tvTinhTrang.setText(deTaiModel.getTinhTrang());
+        Project deTaiModel = listDeTai.get(position);
+        holder.tvMaDeTai.setText(deTaiModel.getProjectCode());
+        holder.tvTenDeTai.setText(deTaiModel.getName());
+        if (deTaiModel.getTopic() != null)
+        holder.tvMaChuDe.setText(deTaiModel.getTopic().getName());
+        else
+            holder.tvMaChuDe.setText("Chưa có chủ đề");
+        holder.tvTinhTrang.setText(deTaiModel.isProposed() ? "Dang mo dang ky" : "Da dong");
     }
 
     @Override
@@ -63,10 +67,10 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Intent intent = new Intent(context, ChiTietDTPheDuyetActivity.class);
-                            intent.putExtra("maDeTai", listDeTai.get(position).getMaDeTai());
-                            intent.putExtra("tenDeTai", listDeTai.get(position).getTenDeTai());
-                            intent.putExtra("tenChuDe", listDeTai.get(position).getTenChuDe());
-                            intent.putExtra("tinhTrang", listDeTai.get(position).getTinhTrang());
+                            intent.putExtra("maDeTai", listDeTai.get(position).getProjectCode());
+                            intent.putExtra("tenDeTai", listDeTai.get(position).getName());
+                            intent.putExtra("tenChuDe", listDeTai.get(position).getTopic().getName());
+                            intent.putExtra("tinhTrang", listDeTai.get(position).isProposed());
                             context.startActivity(intent);
                         }
 
@@ -76,10 +80,10 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Intent intent = new Intent(context, ChiTietDTQuanLyActivity.class);
-                            intent.putExtra("maDeTai", listDeTai.get(position).getMaDeTai());
-                            intent.putExtra("tenDeTai", listDeTai.get(position).getTenDeTai());
-                            intent.putExtra("tenChuDe", listDeTai.get(position).getTenChuDe());
-                            intent.putExtra("tinhTrang", listDeTai.get(position).getTinhTrang());
+                            intent.putExtra("maDeTai", listDeTai.get(position).getProjectCode());
+                            intent.putExtra("tenDeTai", listDeTai.get(position).getName());
+                            intent.putExtra("tenChuDe", listDeTai.get(position).getTopic().getName());
+                            intent.putExtra("tinhTrang", listDeTai.get(position).isProposed());
                             context.startActivity(intent);
                         }
                     }

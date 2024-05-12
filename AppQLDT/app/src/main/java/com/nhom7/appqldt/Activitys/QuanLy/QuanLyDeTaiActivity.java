@@ -1,30 +1,54 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nhom7.appqldt.API.APIService;
+import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.DeTai;
+import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.R;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
 public class QuanLyDeTaiActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    List<DeTai> listDeTai;
+    List<Project> listDeTai;
     ImageView btnThemDeTai;
     DeTaiAdapter deTaiAdapter;
+
+
+    //chuyen activity co nhan du lieu tra ve
+    ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    Bundle bundle = data.getExtras();
+                    Project project = (Project) bundle.getSerializable("project");
+                    Log.e(TAG, "trabe: " + project.getProjectCode());
+                    addDeTai(project);
+                }
+            });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +71,12 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         btnThemDeTai.setOnClickListener(v -> {
-            ThemDeTaiDialogFragment themDeTaiDialogFragment = new ThemDeTaiDialogFragment();
-            themDeTaiDialogFragment.show(getSupportFragmentManager(), "Them De Tai");
+            Intent intent = new Intent(QuanLyDeTaiActivity.this, ThemDeTaiActivity.class);
+            mStartForResult.launch(intent);
+
 
         });
+        //chuyen activity co nhan du lieu tra ve
 
 
     }
@@ -65,9 +91,23 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
     }
     private void initializeData() {
         listDeTai = new ArrayList<>();
-        listDeTai.add(new DeTai("60650", "Title 0", "Chu De 0", "Đang mở đăng ký"));
-        listDeTai.add(new DeTai("60651", "Title 1", "Chu De 1", "Đang mở đăng ký"));
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        Call<APIResponse<List<Project>>> call = apiService.getAllProject();
+        call.enqueue(new retrofit2.Callback<APIResponse<List<Project>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<List<Project>>> call, retrofit2.Response<APIResponse<List<Project>>> response) {
+                if(response.isSuccessful()){
+                    List<Project> projects = response.body().getResult();
+                    listDeTai.addAll(projects);
+                    deTaiAdapter.notifyDataSetChanged();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<APIResponse<List<Project>>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -89,8 +129,24 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    void addDeTai(DeTai deTai){
-        listDeTai.add(deTai);
-        deTaiAdapter.notifyDataSetChanged();
+    void addDeTai(Project project){
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+
+//        Call<APIResponse<Project>> call = apiService.createProject(project);
+        Log.e(TAG, "addDeTai: " +project);
+//        call.enqueue(new retrofit2.Callback<APIResponse<Project>>() {
+//            @Override
+//            public void onResponse(Call<APIResponse<Project>> call, retrofit2.Response<APIResponse<Project>> response) {
+//                if(response.isSuccessful()){
+//                    Log.e(TAG, "onResponse: " + response.body().getResult());
+//                    deTaiAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<APIResponse<Project>> call, Throwable t) {
+//
+//            }
+//        });
     }
 }
