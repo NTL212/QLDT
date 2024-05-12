@@ -56,7 +56,6 @@ public class SubjectController extends HttpServlet {
     throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
     	String action = request.getPathInfo();
-        System.out.println(action);
         try {
             if (action == null || action.isEmpty()) {
             	insertTopic(request, response);
@@ -135,7 +134,7 @@ public class SubjectController extends HttpServlet {
             }
 
         } catch (Exception e) {
-            jsonResponse = new JsonResponse<Topic>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "C3ó lỗi xảy ra.", null);
+            jsonResponse = new JsonResponse<Topic>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
         }
     	response.getWriter().write(gson.toJson(jsonResponse)); 
     }
@@ -156,7 +155,7 @@ public class SubjectController extends HttpServlet {
                 jsonResponse = new JsonResponse<Topic>(true, HttpServletResponse.SC_OK, "Cập nhật thành công.", topic);
     		}
         } catch (Exception e) {
-            jsonResponse = new JsonResponse<Topic>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "1Có lỗi xảy ra.", null);
+            jsonResponse = new JsonResponse<Topic>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
         }
     	response.getWriter().write(gson.toJson(jsonResponse)); 
     }
