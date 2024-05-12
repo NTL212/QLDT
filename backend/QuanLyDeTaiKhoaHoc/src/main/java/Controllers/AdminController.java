@@ -64,6 +64,9 @@ public class AdminController extends HttpServlet {
 			case "/api/listadmin":
 				listadmin(request, response);
 				break;
+			case "/api/adminprofile":
+				adminprofile(request, response);
+				break;
 			case "/api/listlecturer":
 				listlecturer(request, response);
 				break;
@@ -92,6 +95,29 @@ public class AdminController extends HttpServlet {
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
 		}
+	}
+	
+	private void adminprofile(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+//		        List < Account > listAdmin = accountDAO.selectByAdmin("ROLE_ADMIN");
+//		        request.setAttribute("listAdmin", listAdmin);
+//		        RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/ADMIN/ADMIN.jsp");
+//		        dispatcher.forward(request, response);
+//		        
+//		        String lectCode = request.getParameter("id");
+		String adcode = request.getParameter("id");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		JsonResponse<Admin> jsonResponse = null;
+		try {
+			Admin admin = AdminDAO.selectByAdCode(adcode);
+			jsonResponse = new JsonResponse<Admin>(true, HttpServletResponse.SC_OK, "Thành công!", admin);
+		} catch (Exception e) {
+			jsonResponse = new JsonResponse<Admin>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"Có lỗi xảy ra.", null);
+		}
+		String jsonOutput = gson.toJson(jsonResponse);
+		response.getWriter().write(jsonOutput);
 	}
 	private void allfalculities(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
