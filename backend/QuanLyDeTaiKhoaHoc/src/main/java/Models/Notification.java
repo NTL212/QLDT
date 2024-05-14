@@ -10,7 +10,7 @@ public class Notification {
 	private String title;
 	private String content;
 	private LocalDateTime sentTime;
-	
+
 	public Notification() {
 		super();
 	}
@@ -25,9 +25,8 @@ public class Notification {
 		this.content = content;
 		this.sentTime = sentTime;
 	}
-	
-	public Notification(String senderId, String receiverId, String title, String content,
-			LocalDateTime sentTime) {
+
+	public Notification(String senderId, String receiverId, String title, String content, LocalDateTime sentTime) {
 		super();
 		this.sender = new AccountDAO().selectByUsername(senderId);
 		this.receiver = new AccountDAO().selectByUsername(receiverId);

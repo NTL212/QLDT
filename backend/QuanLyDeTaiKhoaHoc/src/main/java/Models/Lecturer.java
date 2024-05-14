@@ -6,11 +6,11 @@ import DAO.FalculityDAO;
 public class Lecturer extends User {
 	private String lecturerCode;
 	private Falculity falculity;
-	
+
 	public Lecturer() {
 		super();
 	}
-	
+
 	public Lecturer(String lecturerCode, String name, LocalDate birthday, String address, String idNum, String phoneNum,
 			String email, String sex, String falculityCode) {
 		super();

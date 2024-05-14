@@ -3,14 +3,14 @@ package Models;
 import java.time.LocalDate;
 import DAO.ClassDAO;
 
-public class Student extends User{
+public class Student extends User {
 	private String studentCode;
 	private Class classDTO;
-	
+
 	public Student() {
 		super();
 	}
-	
+
 	public Student(String name, LocalDate birthday, String address, String idNum, String phoneNum, String email,
 			String sex, String studentCode, String classCode) {
 		super();

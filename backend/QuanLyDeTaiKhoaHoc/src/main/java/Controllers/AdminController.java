@@ -30,6 +30,7 @@ import Util.CustomTimeGson;
 import Util.FormDataReader;
 import Util.JsonResponse;
 import DAO.ManagementStaffDAO;
+import DTO.LectureDTO;
 import DTO.ProjectDTO;
 import Models.Admin;
 import Models.Falculity;
@@ -174,16 +175,20 @@ public class AdminController extends HttpServlet {
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		JsonResponse<List<Lecturer>> jsonResponse = null;
+		JsonResponse<List<LectureDTO>> jsonResponse = null;
 		List<Lecturer> lecturers = new ArrayList<>();
+		List<LectureDTO> lecturerDTOs = new ArrayList<>();
 		try {
 			List<Account> listLecturer = accountDAO.selectByLecturer("ROLE_LECT");
 			for (Account account : listLecturer) {
-				lecturers.add(lecturerDAO.selectLecturerByLectCode(account.getUsername()));
+				LectureDTO lect = new LectureDTO();
+				lect.setAccount(account);
+				lect.setLecturer(lecturerDAO.selectLecturerByLectCode(account.getUsername()));
+				lecturerDTOs.add(lect);
 			}
-			jsonResponse = new JsonResponse<List<Lecturer>>(true, HttpServletResponse.SC_OK, "Thành công!", lecturers);
+			jsonResponse = new JsonResponse<List<LectureDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", lecturerDTOs);
 		} catch (Exception e) {
-			jsonResponse = new JsonResponse<List<Lecturer>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+			jsonResponse = new JsonResponse<List<LectureDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					"Có lỗi xảy ra.", null);
 		}
 		String jsonOutput = gson.toJson(jsonResponse);

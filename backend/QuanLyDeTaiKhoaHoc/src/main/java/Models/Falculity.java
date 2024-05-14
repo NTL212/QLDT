@@ -1,11 +1,10 @@
 package Models;
 
 public class Falculity {
-	
+
 	private String falculityCode;
 	private String name;
-	
-	
+
 	public Falculity() {
 		super();
 	}

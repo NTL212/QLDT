@@ -21,7 +21,7 @@ public class RegistrationDAO {
 	private static final String INSERT_REG = "insert into dangkydetai(machunhiem, madetai) values (?, ?)";
 	private static final String SELECT_ONE_REGI = "select * from dangkydetai where machunhiem = ? and madetai = ?";
 
-	public List <Registration> selectAllRegis() {
+	public List<Registration> selectAllRegis() {
 		List<Registration> lstRe = new ArrayList<Registration>();
 		Connection connection = JDBCUtil.getConnection();
 		try {
@@ -35,7 +35,7 @@ public class RegistrationDAO {
 				LocalDate approveDate = rs.getDate("ngayduyet") != null ? rs.getDate("ngayduyet").toLocalDate() : null;
 				boolean status = rs.getBoolean("tinhtrang");
 				String approvePerson = rs.getString("nguoiduyet");
-				Re = new Registration(lecture,projectCode, regisDate, approveDate, status, approvePerson);
+				Re = new Registration(lecture, projectCode, regisDate, approveDate, status, approvePerson);
 				lstRe.add(Re);
 			}
 		} catch (SQLException exception) {
@@ -43,7 +43,7 @@ public class RegistrationDAO {
 		}
 		return lstRe;
 	}
-	
+
 	public List<Registration> selectApproveRegis() {
 		List<Registration> lstRe = new ArrayList<Registration>();
 		Connection connection = JDBCUtil.getConnection();
@@ -58,7 +58,7 @@ public class RegistrationDAO {
 				LocalDate approveDate = rs.getDate("ngayduyet") != null ? rs.getDate("ngayduyet").toLocalDate() : null;
 				boolean status = rs.getBoolean("tinhtrang");
 				String approvePerson = rs.getString("nguoiduyet");
-				Re = new Registration(lecture,projectCode, regisDate, approveDate, status, approvePerson);
+				Re = new Registration(lecture, projectCode, regisDate, approveDate, status, approvePerson);
 				lstRe.add(Re);
 			}
 		} catch (SQLException exception) {
@@ -66,9 +66,8 @@ public class RegistrationDAO {
 		}
 		return lstRe;
 	}
-	
-	public boolean approveProject(String lecCode, String prCode, String MgCode)
-	{
+
+	public boolean approveProject(String lecCode, String prCode, String MgCode) {
 		boolean rowUpdated = false;
 		Connection connection = JDBCUtil.getConnection();
 		try {
@@ -83,9 +82,8 @@ public class RegistrationDAO {
 		JDBCUtil.closeConnection(connection);
 		return rowUpdated;
 	}
-	
-	public boolean disagreeProject(String lecCode, String prCode, String MgCode)
-	{
+
+	public boolean disagreeProject(String lecCode, String prCode, String MgCode) {
 		boolean rowUpdated = false;
 		Connection connection = JDBCUtil.getConnection();
 		try {
@@ -100,7 +98,7 @@ public class RegistrationDAO {
 		JDBCUtil.closeConnection(connection);
 		return rowUpdated;
 	}
-	
+
 	public boolean insertRegestration(Registration reg) {
 		boolean rowUpdated = false;
 		Connection connection = JDBCUtil.getConnection();
@@ -115,7 +113,7 @@ public class RegistrationDAO {
 		JDBCUtil.closeConnection(connection);
 		return rowUpdated;
 	}
-	
+
 	public Registration selectOneRegistration(String lectCode, String projCode) {
 		Connection connection = JDBCUtil.getConnection();
 		Registration Re = null;
@@ -127,7 +125,7 @@ public class RegistrationDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				String lecture = rs.getString("machunhiem");
-				String projectCode = rs.getString("madetai");	
+				String projectCode = rs.getString("madetai");
 				LocalDate regisDate = rs.getDate("ngaydangky") != null ? rs.getDate("ngaydangky").toLocalDate() : null;
 				LocalDate approveDate = rs.getDate("ngayduyet") != null ? rs.getDate("ngayduyet").toLocalDate() : null;
 				Boolean status = rs.getBoolean("tinhtrang");
@@ -135,12 +133,11 @@ public class RegistrationDAO {
 					status = null;
 				}
 				String approvePerson = rs.getString("nguoiduyet");
-				Re = new Registration(lecture,projectCode, regisDate, approveDate, status, approvePerson);
+				Re = new Registration(lecture, projectCode, regisDate, approveDate, status, approvePerson);
 			}
 		} catch (SQLException exception) {
 			HandleException.printSQLException(exception);
 		}
-		System.out.println(Re.getLect().getLecturerCode());
 		return Re;
 	}
 }

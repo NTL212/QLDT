@@ -10,7 +10,7 @@ public class FileDTO {
 	private LocalDateTime uploadTime;
 	private Account uploader;
 	private Project proj;
-	
+
 	public FileDTO() {
 		super();
 	}
@@ -23,8 +23,8 @@ public class FileDTO {
 		this.uploader = new AccountDAO().selectByUsername(uploaderId);
 		this.proj = new ProjectDAO().selectProjectByProjectCode(projCode);
 	}
-	
-	public FileDTO (byte[] data, String uploaderId, String projCode) {
+
+	public FileDTO(byte[] data, String uploaderId, String projCode) {
 		super();
 		this.data = data;
 		this.uploader = new AccountDAO().selectByUsername(uploaderId);
@@ -62,7 +62,7 @@ public class FileDTO {
 	public void setProj(Project proj) {
 		this.proj = proj;
 	}
-	
+
 	public int getFileId() {
 		return fileId;
 	}

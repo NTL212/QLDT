@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import DAO.TopicDAO;
+import Util.CustomTimeGson;
 import Util.JsonResponse;
 import Models.Topic;
 
@@ -23,9 +24,12 @@ public class SubjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     private TopicDAO topicDAO = new TopicDAO();
-	private Gson gson = new Gson();
+	private Gson gson;
 	
-    public void init() {}
+    public void init() {
+    	CustomTimeGson customGson = new CustomTimeGson();
+    	gson = customGson.createGson();
+    }
     
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
