@@ -137,16 +137,18 @@ public class ProjectController extends HttpServlet {
     
     private void getAll(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {        
-        JsonResponse<List<ProjectDTO>> jsonResponse = null;
+        JsonResponse<List<Project>> jsonResponse = null;
         try {
         	List <Project> listProject = projectDAO.selectAllProject();
-        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
+//        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
+        	List<Project> listProjectDTO = new ArrayList<Project>();
+
         	for (int i = 0; i < listProject.size(); i++) {
-        		listProjectDTO.add(new ProjectDTO(listProject.get(i))) ;
+        		listProjectDTO.add(listProject.get(i)) ;
         	}
-            jsonResponse = new JsonResponse<List<ProjectDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", listProjectDTO);
+            jsonResponse = new JsonResponse<List<Project>>(true, HttpServletResponse.SC_OK, "Thành công!", listProjectDTO);
         } catch (Exception e) {
-            jsonResponse = new JsonResponse<List<ProjectDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            jsonResponse = new JsonResponse<List<Project>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
             								"Có lỗi xảy ra.", null);
             e.printStackTrace();
         }
@@ -344,9 +346,12 @@ public class ProjectController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         JsonResponse<Project> jsonResponse = null;
     	try {
+    		System.out.println(2222);
             Project project = gson.fromJson(reader, Project.class);
+            System.out.println(2223);
             if (projectDAO.selectProjectByProjectCode(project.getProjectCode()) == null)
             {
+            	System.out.println("3");
             	boolean succ = projectDAO.insertProject(project);
             	if (succ) {
             		jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_CREATED, "Đề tài đã được tạo thành công,", project);
