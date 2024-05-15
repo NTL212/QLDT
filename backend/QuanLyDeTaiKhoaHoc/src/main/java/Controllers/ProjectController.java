@@ -138,11 +138,10 @@ public class ProjectController extends HttpServlet {
     private void getAll(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {        
         JsonResponse<List<Project>> jsonResponse = null;
+        
         try {
         	List <Project> listProject = projectDAO.selectAllProject();
-//        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
         	List<Project> listProjectDTO = new ArrayList<Project>();
-
         	for (int i = 0; i < listProject.size(); i++) {
         		listProjectDTO.add(listProject.get(i)) ;
         	}
@@ -346,12 +345,9 @@ public class ProjectController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         JsonResponse<Project> jsonResponse = null;
     	try {
-    		System.out.println(2222);
             Project project = gson.fromJson(reader, Project.class);
-            System.out.println(2223);
             if (projectDAO.selectProjectByProjectCode(project.getProjectCode()) == null)
             {
-            	System.out.println("3");
             	boolean succ = projectDAO.insertProject(project);
             	if (succ) {
             		jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_CREATED, "Đề tài đã được tạo thành công,", project);

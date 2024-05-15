@@ -204,7 +204,6 @@ public class ProjectDAO {
 		Connection connection = JDBCUtil.getConnection();
 		Boolean rowUpdated = null;
 		try {
-			System.out.println("4");
 			PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PROJECT);
 			preparedStatement.setString(1, proj.getProjectCode());
 			preparedStatement.setString(2, proj.getName());
