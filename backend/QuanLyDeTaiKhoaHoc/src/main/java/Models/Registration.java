@@ -13,7 +13,7 @@ public class Registration {
 	private LocalDate acceptDate;
 	private Boolean isAccepted;
 	private ManagementStaff mgtStaff;
-	
+
 	public Registration() {
 		super();
 	}
@@ -28,7 +28,7 @@ public class Registration {
 		this.isAccepted = isAccepted;
 		this.mgtStaff = new ManagementStaffDAO().selectByEmpCode(mgtStaffCode);
 	}
-	
+
 	public Registration(String lectCode, String projCode) {
 		super();
 		this.lect = new LecturerDAO().selectLecturerByLectCode(lectCode);
@@ -42,7 +42,7 @@ public class Registration {
 	public void setLect(Lecturer lect) {
 		this.lect = lect;
 	}
-	
+
 	public Boolean isAccepted() {
 		return isAccepted;
 	}

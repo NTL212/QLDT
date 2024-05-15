@@ -6,7 +6,7 @@ public class Class {
 	private String classCode;
 	private String name;
 	private Major major;
-	
+
 	public Class() {
 		super();
 	}

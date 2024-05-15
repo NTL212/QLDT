@@ -36,7 +36,7 @@ public class TopicDAO {
 		JDBCUtil.closeConnection(connection);
 		return topic;
 	}
-	
+
 	public List<Topic> selectAllTopic() {
 		Connection connection = JDBCUtil.getConnection();
 		List<Topic> listtopic = new ArrayList<Topic>();
@@ -57,7 +57,7 @@ public class TopicDAO {
 		JDBCUtil.closeConnection(connection);
 		return listtopic;
 	}
-	
+
 	public List<Topic> selectActiveTopic() {
 		Connection connection = JDBCUtil.getConnection();
 		List<Topic> listtopic = new ArrayList<Topic>();
@@ -103,7 +103,6 @@ public class TopicDAO {
 			rowUpdated = statement.executeUpdate() > 0;
 		} catch (SQLException exception) {
 			HandleException.printSQLException(exception);
-			throw exception;
 		}
 		JDBCUtil.closeConnection(connection);
 		return rowUpdated;

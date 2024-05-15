@@ -2,8 +2,10 @@ package Controllers;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -27,7 +29,7 @@ import Models.Lecturer;
 import Models.Project;
 import Models.Registration;
 import Models.Topic;
-import Util.CustomGson;
+import Util.CustomTimeGson;
 import Util.FormDataReader;
 import Util.JsonResponse;
 import DAO.ProjectDAO;
@@ -36,14 +38,17 @@ import DAO.TopicDAO;
 import DTO.ProjectDTO;
 import DTO.ProjectDetailDTO;
 import DAO.FileDAO;
+import DAO.LecturerDAO;
 import Models.FileDTO;
 
-@WebServlet("/lecturerProject/*")
+@WebServlet("/api/lecturer-project/*")
 public class LecturerProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProjectDAO projectDAO;
 	private RegistrationDAO regDAO;
+	
 	private TopicDAO topicDAO;
+	private LecturerDAO lecturerDAO;
 	private FileDAO fileDAO;
 	private Gson gson;
 	
@@ -55,35 +60,29 @@ public class LecturerProjectController extends HttpServlet {
 		projectDAO = new ProjectDAO();
 		regDAO = new RegistrationDAO();
 		topicDAO = new TopicDAO();
-		CustomGson customGson = new CustomGson();
-		gson = customGson.createGson();
+		lecturerDAO = new LecturerDAO();	
+		fileDAO = new FileDAO();
+		CustomTimeGson customGson = new CustomTimeGson();
+    	gson = customGson.createGson();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-    	response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        String action = request.getPathInfo();
+		String action = request.getPathInfo();
 		try {
 			switch (action) {
 			case "/detail":
 				showInfoProj(request, response);
 				break;
-			case "/api/listActiveAPI":
-				listActiveAPI(request, response);
+			case "/list":
+				listProject(request, response);
 				break;
 			case "/propose":
 				ProposeProject(request, response);
 				break;
-			case "/api/propose":
-				proposeProjectAPI(request, response);
-				break;
 			case "/myproj":
 				myProject(request, response);
-				break;
-			case "/api/myProject":
-				myProjectAPI(request, response);
 				break;
 			case "/register-project":
 				regProj(request, response);
@@ -97,6 +96,12 @@ public class LecturerProjectController extends HttpServlet {
 			case "/submit":
 				submitFile(request, response);
 				break;
+			case "/get-lecture":
+				getLecture(request, response);
+				break;
+			case "/getfile":
+				getFileByProAngLect(request, response);
+				break;
 			}
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
@@ -107,202 +112,240 @@ public class LecturerProjectController extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-	
+	private void getFileByProAngLect(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		String projectCode = request.getParameter("projCode");
+		String lectCode = request.getParameter("lectCode");
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/RegisterProject/Detail/Detail.jsp");
+//		request.setAttribute("project", project);
+//		dispatcher.forward(request, response);
+
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<FileDTO> jsonResponse = null;
+        try {
+        	FileDTO fileDTO = fileDAO.getFileByLectIdAndProId(projectCode, lectCode);
+        	
+            jsonResponse = new JsonResponse<FileDTO>(true, HttpServletResponse.SC_OK, "Thành công!", fileDTO);
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<FileDTO>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            								"Có lỗi xảy ra.", null);
+        }
+        String jsonOutput = gson.toJson(jsonResponse);
+        response.getWriter().write(jsonOutput);
+	}
 	private void showMyProject(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		String projectCode = request.getParameter("id");
-		Project project = projectDAO.selectProjectByProjectCode(projectCode);
-		String status = project.getProjectStatusOfLecturer();
-		RequestDispatcher dispatcher = null;
-		System.out.println(status);
-		if (status.equals("Đang thực hiện")) {
-			
-			dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/Pending/Pending.jsp");
-			request.setAttribute("project", project);
-		} else if (status.equals("Đã hoàn thành")) {
-			dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/Done/DoneProject.jsp");
-			request.setAttribute("project", project);
-		} else {
-			dispatcher = request.getRequestDispatcher("/lecturer-project/myproj");
-		}
-		dispatcher.forward(request, response);
+//		Project project = projectDAO.selectProjectByProjectCode(projectCode);
+//		String status = project.getProjectStatusOfLecturer();
+//		RequestDispatcher dispatcher = null;
+//		System.out.println(status);
+//		if (status.equals("Đang thực hiện")) {
+//			
+//			dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/Pending/Pending.jsp");
+//			request.setAttribute("project", project);
+//		} else if (status.equals("Đã hoàn thành")) {
+//			dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/Done/DoneProject.jsp");
+//			request.setAttribute("project", project);
+//		} else {
+//			dispatcher = request.getRequestDispatcher("/lecturer-project/myproj");
+//		}
+//		dispatcher.forward(request, response);
+		
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<ProjectDetailDTO> jsonResponse = null;
+        try {
+        	//List<Project> listProject = projectDAO.selectActiveProjectForLecturer();
+        	Project project = projectDAO.selectProjectByProjectCode(projectCode);
+            jsonResponse = new JsonResponse<ProjectDetailDTO>(true, HttpServletResponse.SC_OK, "Thành công!", new ProjectDetailDTO(project));
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<ProjectDetailDTO>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            								"Có lỗi xảy ra.", null);
+        }
+        String jsonOutput = gson.toJson(jsonResponse);
+        response.getWriter().write(jsonOutput);
 	}
 
 	private void showInfoProj(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		String projectCode = request.getParameter("id");
-		Project project = projectDAO.selectProjectByProjectCode(projectCode);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/RegisterProject/Detail/Detail.jsp");
-		request.setAttribute("project", project);
-		dispatcher.forward(request, response);
+		
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/RegisterProject/Detail/Detail.jsp");
+//		request.setAttribute("project", project);
+//		dispatcher.forward(request, response);
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<Project> jsonResponse = null;
+        try {
+        	//List<Project> listProject = projectDAO.selectActiveProjectForLecturer();
+        	Project project = projectDAO.selectProjectByProjectCode(projectCode);
+            jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_OK, "Thành công!", project);
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            								"Có lỗi xảy ra.", null);
+        }
+        String jsonOutput = gson.toJson(jsonResponse);
+        response.getWriter().write(jsonOutput);
 	}
 
-	private void listActiveAPI(HttpServletRequest request, HttpServletResponse response)
+	private void listProject(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
+		
+//		request.setAttribute("listProject", listProject);
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/RegisterProject/List/List.jsp");
+//		dispatcher.forward(request, response);
+		
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<List<Project>> jsonResponse = null;
+        try {
+        	List<Project> listProject = projectDAO.selectActiveProjectForLecturer();
+//        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
+//        	for (int i = 0; i < listProject.size(); i++) {
+//        		listProjectDTO.add(new ProjectDTO(listProject.get(i))) ;
+//        	}
+        	//List<Project> listProject = projectDAO.selectAllProject();
+            jsonResponse = new JsonResponse<List<Project>>(true, HttpServletResponse.SC_OK, "Thành công!", listProject);
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<List<Project>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            								"Có lỗi xảy ra.", null);
+        }
+        String jsonOutput = gson.toJson(jsonResponse);
+        response.getWriter().write(jsonOutput);
+	}
+
+	private void myProject(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+//		HttpSession session = request.getSession(false);
+//		Lecturer lect = (Lecturer) session.getAttribute("user");
+//		if (lect != null) {
+//			List<Project> myProject = projectDAO.selectProjectsByLecturerCode(lect.getLecturerCode());
+//			request.setAttribute("myProject", myProject);
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/List/ListProject.jsp");
+//			dispatcher.forward(request, response);
+//		}
+		String lectCode = request.getParameter("id");
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         JsonResponse<List<ProjectDTO>> jsonResponse = null;
         try {
-        	List <Project> listProject = projectDAO.selectActiveProjectForLecturer();
+        	//List<Project> listProject = projectDAO.selectActiveProjectForLecturer();
+        	List<Project> myProject = projectDAO.selectProjectsByLecturerCode(lectCode);
         	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
-        	for (int i = 0; i < listProject.size(); i++) {
-        		listProjectDTO.add(new ProjectDTO(listProject.get(i))) ;
+        	for (int i = 0; i < myProject.size(); i++) {
+        		listProjectDTO.add(new ProjectDTO(myProject.get(i))) ;
         	}
             jsonResponse = new JsonResponse<List<ProjectDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", listProjectDTO);
         } catch (Exception e) {
             jsonResponse = new JsonResponse<List<ProjectDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
             								"Có lỗi xảy ra.", null);
-            e.printStackTrace();
         }
         String jsonOutput = gson.toJson(jsonResponse);
         response.getWriter().write(jsonOutput);
 	}
-	
-	private void listProject(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		List<Project> listProject = projectDAO.selectActiveProjectForLecturer();
-		request.setAttribute("listProject", listProject);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/RegisterProject/List/List.jsp");
-		dispatcher.forward(request, response);
-	}
-
-	private void myProject(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		HttpSession session = request.getSession(false);
-		Lecturer lect = (Lecturer) session.getAttribute("user");
-		if (lect != null) {
-			List<Project> myProject = projectDAO.selectProjectsByLecturerCode(lect.getLecturerCode());
-			request.setAttribute("myProject", myProject);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/List/ListProject.jsp");
-			dispatcher.forward(request, response);
-		}
-	}
-	
-	private void myProjectAPI(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		FormDataReader reader = new FormDataReader(request);
-	    Map<String, String> formData = reader.getData();
-	    try {
-    	    if (formData.containsKey("lecturerId")) {
-    	        String id = formData.get("lecturerId");
-    	        JsonResponse<List<ProjectDTO>> jsonResponse = null;
-    	        try {
-    	        	List <Project> listProject = projectDAO.selectProjectsByLecturerCode(id);
-    	        	List<ProjectDTO> listProjectDTO = new ArrayList<ProjectDTO>();
-    	        	for (int i = 0; i < listProject.size(); i++) {
-    	        		listProjectDTO.add(new ProjectDTO(listProject.get(i))) ;
-    	        	}
-    	            jsonResponse = new JsonResponse<List<ProjectDTO>>(true, HttpServletResponse.SC_OK, "Thành công!", listProjectDTO);
-    	        } catch (Exception e) {
-    	            jsonResponse = new JsonResponse<List<ProjectDTO>>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-    	            								"Có lỗi xảy ra.", null);
-    	            e.printStackTrace();
-    	        }
-    	        String jsonOutput = gson.toJson(jsonResponse);
-    	        response.getWriter().write(jsonOutput);
-    	    }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    /*
-		if (lect != null) {
-			List<Project> myProject = projectDAO.selectProjectsByLecturerCode(lect.getLecturerCode());
-			request.setAttribute("myProject", myProject);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/LecturerPage/MyProject/List/ListProject.jsp");
-			dispatcher.forward(request, response);
-		}
-		*/
-	}
 
 	private void ProposeProject(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
+		
+		BufferedReader reader = request.getReader();
+		Project propose_project = gson.fromJson(reader, Project.class);
+		
 		HttpSession session = request.getSession(false);
-		Lecturer lect = (Lecturer) session.getAttribute("user");
+		Lecturer lect = (Lecturer) propose_project.getLecturer();
 		if (lect != null) {
-		String projectCode = request.getParameter("id");
-		String name = request.getParameter("name");
-		String topic = request.getParameter("projectTopic");
-		LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
-		LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
-		float expectedBudget = Float.parseFloat(request.getParameter("expectcost"));
-		int teamMembers = Integer.parseInt(request.getParameter("maxofmem"));
-		String projectDescription = request.getParameter("describe");
+		String projectCode = propose_project.getProjectCode();
+		String name = propose_project.getName();
+		String topic = propose_project.getTopic().getTopicCode();
+		LocalDate startDate = propose_project.getStartDate();
+		LocalDate endDate = propose_project.getEndDate();
+		float expectedBudget = propose_project.getEstBudget();
+		int teamMembers = propose_project.getMaxMember();
+		String projectDescription = propose_project.getDescription();
 		Project project = new Project(projectCode, name, null, projectDescription, teamMembers, null, null,
 				startDate, endDate, null, expectedBudget, null, null, topic, lect.getLecturerCode(), null, true);
 
-		if (projectDAO.proposeProject(project)) {
-			Registration reg = new Registration(lect.getLecturerCode(), projectCode);
-			if (regDAO.insertRegestration(reg)) {
-				request.setAttribute("successMsg", "Đề xuất thành công");
-			} else {
-				Project projTemp = projectDAO.selectProjectByProjectCode(projectCode);
-				if (projTemp != null && projTemp.getProjectCode() == projectCode) {
-					projectDAO.deleteProject(projTemp);
-				}
-				request.setAttribute("errMsg", "Đề xuất thất bại");
-			}
-		} else {
-			request.setAttribute("errMsg", "Đề xuất thất bại");
-		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/lecturer-project/list");
-		dispatcher.forward(request, response);
-		}
-	}
-	
-	private void proposeProjectAPI(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		FormDataReader reader = new FormDataReader(request);
-	    Map<String, String> formData = reader.getData();
-	    try {
-	        String projectId = formData.get("projectId");
-			String name = formData.get("name");
-			String topicId = formData.get("topicId");
-			LocalDate startDate = LocalDate.parse(formData.get("startDate"));
-			LocalDate endDate = LocalDate.parse(formData.get("endDate"));
-			float expectedBudget = Float.parseFloat(formData.get("expectedBudget"));
-			int teamMembers = Integer.parseInt(formData.get("teamMembers"));
-			String projectDescription = formData.get("describe");
-			String lecturerId = formData.get("lecturerId");
-			Project project = new Project(projectId, name, null, projectDescription, teamMembers, null, null,
-					startDate, endDate, null, expectedBudget, null, null, topicId, lecturerId, null, true);
-	        JsonResponse<String> jsonResponse = null;
-	        try {
-	    		if (projectDAO.proposeProject(project)) {
-	    			Registration reg = new Registration(lecturerId, projectId);
-	    			if (regDAO.insertRegestration(reg)) {
-	    				jsonResponse = new JsonResponse<String>(true, HttpServletResponse.SC_OK, "Thành công!", null);
+//		if (projectDAO.proposeProject(project)) {
+//			Registration reg = new Registration(lect.getLecturerCode(), projectCode);
+//			if (regDAO.insertRegestration(reg)) {
+//				request.setAttribute("successMsg", "Đề xuất thành công");
+//			} else {
+//				Project projTemp = projectDAO.selectProjectByProjectCode(projectCode);
+//				if (projTemp != null && projTemp.getProjectCode() == projectCode) {
+//					projectDAO.deleteProject(projTemp);
+//				}
+//				request.setAttribute("errMsg", "Đề xuất thất bại");
+//			}
+//		} else {
+//			request.setAttribute("errMsg", "Đề xuất thất bại");
+//		}
+
+		 response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        JsonResponse<Project> jsonResponse = null;
+	    	try {
+	            if(projectDAO.proposeProject(project))
+	            {
+	            	Registration reg = new Registration(lect.getLecturerCode(), projectCode);
+	            	if (regDAO.insertRegestration(reg)) {
 	    			} else {
-	    				Project projTemp = projectDAO.selectProjectByProjectCode(projectId);
-	    				if (projTemp != null && projTemp.getProjectCode() == projectId) {
+	    				Project projTemp = projectDAO.selectProjectByProjectCode(projectCode);
+	    				if (projTemp != null && projTemp.getProjectCode() == projectCode) {
 	    					projectDAO.deleteProject(projTemp);
 	    				}
-	    				jsonResponse = new JsonResponse<String>(true, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đề xuất thất bại!", null);
 	    			}
-	    		} else {
-	    			jsonResponse = new JsonResponse<String>(true, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đề xuất thất bại!", null);
-	    		}
+	                jsonResponse = new JsonResponse<Project>(true, HttpServletResponse.SC_CREATED, "De tai đã được de xuat thành công,", propose_project);
+	            }
+	            else {
+	                jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_CONFLICT, "Đề xuất thất bại.", null);
+	            }
+
 	        } catch (Exception e) {
-	            jsonResponse = new JsonResponse<String>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-	            								"Có lỗi xảy ra.", null);
-	            e.printStackTrace();
+	            jsonResponse = new JsonResponse<Project>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
 	        }
-	        String jsonOutput = gson.toJson(jsonResponse);
-	        response.getWriter().write(jsonOutput);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+	    	response.getWriter().write(gson.toJson(jsonResponse)); 
+		}
 	}
 	
 	private void regProj(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-		String projCode = request.getParameter("projCode");
-		HttpSession session = request.getSession(false);
-		Lecturer lect = (Lecturer) session.getAttribute("user");
-		Registration reg = new Registration(lect.getLecturerCode(), projCode);
-		if(regDAO.insertRegestration(reg)) {
-			request.setAttribute("successMsg", "Đăng ký thành công");
-		} else {
-			request.setAttribute("errMsg", "Đăng ký thất bại");
-		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/lecturer-project/list");
-		dispatcher.forward(request, response);
+//		String projCode = request.getParameter("projCode");
+//		HttpSession session = request.getSession(false);
+//		Lecturer lect = (Lecturer) session.getAttribute("user");
+//		Registration reg = new Registration(lect.getLecturerCode(), projCode);
+//		if(regDAO.insertRegestration(reg)) {
+//			request.setAttribute("successMsg", "Đăng ký thành công");
+//		} else {
+//			request.setAttribute("errMsg", "Đăng ký thất bại");
+//		}
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("/lecturer-project/list");
+//		dispatcher.forward(request, response);
+		
+		FormDataReader reader = new FormDataReader(request);
+	    Map<String, String> formData = reader.getData();
+	    
+	    String lectCode = formData.get("lectCode");
+	    String projCode = formData.get("projCode");
+	    Registration reg = new Registration(lectCode, projCode);
+	    
+	    response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<Registration> jsonResponse = null;
+    	try {
+            if(regDAO.insertRegestration(reg))
+            {
+                jsonResponse = new JsonResponse<Registration>(true, HttpServletResponse.SC_CREATED, "Đang ký thành công", reg);
+            }
+            else {
+                jsonResponse = new JsonResponse<Registration>(false, HttpServletResponse.SC_CONFLICT, "Đăng ký thất bại.", null);
+            }
+
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<Registration>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra.", null);
+        }
+    	response.getWriter().write(gson.toJson(jsonResponse)); 
+	    
+
 	}
 	
 	private void loadProposePage (HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
@@ -313,25 +356,55 @@ public class LecturerProjectController extends HttpServlet {
 	}
 	
 	private void submitFile (HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-		HttpSession session = request.getSession(false);
 		String projCode = request.getParameter("projCode");
-		Part filePart = request.getPart("fileInput");
-		Lecturer lect = (Lecturer) session.getAttribute("user");
-		System.out.println(127);
+        String lectCode = request.getParameter("lectCode");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<FileDTO> jsonResponse = null;
+        
 		byte[] fileData = null;
-		if (filePart != null && filePart.getSize() > 0) {
-			InputStream fileContent = filePart.getInputStream();
-	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-	        byte[] buffer = new byte[1024];
-	        int bytesRead;
-	        while ((bytesRead = fileContent.read(buffer)) != -1) {
-	            byteArrayOutputStream.write(buffer, 0, bytesRead);
+		FileDTO file_exist = fileDAO.getFileByLectIdAndProId(projCode, lectCode);
+		if (file_exist==null) {			
+	        try {
+	        	InputStream fileContent = request.getInputStream();
+		        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		        byte[] buffer = new byte[1024];
+		        int bytesRead;
+		        while ((bytesRead = fileContent.read(buffer)) != -1) {
+		            byteArrayOutputStream.write(buffer, 0, bytesRead);
+		        }
+		        fileData = byteArrayOutputStream.toByteArray();
+		        FileDTO file = new FileDTO(fileData, lectCode, projCode);
+				fileDAO.insertFile(file);
+	            jsonResponse = new JsonResponse<FileDTO>(true, HttpServletResponse.SC_OK, "Thành công!", file);
+	        } catch (Exception e) {
+	            jsonResponse = new JsonResponse<FileDTO>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+	            								"Có lỗi xảy ra.", null);
 	        }
-	        fileData = byteArrayOutputStream.toByteArray();
-	        FileDTO file = new FileDTO(fileData, lect.getLecturerCode(), projCode);
-			fileDAO.insertFile(file);
+		}else {
+			jsonResponse = new JsonResponse<FileDTO>(false, HttpServletResponse.SC_CONFLICT,
+					"Đã tồn tại file rồi", null);
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/lecturer-project/myproj");
-		dispatcher.forward(request, response);
+		response.getWriter().write(gson.toJson(jsonResponse)); 
+    }
+	
+	
+	private void getLecture(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		String lectCode = request.getParameter("id");
+		
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        JsonResponse<Lecturer> jsonResponse = null;
+        try {
+        	Lecturer lect = lecturerDAO.selectLecturerByLectCode(lectCode);
+            jsonResponse = new JsonResponse<Lecturer>(true, HttpServletResponse.SC_OK, "Thành công!", lect);
+        } catch (Exception e) {
+            jsonResponse = new JsonResponse<Lecturer>(false, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            								"Có lỗi xảy ra.", null);
+        }
+        String jsonOutput = gson.toJson(jsonResponse);
+        response.getWriter().write(jsonOutput);
 	}
 }

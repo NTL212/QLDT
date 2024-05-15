@@ -10,6 +10,8 @@ import DAO.RegistrationDAO;
 import Models.Registration;
 
 public class Project {
+	
+
 	private String projectCode;
 	private String name;
 	private LocalDate createDate;
@@ -27,15 +29,21 @@ public class Project {
 	private Lecturer lecturer;
 	private AcceptanceCouncil aCouncil;
 	private Boolean isProposed;
-	
+	public Boolean getIsProposed() {
+		return isProposed;
+	}
+
+	public void setIsProposed(Boolean isProposed) {
+		this.isProposed = isProposed;
+	}
 	public Project() {
 		super();
 	}
 
 	public Project(String projectCode, String name, LocalDate createDate, String description, int maxMember,
 			LocalDate openRegDate, LocalDate closeRegDate, LocalDate startDate, LocalDate endDate,
-			LocalDate acceptanceDate, float estBudget, String result, String comment, String topicCode, String lecturerCode,
-			String aCouncilCode) {
+			LocalDate acceptanceDate, float estBudget, String result, String comment, String topicCode,
+			String lecturerCode, String aCouncilCode) {
 		super();
 		this.projectCode = projectCode;
 		this.name = name;
@@ -54,11 +62,11 @@ public class Project {
 		this.lecturer = new LecturerDAO().selectLecturerByLectCode(lecturerCode);
 		this.aCouncil = new AcceptanceCouncilDAO().selectACouncilByACouncilCode(aCouncilCode);
 	}
-	
+
 	public Project(String projectCode, String name, LocalDate createDate, String description, int maxMember,
 			LocalDate openRegDate, LocalDate closeRegDate, LocalDate startDate, LocalDate endDate,
-			LocalDate acceptanceDate, float estBudget, String result, String comment, String topicCode, String lecturerCode,
-			String aCouncilCode, Boolean isProposed) {
+			LocalDate acceptanceDate, float estBudget, String result, String comment, String topicCode,
+			String lecturerCode, String aCouncilCode, Boolean isProposed) {
 		super();
 		this.projectCode = projectCode;
 		this.name = name;
@@ -206,27 +214,14 @@ public class Project {
 	public void setaCouncil(AcceptanceCouncil aCouncil) {
 		this.aCouncil = aCouncil;
 	}
-	
-	
-	
-	public Boolean getIsProposed() {
-		return isProposed;
-	}
-
-	public void setIsProposed(Boolean isProposed) {
-		this.isProposed = isProposed;
-	}
 
 	public String getStatus() {
 		ProjectDAO temp = new ProjectDAO();
 		return temp.calcProjStatus(this.getProjectCode());
 	}
-	
+
 	public String getProjectStatusOfLecturer() {
 		LocalDate curDate = LocalDate.now();
-		if (lecturer == null) {
-			return "Chưa có chủ nhiệm";
-		}
 		if (isProposed) {
 			Registration reg = new RegistrationDAO().selectOneRegistration(lecturer.getLecturerCode(), projectCode);
 			if (reg.isAccepted() == null) {
@@ -237,7 +232,8 @@ public class Project {
 		}
 		if (startDate.isAfter(curDate)) {
 			return "Chưa tới hạn làm";
-		} else if ((startDate.isBefore(curDate) || startDate.isEqual(curDate)) && (endDate.isAfter(curDate) || endDate.isEqual(curDate))) {
+		} else if ((startDate.isBefore(curDate) || startDate.isEqual(curDate))
+				&& (endDate.isAfter(curDate) || endDate.isEqual(curDate))) {
 			return "Đang thực hiện";
 		}
 		return "Đã hoàn thành";

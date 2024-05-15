@@ -6,7 +6,7 @@ public class Major {
 	private String majorCode;
 	private String name;
 	private Falculity falc;
-	
+
 	public Major() {
 		super();
 	}

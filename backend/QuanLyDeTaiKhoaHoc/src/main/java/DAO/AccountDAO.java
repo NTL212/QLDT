@@ -2,7 +2,6 @@ package DAO;
 
 import java.sql.Connection;
 
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +19,7 @@ import Util.HandleException;
 import Util.JDBCUtil;
 
 public class AccountDAO {
-	
+
 	private static final String AUTH_ACCOUNT = "select * from user where username = ? and pass = ? ";
 	private static final String SELECT_ACCOUNT_BY_USERNAME = "select * from user where username = ?";
 	private static final String INSERT_ACCOUNT = "insert into user (username, pass, role) values (?, ?, ?)";
@@ -28,13 +27,12 @@ public class AccountDAO {
 	private static final String EDIT_ACCOUNT_BY_USERNAME = "UPDATE user set pass = ?, role = ?";
 	private static final String DELETE_ACCOUNT_BY_USERNAME = "delete from user where username = ?";
 	private static final String SELECT_ACCOUNT_BY_ROLE = "SELECT * FROM user WHERE role = ?";
-	
+
 	public Account validate(Account loginData) throws ClassNotFoundException {
 		Account acc = null;
 		Connection conn = JDBCUtil.getConnection();
 		try {
-			PreparedStatement preparedStatement = conn
-					.prepareStatement(AUTH_ACCOUNT);
+			PreparedStatement preparedStatement = conn.prepareStatement(AUTH_ACCOUNT);
 			preparedStatement.setString(1, loginData.getUsername());
 			preparedStatement.setString(2, loginData.getPassword());
 
@@ -49,33 +47,32 @@ public class AccountDAO {
 		JDBCUtil.closeConnection(conn);
 		return acc;
 	}
-	
+
 	public List<Account> selectAllAccount() {
-	    List<Account> accountList = new ArrayList<Account>();
-	    Connection conn = JDBCUtil.getConnection();
-	    try {
-	        PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ALL_ACCOUNT);
-	        ResultSet rs = preparedStatement.executeQuery();
-	        while (rs.next()) {
-	            String username = rs.getString("username");
-	            String pass = rs.getString("pass");
-	            String role = rs.getString("role");
-	            Account acc = new Account(username, pass, role);
-	            accountList.add(acc);
-	        }
-	    } catch (SQLException e) {
-	        HandleException.printSQLException(e);
-	    }
-	    JDBCUtil.closeConnection(conn);
-	    return accountList;
+		List<Account> accountList = new ArrayList<Account>();
+		Connection conn = JDBCUtil.getConnection();
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ALL_ACCOUNT);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				String username = rs.getString("username");
+				String pass = rs.getString("pass");
+				String role = rs.getString("role");
+				Account acc = new Account(username, pass, role);
+				accountList.add(acc);
+			}
+		} catch (SQLException e) {
+			HandleException.printSQLException(e);
+		}
+		JDBCUtil.closeConnection(conn);
+		return accountList;
 	}
-	
+
 	public Account selectByUsername(String username) {
 		Account acc = null;
 		Connection conn = JDBCUtil.getConnection();
 		try {
-			PreparedStatement preparedStatement = conn
-					.prepareStatement(SELECT_ACCOUNT_BY_USERNAME);
+			PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ACCOUNT_BY_USERNAME);
 			preparedStatement.setString(1, username);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
@@ -88,78 +85,80 @@ public class AccountDAO {
 		JDBCUtil.closeConnection(conn);
 		return acc;
 	}
-	
+
 	public List<Account> selectByAdmin(String role) {
-	    List<Account> accountList = new ArrayList<>();
-	    Connection conn = JDBCUtil.getConnection();
-	    try {
-	    	PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ACCOUNT_BY_ROLE);
-	        preparedStatement.setString(1, role);
-	        if (role.equals("ROLE_ADMIN")) {
-	            preparedStatement = conn.prepareStatement("SELECT * FROM admin");
-	        }
-	        ResultSet rs = preparedStatement.executeQuery();
-	        while (rs.next()) {
-	            String id = rs.getString("masoadmin");
-	            String email = rs.getString("email");
-	            String name = rs.getString("hoten");
-	            Account acc = new Account(id, email, name);
-	            accountList.add(acc);
-	        }
-	    } catch (SQLException exception) {
-	        HandleException.printSQLException(exception);
-	    }
-	    JDBCUtil.closeConnection(conn);
-	    return accountList;
+		List<Account> accountList = new ArrayList<>();
+		Connection conn = JDBCUtil.getConnection();
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ACCOUNT_BY_ROLE);
+			preparedStatement.setString(1, role);
+			if (role.equals("ROLE_ADMIN")) {
+				preparedStatement = conn.prepareStatement("SELECT * FROM admin");
+			}
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("masoadmin");
+				String email = rs.getString("email");
+				String name = rs.getString("hoten");
+				Account acc = new Account(id, email, name);
+				accountList.add(acc);
+			}
+		} catch (SQLException exception) {
+			HandleException.printSQLException(exception);
+		}
+		JDBCUtil.closeConnection(conn);
+		return accountList;
 	}
+
 	public List<Account> selectByLecturer(String role) {
-	    List<Account> accountList = new ArrayList<>();
-	    Connection conn = JDBCUtil.getConnection();
-	    try {
-	    	PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ACCOUNT_BY_ROLE);
-	        preparedStatement.setString(1, role);
-	        if (role.equals("ROLE_LECT")) {
-	            preparedStatement = conn.prepareStatement("SELECT * FROM giangvien");
-	        }
-	        ResultSet rs = preparedStatement.executeQuery();
-	        while (rs.next()) {
-	            String id = rs.getString("magv");
-	            String email = rs.getString("email");
-	            String name = rs.getString("hoten");
-	            Account acc = new Account(id, email, name);
-	            accountList.add(acc);
-	        }
-	    } catch (SQLException exception) {
-	        HandleException.printSQLException(exception);
-	    }
-	    JDBCUtil.closeConnection(conn);
-	    return accountList;
+		List<Account> accountList = new ArrayList<>();
+		Connection conn = JDBCUtil.getConnection();
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ACCOUNT_BY_ROLE);
+			preparedStatement.setString(1, role);
+			if (role.equals("ROLE_LECT")) {
+				preparedStatement = conn.prepareStatement("SELECT * FROM giangvien");
+			}
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("magv");
+				String email = rs.getString("email");
+				String name = rs.getString("hoten");
+				Account acc = new Account(id, email, name);
+				accountList.add(acc);
+			}
+		} catch (SQLException exception) {
+			HandleException.printSQLException(exception);
+		}
+		JDBCUtil.closeConnection(conn);
+		return accountList;
 	}
+
 	public List<Account> selectByManager(String role) {
-	    List<Account> accountList = new ArrayList<>();
-	    Connection conn = JDBCUtil.getConnection();
-	    try {
-	    	PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ACCOUNT_BY_ROLE);
-	        preparedStatement.setString(1, role);
-	        if (role.equals("ROLE_MGT_STAFF")) {
-	            preparedStatement = conn.prepareStatement("SELECT * FROM nhanvienqlkh");
-	        }
-	        ResultSet rs = preparedStatement.executeQuery();
-	        while (rs.next()) {
-	            String id = rs.getString("manv");
-	            String email = rs.getString("email");
-	            String name = rs.getString("hoten");
-	            Account acc = new Account(id, email, name);
-	            accountList.add(acc);
-	        }
-	    } catch (SQLException exception) {
-	        HandleException.printSQLException(exception);
-	    }
-	    JDBCUtil.closeConnection(conn);
-	    return accountList;
+		List<Account> accountList = new ArrayList<>();
+		Connection conn = JDBCUtil.getConnection();
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ACCOUNT_BY_ROLE);
+			preparedStatement.setString(1, role);
+			if (role.equals("ROLE_MGT_STAFF")) {
+				preparedStatement = conn.prepareStatement("SELECT * FROM nhanvienqlkh");
+			}
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("manv");
+				String email = rs.getString("email");
+				String name = rs.getString("hoten");
+				Account acc = new Account(id, email, name);
+				accountList.add(acc);
+			}
+		} catch (SQLException exception) {
+			HandleException.printSQLException(exception);
+		}
+		JDBCUtil.closeConnection(conn);
+		return accountList;
 	}
-	
-	public void insertAccount (Account acc) {
+
+	public void insertAccount(Account acc) {
 		Connection connection = JDBCUtil.getConnection();
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ACCOUNT);
@@ -172,6 +171,7 @@ public class AccountDAO {
 		}
 		JDBCUtil.closeConnection(connection);
 	}
+
 	public boolean editAccountByUsername(Account acc) {
 		boolean rowUpdated = false;
 		Connection connection = JDBCUtil.getConnection();
@@ -186,6 +186,7 @@ public class AccountDAO {
 		JDBCUtil.closeConnection(connection);
 		return rowUpdated;
 	}
+
 	public boolean deleteAccountByUsername(Account acc) throws SQLException {
 		boolean rowUpdated = false;
 		Connection connection = JDBCUtil.getConnection();

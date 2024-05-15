@@ -16,6 +16,7 @@ public class AdminDAO {
 
 	private static final String SELECT_AD_BY_AD_CODE = "select * from admin where masoadmin = ?";
 	private static final String INSERT_ADMIN = "insert into admin (masoadmin, hoten, ngaysinh, cccd, dienthoai, email, gioitinh, diachi) values (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String UPDATE_ADMIN = "update admin set hoten = ?, ngaysinh = ?, cccd = ?, dienthoai = ?, email = ?, gioitinh = ?, diachi = ? where masoadmin = ?";
 
 	public Admin selectByAdCode(String adCode) {
 		Connection connection = JDBCUtil.getConnection();
@@ -60,4 +61,23 @@ public class AdminDAO {
 		}
 		JDBCUtil.closeConnection(connection);
 	}
+	public void updateAdmin(Admin ad) {
+	    Connection connection = JDBCUtil.getConnection();
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ADMIN);
+	        preparedStatement.setString(1, ad.getName());
+	        preparedStatement.setDate(2, Date.valueOf(ad.getBirthday()));
+	        preparedStatement.setString(3, ad.getIdNum());
+	        preparedStatement.setString(4, ad.getPhoneNum());
+	        preparedStatement.setString(5, ad.getEmail());
+	        preparedStatement.setBoolean(6, ad.getSex().equals("Nam"));
+	        preparedStatement.setString(7, ad.getAddress());
+	        preparedStatement.setString(8, ad.getAdCode()); // Điều kiện cập nhật dựa trên mã số admin
+	        preparedStatement.executeUpdate();
+	    } catch (SQLException exception) {
+	        HandleException.printSQLException(exception);
+	    }
+	    JDBCUtil.closeConnection(connection);
+	}
+
 }

@@ -6,12 +6,12 @@ import DAO.ProjectDAO;
 public class ProjectMember {
 	private Student student;
 	private Project project;
-	
+
 	public ProjectMember() {
 		super();
 	}
-	
-	public ProjectMember (String studentCode, String projectCode) {
+
+	public ProjectMember(String studentCode, String projectCode) {
 		this.student = new StudentDAO().selectStudentByStudentCode(studentCode);
 		this.project = new ProjectDAO().selectProjectByProjectCode(projectCode);
 	}

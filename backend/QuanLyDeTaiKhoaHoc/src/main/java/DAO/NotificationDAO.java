@@ -15,13 +15,12 @@ public class NotificationDAO {
 	private static final String SELECT_SENT_NOTIFICATIONS_BY_USER_ID = "select * from thongbao where nguoigui = ?";
 	private static final String SELECT_RECEIVED_NOTIFICATIONS_BY_USER_ID = "select * from thongbao where nguoinhan = ?";
 	private static final String INSERT_NOTIFICATION = "insert into thongbao (nguoigui, nguoinhan, tieude, noidung) values (?, ?, ?, ?)";
-	
+
 	public List<Notification> selectSentNotificationsByUserId(String userId) {
 		Connection connection = JDBCUtil.getConnection();
 		List<Notification> lstNots = new ArrayList<>();
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(SELECT_SENT_NOTIFICATIONS_BY_USER_ID);
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SENT_NOTIFICATIONS_BY_USER_ID);
 			preparedStatement.setString(1, userId);
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -40,13 +39,12 @@ public class NotificationDAO {
 		JDBCUtil.closeConnection(connection);
 		return lstNots;
 	}
-	
+
 	public List<Notification> selectNotificationsByUserId(String userId) {
 		Connection connection = JDBCUtil.getConnection();
 		List<Notification> lstNots = new ArrayList<>();
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(SELECT_RECEIVED_NOTIFICATIONS_BY_USER_ID);
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_RECEIVED_NOTIFICATIONS_BY_USER_ID);
 			preparedStatement.setString(1, userId);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
@@ -64,7 +62,7 @@ public class NotificationDAO {
 		JDBCUtil.closeConnection(connection);
 		return lstNots;
 	}
-	
+
 	public void insertNotification(Notification noti) throws SQLException {
 		Connection connection = JDBCUtil.getConnection();
 		try {

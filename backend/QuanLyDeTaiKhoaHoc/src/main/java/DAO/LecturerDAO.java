@@ -16,7 +16,9 @@ public class LecturerDAO {
 
 	private static final String SELECT_LECTURER_BY_LECT_CODE = "select * from giangvien where magv = ?";
 	private static final String INSERT_LECTURER = "insert into giangvien (magv, khoa, hoten, ngaysinh, cccd, dienthoai, email, gioitinh, diachi) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	
+	private static final String DELETE_LECTURE= "delete from giangvien where magv=?";
+	private static final String UPDATE_LECTURER = "update giangvien set khoa = ?, hoten = ?, ngaysinh = ?, cccd = ?, dienthoai = ?, email = ?, gioitinh = ?, diachi = ? where magv = ?";
+
 	public Lecturer selectLecturerByLectCode(String lectCode) {
 		Connection connection = JDBCUtil.getConnection();
 		Lecturer lecturer = null;
@@ -62,6 +64,40 @@ public class LecturerDAO {
 			HandleException.printSQLException(exception);
 		}
 		JDBCUtil.closeConnection(connection);
+	}
+	public void updateLecturer(Lecturer lect) {
+	    Connection connection = JDBCUtil.getConnection();
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LECTURER);
+	        preparedStatement.setString(1, lect.getFalculity().getFalculityCode());
+	        preparedStatement.setString(2, lect.getName());
+	        preparedStatement.setDate(3, Date.valueOf(lect.getBirthday()));
+	        preparedStatement.setString(4, lect.getIdNum());
+	        preparedStatement.setString(5, lect.getPhoneNum());
+	        preparedStatement.setString(6, lect.getEmail());
+	        preparedStatement.setBoolean(7, lect.getSex().equals("Nam"));
+	        preparedStatement.setString(8, lect.getAddress());
+	        preparedStatement.setString(9, lect.getLecturerCode()); // Điều kiện cập nhật dựa trên mã giảng viên
+	        System.out.println(preparedStatement);
+	        preparedStatement.executeUpdate();
+	    } catch (SQLException exception) {
+	        HandleException.printSQLException(exception);
+	    }
+	    JDBCUtil.closeConnection(connection);
+	}
+
+	public boolean deleteLectureById(String id) {
+		boolean rowUpdated = false;
+		Connection connection = JDBCUtil.getConnection();
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LECTURE);
+			preparedStatement.setString(1, id);
+			rowUpdated = preparedStatement.executeUpdate() > 0;
+		} catch (SQLException exception) {
+			HandleException.printSQLException(exception);
+		}
+		JDBCUtil.closeConnection(connection);
+		return rowUpdated;
 	}
 }
 

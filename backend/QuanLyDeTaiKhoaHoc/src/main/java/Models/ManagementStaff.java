@@ -76,7 +76,7 @@ public class ManagementStaff extends User {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}

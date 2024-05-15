@@ -6,7 +6,7 @@ public class AcceptanceCouncil {
 	private String councilCode;
 	private String name;
 	private Falculity falculity;
-	
+
 	public AcceptanceCouncil() {
 		super();
 	}

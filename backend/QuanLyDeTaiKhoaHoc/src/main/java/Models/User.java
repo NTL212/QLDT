@@ -10,7 +10,7 @@ public class User {
 	protected String phoneNum;
 	protected String email;
 	protected String sex;
-	
+
 	public User() {
 		super();
 	}
@@ -82,5 +82,5 @@ public class User {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	
+
 }
