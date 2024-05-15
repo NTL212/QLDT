@@ -9,12 +9,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit retrofit;
+    private static Retrofit retrofit2;
+
 //    private static final String BASE_URL = "http://192.168.0.0:8080/QuanLyDeTaiKhoaHoc_tmp/";
 
 //    private static final String BASE_URL = "http://26.162.156.25:8080/QuanLyDeTaiKhoaHoc_tmp/api/";
 
 //    private static final String BASE_URL = "http://10.0.2.2:8080/untitled1_war_exploded/api/";
     private static final String BASE_URL = "http://10.0.2.2:8080/QuanLyDeTaiKhoaHoc_tmp/api/";
+    private static final String BASE_URL_PROJ = "http://10.0.2.2:8080/QuanLyDeTaiKhoaHoc_tmp/";
     // Tạo đối tượng Gson tùy chỉnh với setLenient(true)
 
     public static Retrofit getRetrofitInstance() {
@@ -28,5 +31,17 @@ public class RetrofitClient {
                     .build();
         }
         return retrofit;
+    }
+    public static Retrofit getRetrofitInstance2() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        if (retrofit2 == null) {
+            retrofit2 = new Retrofit.Builder()
+                    .baseUrl(BASE_URL_PROJ)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+        }
+        return retrofit2;
     }
 }

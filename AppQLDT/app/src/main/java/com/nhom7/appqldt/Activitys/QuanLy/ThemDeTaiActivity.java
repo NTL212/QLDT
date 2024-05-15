@@ -56,22 +56,22 @@ public class ThemDeTaiActivity extends AppCompatActivity {
 
         findViewById(R.id.buttonThemDeTai).setOnClickListener(v -> {
 
-            String maDeTai = tvMaDeTai.getText().toString();
-            String tenDeTai = tvTenDeTai.getText().toString();
-            String ngayMoDangKy = tvngaymodangky.getText().toString();
-            String ngayKetThucDangKy = tvngayketthucdangky.getText().toString();
-
-            String ngayBatDau = tvngaybatdau.getText().toString();
-            String ngayKetThuc = tvngayketthuc.getText().toString();
-            String ngayNghiemThu = tvngaynghiemthu.getText().toString();
-            double nganSach = Double.parseDouble(tvngansach.getText().toString());
-            int soLuongTVMax = Integer.parseInt(tvsoluongtvmax.getText().toString());
-            Topic topic = (Topic) spnChude.getSelectedItem();
-            Intent intent = new Intent();
-            Project project = new Project(maDeTai,tenDeTai,ngayMoDangKy,"",soLuongTVMax,ngayMoDangKy,ngayKetThucDangKy,ngayBatDau,ngayKetThuc,ngayNghiemThu,nganSach,"",topic,null,true);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("project", project);
-            setResult(RESULT_OK, new Intent().putExtras(bundle));
+//            String maDeTai = tvMaDeTai.getText().toString();
+//            String tenDeTai = tvTenDeTai.getText().toString();
+//            String ngayMoDangKy = tvngaymodangky.getText().toString();
+//            String ngayKetThucDangKy = tvngayketthucdangky.getText().toString();
+//
+//            String ngayBatDau = tvngaybatdau.getText().toString();
+//            String ngayKetThuc = tvngayketthuc.getText().toString();
+//            String ngayNghiemThu = tvngaynghiemthu.getText().toString();
+//            double nganSach = Double.parseDouble(tvngansach.getText().toString());
+//            int soLuongTVMax = Integer.parseInt(tvsoluongtvmax.getText().toString());
+//            Topic topic = (Topic) spnChude.getSelectedItem();
+//            Intent intent = new Intent();
+//            Project project = new Project(maDeTai,tenDeTai,ngayMoDangKy,"",soLuongTVMax,ngayMoDangKy,ngayKetThucDangKy,ngayBatDau,ngayKetThuc,ngayNghiemThu,nganSach,"",topic,null,true);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("project", project);
+//            setResult(RESULT_OK, new Intent().putExtras(bundle));
             finish();
         });
 

@@ -70,7 +70,7 @@ public interface APIService {
     @GET("topic")
     Call<APIResponse<List<Topic>>> getAllTopic();
 
-//    @POST("topic")
+    //    @POST("topic")
 //    @FormUrlEncoded
 //    Call<APIResponse<Topic>> insertTopic(@Field("topicCode") String topicCode,
 //                                         @Field("name") String name,
@@ -80,7 +80,7 @@ public interface APIService {
     Call<APIResponse<Topic>> insertTopic(@Body Topic topic);
 
 
-//    {
+    //    {
 //        "projectCode": "",
 //            "name": "",
 //            "createDate": "2024-06-01",
@@ -99,10 +99,13 @@ public interface APIService {
 //        "aCouncil": {},
 //        "isProposed": false
 //    }
+    @GET("project/api/getAll")
+    Call<APIResponse<List<Project>>> getAllProjectManager();
 
-    @GET("project/api/createProject")
+        @GET("project/api/createProject")
     Call<APIResponse<Project>> createProject(@Body Project project);
 //                                             @Query("isProposed") boolean isProposed);ect/api/createProject")
+//    @GET("project/api/createProject")
 //    Call<APIResponse<Project>> createProject(@Query("projectCode") String projectCode,
 //                                             @Query("name") String name,
 //                                             @Query("createDate") String createDate,
@@ -113,7 +116,7 @@ public interface APIService {
 //                                             @Query("startDate") String startDate,
 //                                             @Query("endDate") String endDate,
 //                                             @Query("acceptanceDate") String acceptanceDate,
-//                                             @Query("estBudget") double estBudget,
+//                                             @Query("estBudget") String estBudget,
 //                                             @Query("result") String result,
 //                                             @Query("topic") Topic topic,
 //                                             @Query("lecturer") Lecturer lecturer,

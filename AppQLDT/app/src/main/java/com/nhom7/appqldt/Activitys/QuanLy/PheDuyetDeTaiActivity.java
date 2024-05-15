@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom7.appqldt.Models.DeTai;
+import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.R;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class PheDuyetDeTaiActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    List<DeTai> listDeTai;
+    List<Project> listDeTai;
     DeTaiAdapter deTaiAdapter;
 
 
@@ -43,7 +44,7 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
         listDeTai= new ArrayList<>();
 
         recyclerView = findViewById(R.id.recycler_view_detais);
-//        deTaiAdapter = new DeTaiAdapter(this, listDeTai);
+        deTaiAdapter = new DeTaiAdapter(this, listDeTai);
         recyclerView.setAdapter(deTaiAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         deTaiAdapter.notifyDataSetChanged();

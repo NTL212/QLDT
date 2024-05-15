@@ -72,12 +72,16 @@ ChuDeAdapter chuDeAdapter;
         findViewById(R.id.btn_add_chude).setOnClickListener(v -> {
             ThemChuDeDialogFragment themChuDeDialogFragment = new ThemChuDeDialogFragment();
             themChuDeDialogFragment.show(getSupportFragmentManager(), "Them Chu De");
+            showListChuDe();
+
         });
 
     }
     List<Topic> topicList = new ArrayList<>();
 
     void showListChuDe(){
+        topicList.clear();
+        chuDeList.clear();
         APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
         apiService.getAllTopic().enqueue(new retrofit2.Callback<APIResponse<List<Topic>>>() {
             @Override
@@ -124,22 +128,21 @@ ChuDeAdapter chuDeAdapter;
     }
 
     public void themChuDe(String maSo, String tenChuDe) {
-        chuDeList.add(new ChuDe( chuDeList.size() + 1, tenChuDe, 0, true));
-Toast.makeText(this, maSo, Toast.LENGTH_SHORT).show();
         APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
         Topic topic = new Topic(maSo, tenChuDe, true);
         apiService.insertTopic(topic).enqueue(new retrofit2.Callback<APIResponse<Topic>>() {
             @Override
             public void onResponse(retrofit2.Call<APIResponse<Topic>> call, retrofit2.Response<APIResponse<Topic>> response) {
                 if (response.body() != null) {
-                    Log.e("TAG", "onResponse: " + response.body().getResult());
-                    Log.e("TAG", "onResponse: " + response.body().getMessage());
-                    Log.e("TAG", "onResponse: " + response.body().getStatusCode());
-                    Log.e("TAG", "onResponse: " + response.body().isSuccess());
+//                    Log.e("TAG", "onResponse: " + response.body().getResult());
+//                    Log.e("TAG", "onResponse: " + response.body().getMessage());
+//                    Log.e("TAG", "onResponse: " + response.body().getStatusCode());
+//                    Log.e("TAG", "onResponse: " + response.body().isSuccess());
 
-//                    Toast.makeText(ListChuDeActivity.this, "Thêm chủ đề thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListChuDeActivity.this, "Thêm chủ đề thành công", Toast.LENGTH_SHORT).show();
                     if (response.body().isSuccess()) {
                         Log.e("TAG", "onResponse: " + response.body().getStatusCode());
+                        showListChuDe();
                     }
                 }
                 else {

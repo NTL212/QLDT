@@ -21,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Models.APIResponse;
+import com.nhom7.appqldt.Models.ChuDe;
 import com.nhom7.appqldt.Models.DeTai;
 import com.nhom7.appqldt.Models.Project;
+import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
 
@@ -48,7 +50,11 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
                     Log.e(TAG, "trabe: " + project.getProjectCode());
                     addDeTai(project);
                 }
+                else {
+                    addDeTai(null);
+                }
             });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +71,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
         anhxa();
         initializeData();
         recyclerView = findViewById(R.id.recycler_view_detais);
-        deTaiAdapter = new DeTaiAdapter(this, listDeTai);
-        recyclerView.setAdapter(deTaiAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+
 
         btnThemDeTai.setOnClickListener(v -> {
             Intent intent = new Intent(QuanLyDeTaiActivity.this, ThemDeTaiActivity.class);
@@ -81,25 +84,56 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
 
     }
 
-    void anhxa(){
+    void anhxa() {
         btnThemDeTai = findViewById(R.id.btnThemDeTai);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_quanly, menu);
         return true;
     }
+
     private void initializeData() {
+//        listDeTai = new ArrayList<>();
+//        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+//        Call<APIResponse<List<Project>>> call = apiService.getAllProject();
+//        call.enqueue(new retrofit2.Callback<APIResponse<List<Project>>>() {
+//            @Override
+//            public void onResponse(Call<APIResponse<List<Project>>> call, retrofit2.Response<APIResponse<List<Project>>> response) {
+//                if(response.isSuccessful()){
+//                    List<Project> projects = response.body().getResult();
+//                    listDeTai.addAll(projects);
+//                    deTaiAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<APIResponse<List<Project>>> call, Throwable t) {
+//
+//            }
+//        });
         listDeTai = new ArrayList<>();
-        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
-        Call<APIResponse<List<Project>>> call = apiService.getAllProject();
+        Log.e(TAG, "onResponse: " + listDeTai.size());
+
+        APIService apiService = RetrofitClient.getRetrofitInstance2().create(APIService.class);
+        Call<APIResponse<List<Project>>> call = apiService.getAllProjectManager();
         call.enqueue(new retrofit2.Callback<APIResponse<List<Project>>>() {
             @Override
             public void onResponse(Call<APIResponse<List<Project>>> call, retrofit2.Response<APIResponse<List<Project>>> response) {
-                if(response.isSuccessful()){
+                Log.e(TAG, "onResponse: " + response.body());
+                if (response.isSuccessful()) {
+                    Log.e(TAG, "onResponse: " + response.body().getResult());
                     List<Project> projects = response.body().getResult();
                     listDeTai.addAll(projects);
+                    Log.e(TAG, "onResponse: " + listDeTai.size());
+                    deTaiAdapter = new DeTaiAdapter(getApplicationContext(), listDeTai);
+                    recyclerView.setAdapter(deTaiAdapter);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setLayoutManager(linearLayoutManager);
                     deTaiAdapter.notifyDataSetChanged();
+                } else {
+                    Log.e(TAG, "onResponse: " + response.message());
                 }
             }
 
@@ -108,6 +142,8 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     @Override
@@ -129,24 +165,53 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    void addDeTai(Project project){
-        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
 
-//        Call<APIResponse<Project>> call = apiService.createProject(project);
-        Log.e(TAG, "addDeTai: " +project);
+    void addDeTai(Project project) {
+        APIService apiService = RetrofitClient.getRetrofitInstance2().create(APIService.class);
+
+//        Call<APIResponse<Project>> call = apiService.createProject(project.getProjectCode(), project.getName(), project.getCreateDate(), project.getDescription(), project.getMaxMember(), project.getOpenRegDate(), project.getCloseRegDate(), project.getStartDate(), project.getEndDate(), project.getAcceptanceDate(), project.getEstBudget(), project.getResult(), project.getTopic(), project.getLecturer(), project.isProposed());
 //        call.enqueue(new retrofit2.Callback<APIResponse<Project>>() {
 //            @Override
 //            public void onResponse(Call<APIResponse<Project>> call, retrofit2.Response<APIResponse<Project>> response) {
-//                if(response.isSuccessful()){
-//                    Log.e(TAG, "onResponse: " + response.body().getResult());
+//                if (response.isSuccessful()) {
+//                    Project project = response.body().getResult();
+//                    listDeTai.add(project);
 //                    deTaiAdapter.notifyDataSetChanged();
+//                } else {
+//                    Log.e(TAG, "onResponse: " + response.message());
 //                }
-//            }
 //
+//            }
 //            @Override
 //            public void onFailure(Call<APIResponse<Project>> call, Throwable t) {
+//                Log.e(TAG, "onFailure: " + t.getMessage());
 //
 //            }
+//
 //        });
+        Project project2 = new Project("ma1", "ten1","2024-02-12","",1,"2024-02-12","2024-02-12","2024-02-12","2024-02-12","2024-02-12",11.0,"",new Topic("1","a",true),null,true);
+        Call<APIResponse<Project>> call = apiService.createProject(project2);
+        Log.e(TAG, "addDeTai: " + project2.getProjectCode());
+        call.enqueue(new retrofit2.Callback<APIResponse<Project>>() {
+            @Override
+            public void onResponse(Call<APIResponse<Project>> call, retrofit2.Response<APIResponse<Project>> response) {
+                if (response.isSuccessful()) {
+                    Project project = response.body().getResult();
+                    listDeTai.add(project);
+                    deTaiAdapter.notifyDataSetChanged();
+                    Log.e(TAG, "onResponse: " + project.getProjectCode());
+                } else {
+                    Log.e(TAG, "onResponse: " + response.message());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<Project>> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
+
+            }
+
+        });
     }
 }
