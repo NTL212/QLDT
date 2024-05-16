@@ -102,7 +102,7 @@ public interface APIService {
     @GET("project/api/getAll")
     Call<APIResponse<List<Project>>> getAllProjectManager();
 
-        @GET("project/api/createProject")
+        @POST("project/api/createProject")
     Call<APIResponse<Project>> createProject(@Body Project project);
 //                                             @Query("isProposed") boolean isProposed);ect/api/createProject")
 //    @GET("project/api/createProject")

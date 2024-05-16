@@ -28,6 +28,7 @@ import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,24 +56,41 @@ public class ThemDeTaiActivity extends AppCompatActivity {
         loadintoSpinChude();
 
         findViewById(R.id.buttonThemDeTai).setOnClickListener(v -> {
+            String datenow= "2024-01-01";
+            String maDeTai = tvMaDeTai.getText().toString();
+            String tenDeTai = tvTenDeTai.getText().toString();
+            String ngayMoDangKy = tvngaymodangky.getText().toString().equals("") ? datenow:tvngaymodangky.getText().toString();
+            String ngayKetThucDangKy = tvngayketthucdangky.getText().toString().equals("") ? datenow:tvngayketthucdangky.getText().toString();
 
-//            String maDeTai = tvMaDeTai.getText().toString();
-//            String tenDeTai = tvTenDeTai.getText().toString();
-//            String ngayMoDangKy = tvngaymodangky.getText().toString();
-//            String ngayKetThucDangKy = tvngayketthucdangky.getText().toString();
-//
-//            String ngayBatDau = tvngaybatdau.getText().toString();
-//            String ngayKetThuc = tvngayketthuc.getText().toString();
-//            String ngayNghiemThu = tvngaynghiemthu.getText().toString();
-//            double nganSach = Double.parseDouble(tvngansach.getText().toString());
-//            int soLuongTVMax = Integer.parseInt(tvsoluongtvmax.getText().toString());
-//            Topic topic = (Topic) spnChude.getSelectedItem();
-//            Intent intent = new Intent();
-//            Project project = new Project(maDeTai,tenDeTai,ngayMoDangKy,"",soLuongTVMax,ngayMoDangKy,ngayKetThucDangKy,ngayBatDau,ngayKetThuc,ngayNghiemThu,nganSach,"",topic,null,true);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("project", project);
-//            setResult(RESULT_OK, new Intent().putExtras(bundle));
-            finish();
+            String ngayBatDau = tvngaybatdau.getText().toString().equals("") ? datenow:tvngaybatdau.getText().toString();
+            String ngayKetThuc = tvngayketthuc.getText().toString().equals("") ? datenow:tvngayketthuc.getText().toString();
+            String ngayNghiemThu = tvngaynghiemthu.getText().toString().equals("") ? datenow:tvngaynghiemthu.getText().toString();
+            double nganSach=0;
+            int soLuongTVMax=0;
+            try {
+                nganSach = Double.parseDouble(tvngansach.getText().toString());
+                soLuongTVMax = Integer.parseInt(tvsoluongtvmax.getText().toString());
+            }
+            catch (Exception e){
+                Toast.makeText(ThemDeTaiActivity.this, "Nhập số hop le vào kinh phí hoặc số lượng thành viên", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Topic topic = (Topic) spnChude.getSelectedItem();
+            Intent intent = new Intent();
+            //neu nhap ngay hop le yyyy-mm-dd
+            if (ngayMoDangKy.matches("\\d{4}-\\d{2}-\\d{2}") && ngayKetThucDangKy.matches("\\d{4}-\\d{2}-\\d{2}") && ngayBatDau.matches("\\d{4}-\\d{2}-\\d{2}") && ngayKetThuc.matches("\\d{4}-\\d{2}-\\d{2}") && ngayNghiemThu.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                Project project = new Project(maDeTai,tenDeTai,null,"",soLuongTVMax,ngayMoDangKy,ngayKetThucDangKy,ngayBatDau,ngayKetThuc,ngayNghiemThu,nganSach,null,topic,null,true);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("project", project);
+                setResult(RESULT_OK, new Intent().putExtras(bundle));
+                finish();
+            } else {
+                Toast.makeText(ThemDeTaiActivity.this, "Nhập ngày theo định dạng yyyy-mm-dd", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
         });
 
 

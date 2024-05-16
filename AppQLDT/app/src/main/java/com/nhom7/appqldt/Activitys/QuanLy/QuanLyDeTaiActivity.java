@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -47,7 +48,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     Bundle bundle = data.getExtras();
                     Project project = (Project) bundle.getSerializable("project");
-                    Log.e(TAG, "trabe: " + project.getProjectCode());
+//                    Log.e(TAG, "trabe: " + project.getProjectCode());
                     addDeTai(project);
                 }
                 else {
@@ -189,17 +190,30 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
 //            }
 //
 //        });
-        Project project2 = new Project("ma1", "ten1","2024-02-12","",1,"2024-02-12","2024-02-12","2024-02-12","2024-02-12","2024-02-12",11.0,"",new Topic("1","a",true),null,true);
+        Project project2 = new Project();
+        project2=project;
         Call<APIResponse<Project>> call = apiService.createProject(project2);
-        Log.e(TAG, "addDeTai: " + project2.getProjectCode());
+//        Log.e(TAG, "addDeTai: " + project2.getProjectCode());
         call.enqueue(new retrofit2.Callback<APIResponse<Project>>() {
             @Override
             public void onResponse(Call<APIResponse<Project>> call, retrofit2.Response<APIResponse<Project>> response) {
                 if (response.isSuccessful()) {
-                    Project project = response.body().getResult();
-                    listDeTai.add(project);
-                    deTaiAdapter.notifyDataSetChanged();
-                    Log.e(TAG, "onResponse: " + project.getProjectCode());
+                    if (response.body().isSuccess()) {
+//                        Log.e(TAG, "onResponse: " + response.body().getStatusCode());
+//                        Log.e(TAG, "onResponse: " + response.body().getMessage());
+//                        Log.e(TAG, "onResponse: " + response.body().isSuccess());
+//                        Log.e(TAG, "onResponse: " + response.body().getResult());
+//                        Log.e(TAG, "onResponse: " + response.body().toString());
+                        Project project = response.body().getResult();
+                        listDeTai.add(project);
+                        deTaiAdapter.notifyDataSetChanged();
+                        Toast.makeText(QuanLyDeTaiActivity.this, "Thêm đề tài thành công", Toast.LENGTH_SHORT).show();
+//                        Log.e("o day", "o day" + project);
+//                        Log.e(TAG, "onResponse: " + project.getProjectCode());
+                    }
+                    else {
+                        Toast.makeText(QuanLyDeTaiActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Log.e(TAG, "onResponse: " + response.message());
                 }
