@@ -1,6 +1,7 @@
 package com.nhom7.appqldt.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom7.appqldt.Models.ChuDe;
+import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
 import java.util.List;
@@ -32,12 +34,19 @@ public class ChuDeAdapter extends RecyclerView.Adapter<ChuDeAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ChuDeAdapter.ViewHolder holder, int position) {
+        ChuDe chuDe = chuDeList.get(position);
+        Log.d( "onBindViewHolder: ", chuDeList.get(position).getTenChuDe());
+
+        holder.tvstt.setText(String.valueOf(position+1));
+        holder.tvTenChuDe.setText(chuDeList.get(position).getTenChuDe());
+        holder.tvSoLuongDeTai.setText(String.valueOf(chuDeList.get(position).getSoLuongDeTai()));
+        holder.tvDangMoDangKy.setText(chuDeList.get(position).isDangMoDangKy() ? "Đang mở đăng ký" : "Đã đóng đăng ký");
 
     }
 
     @Override
     public int getItemCount() {
-        return chuDeList.size();
+        return chuDeList == null ? 0 : chuDeList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -45,7 +54,7 @@ public class ChuDeAdapter extends RecyclerView.Adapter<ChuDeAdapter.ViewHolder>{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvstt = itemView.findViewById(R.id.tvStt);
-            tvTenChuDe = itemView.findViewById(R.id.tvChuDe);
+            tvTenChuDe = itemView.findViewById(R.id.tvChude);
             tvSoLuongDeTai = itemView.findViewById(R.id.tvSoluongdetai);
             tvDangMoDangKy = itemView.findViewById(R.id.tvDangmodangky);
 

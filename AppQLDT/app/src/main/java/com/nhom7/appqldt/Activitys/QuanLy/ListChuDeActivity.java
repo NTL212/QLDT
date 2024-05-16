@@ -2,8 +2,15 @@ package com.nhom7.appqldt.Activitys.QuanLy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +21,14 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.nhom7.appqldt.API.APIService;
+import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Adapters.ChuDeAdapter;
+import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.ChuDe;
 import com.nhom7.appqldt.Models.DeTai;
+import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
 import java.util.ArrayList;
@@ -24,8 +36,8 @@ import java.util.List;
 
 public class ListChuDeActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-List<ChuDe> chuDeList;
-ChuDeAdapter chuDeAdapter;
+    List<ChuDe> chuDeList;
+    ChuDeAdapter chuDeAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +51,17 @@ ChuDeAdapter chuDeAdapter;
                 return onOptionsItemSelected(item);
             }
         });
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+//Lấy giá trị được lưu giữ ra
+        TextView tvUserName = (TextView) findViewById(R.id.toolbar_title2);
+        tvUserName.setText(sharedPreferences.getString("username",""));
         chuDeList = new ArrayList<>();
-        chuDeList.add(new ChuDe(1, "Chủ đề 1", 10, true));
-        chuDeList.add(new ChuDe(2, "Chủ đề 2", 10, false));
-        chuDeList.add(new ChuDe(3, "Chủ đề 3", 10, true));
+//        chuDeList.add(new ChuDe(1, "Chủ đề 1", 10, true));
+//        chuDeList.add(new ChuDe(2, "Chủ đề 2", 10, false));
+//        chuDeList.add(new ChuDe(3, "Chủ đề 3", 10, true));
+        showListChuDe();
 
         recyclerView = findViewById(R.id.recycler_view_chudes);
         chuDeAdapter = new ChuDeAdapter(this, chuDeList);
@@ -50,12 +69,38 @@ ChuDeAdapter chuDeAdapter;
         chuDeAdapter.notifyDataSetChanged();
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-
         findViewById(R.id.btn_add_chude).setOnClickListener(v -> {
             ThemChuDeDialogFragment themChuDeDialogFragment = new ThemChuDeDialogFragment();
             themChuDeDialogFragment.show(getSupportFragmentManager(), "Them Chu De");
+            showListChuDe();
+
         });
 
+    }
+    List<Topic> topicList = new ArrayList<>();
+
+    void showListChuDe(){
+        topicList.clear();
+        chuDeList.clear();
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        apiService.getAllTopic().enqueue(new retrofit2.Callback<APIResponse<List<Topic>>>() {
+            @Override
+            public void onResponse(retrofit2.Call<APIResponse<List<Topic>>> call, retrofit2.Response<APIResponse<List<Topic>>> response) {
+                if (response.body().isSuccess()) {
+                    Log.e("TAG", "onResponse: " + response.body().getResult());
+                    topicList = response.body().getResult();
+                    for (Topic topic : topicList) {
+                        chuDeList.add(new ChuDe(1, topic.getName(), 0, topic.isEnabled()));
+                    }
+
+                    chuDeAdapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onFailure(retrofit2.Call<APIResponse<List<Topic>>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,7 +129,36 @@ ChuDeAdapter chuDeAdapter;
     }
 
     public void themChuDe(String maSo, String tenChuDe) {
-        chuDeList.add(new ChuDe( 1, tenChuDe, 0, false));
-        chuDeAdapter.notifyDataSetChanged();
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        Topic topic = new Topic(maSo, tenChuDe, true);
+        apiService.insertTopic(topic).enqueue(new retrofit2.Callback<APIResponse<Topic>>() {
+            @Override
+            public void onResponse(retrofit2.Call<APIResponse<Topic>> call, retrofit2.Response<APIResponse<Topic>> response) {
+                if (response.body() != null) {
+//                    Log.e("TAG", "onResponse: " + response.body().getResult());
+//                    Log.e("TAG", "onResponse: " + response.body().getMessage());
+//                    Log.e("TAG", "onResponse: " + response.body().getStatusCode());
+//                    Log.e("TAG", "onResponse: " + response.body().isSuccess());
+
+                    Toast.makeText(ListChuDeActivity.this, "Thêm chủ đề thành công", Toast.LENGTH_SHORT).show();
+                    if (response.body().isSuccess()) {
+                        Log.e("TAG", "onResponse: " + response.body().getStatusCode());
+                        showListChuDe();
+                    }
+                }
+                else {
+                    Toast.makeText(ListChuDeActivity.this, "Thêm chủ đề thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(retrofit2.Call<APIResponse<Topic>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void loadListChuDe(){
+
     }
 }
