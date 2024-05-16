@@ -76,7 +76,7 @@ public interface APIService {
     @FormUrlEncoded
     Call<APIResponse<Notification>> sendMessageLecture(@Field("lectCode") String id, @Field("recieveperson") String receiveId, @Field("messagetitle") String title, @Field("messagecontent") String content);
 
-    @GET("project/showdetailform")
+    @GET("project/api/showdetailform")
     Call<APIResponse<Project>> getDetailProject(@Query("id") String id);
 
     @GET("lecturer-notification/api/getAllAcc")
