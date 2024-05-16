@@ -32,11 +32,17 @@ import DAO.NotificationDAO;
 import Models.ManagementStaff;
 import Models.Notification;
 import Models.ManagementStaff;
+
 import Models.Account;
 import Models.Lecturer;
 import DAO.AccountDAO;
 import DAO.LecturerDAO;
 @WebServlet("/lecturer-notification/*")
+
+import Models.Lecturer;
+import DAO.LecturerDAO;
+@WebServlet("/api/lecturer-notification/*")
+
 public class LecturerNotifycationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -72,6 +78,16 @@ public class LecturerNotifycationController extends HttpServlet {
                 case "/api/getAllAcc":
                 	getAllAcc(request, response);
                 	break;
+                case "/getSendMessage":
+                	getSendMessage(request, response);
+                    break;
+                case "/getNotify":
+                	getRecieveMessage(request, response);
+                	break;
+                case "/sendMessage":
+                	sendMessage(request, response);
+                	break;
+
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);

@@ -41,7 +41,9 @@ import DAO.FileDAO;
 import DAO.LecturerDAO;
 import Models.FileDTO;
 
+
 @WebServlet("/lecturer-project/*")
+
 public class LecturerProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProjectDAO projectDAO;
@@ -72,6 +74,7 @@ public class LecturerProjectController extends HttpServlet {
 		String action = request.getPathInfo();
 		try {
 			switch (action) {
+
 			case "/api/detail":
 				showInfoProj(request, response);
 				break;

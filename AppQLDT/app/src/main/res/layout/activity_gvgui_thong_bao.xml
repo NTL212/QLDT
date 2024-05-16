@@ -80,11 +80,23 @@
                 android:text="Người nhận: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
             <Spinner
                 android:layout_weight="1"
                 android:id="@+id/spinnerNguoiNhan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+
+
+            <EditText
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtNguoiNhan"
+                android:hint="Nhập người nhận"
+                android:inputType="text"
+                android:textSize="16sp" />
 
         </TableRow>
         <TableRow

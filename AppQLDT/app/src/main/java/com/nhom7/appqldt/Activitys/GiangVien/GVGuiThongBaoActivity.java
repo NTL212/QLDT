@@ -1,7 +1,6 @@
 package com.nhom7.appqldt.Activitys.GiangVien;
 
 import static android.R.layout.simple_spinner_dropdown_item;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,11 +11,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import android.widget.Button;
+import android.widget.EditText;
+
 import android.widget.TextView;
 
 import com.nhom7.appqldt.API.APIService;
@@ -24,12 +28,18 @@ import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Helpers.DialogHelper;
 import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.APIResponse;
+
 import com.nhom7.appqldt.Models.Account;
 import com.nhom7.appqldt.Models.Notification;
 import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
 import java.util.ArrayList;
+
+import com.nhom7.appqldt.Models.Notification;
+import com.nhom7.appqldt.R;
+
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -41,7 +51,10 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
     String username;
     EditText nguoigui, nguoinhan, tieude, noidung;
     Button btnGuiTB;
+
     Spinner spinner;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +79,20 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
         tvUserName.setText(username);
 
         AnhXa();
+
         getAllAccount();
+
+
+
         btnGuiTB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+
                 String receiveId = spinner.getSelectedItem().toString().trim();
+
+                String receiveId = nguoinhan.getText().toString().trim();
+
                 String title = tieude.getText().toString().trim();
                 String content = noidung.getText().toString().trim();
 
@@ -84,7 +105,11 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
                                 Notification notification = response.body().getResult();
                                 DialogHelper.showDialog(GVGuiThongBaoActivity.this, // Context của Activity hiện tại
                                         "Thông báo", // Tiêu đề của dialog
+
                                         "Gửi thông báo cho " + notification.getReceiver().getUsername() + " thành công", // Nội dung của dialog
+
+                                        "Gửi thông báo cho " + notification.getReceiver() + " thành công", // Nội dung của dialog
+
                                         "OK", // Text của nút Positive
                                         new DialogInterface.OnClickListener() {
                                             @Override
@@ -127,7 +152,9 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
         tieude = findViewById(R.id.edtTieuDe);
         noidung = findViewById(R.id.edtNoiDung);
         btnGuiTB = findViewById(R.id.btnGui);
+
         spinner = findViewById(R.id.spinnerNguoiNhan);
+
     }
 
     @Override
@@ -144,6 +171,7 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void getAllAccount(){
         APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
@@ -187,4 +215,5 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
             }
         });
     }
+
 }

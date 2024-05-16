@@ -1,8 +1,12 @@
 package com.nhom7.appqldt.Models;
 
+
 import java.io.Serializable;
 
 public class Project implements Serializable {
+
+public class Project {
+
     private String projectCode;
     private String name;
     private String createDate;
