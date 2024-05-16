@@ -128,7 +128,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
                     List<Project> projects = response.body().getResult();
                     listDeTai.addAll(projects);
                     Log.e(TAG, "onResponse: " + listDeTai.size());
-                    deTaiAdapter = new DeTaiAdapter(getApplicationContext(), listDeTai);
+                    deTaiAdapter = new DeTaiAdapter(QuanLyDeTaiActivity.this, listDeTai);
                     recyclerView.setAdapter(deTaiAdapter);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                     recyclerView.setLayoutManager(linearLayoutManager);

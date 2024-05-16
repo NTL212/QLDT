@@ -174,12 +174,14 @@ public class ProjectController extends HttpServlet {
     throws SQLException, IOException, ServletException {
 	    FormDataReader reader = new FormDataReader(request);
 	    Map<String, String> formData = reader.getData();
-	    
+	    System.out.println("getById1");
 	    if (formData.containsKey("projectId")) {
 	        String projectId = formData.get("projectId");
 	        JsonResponse<ProjectDetailDTO> jsonResponse = null;
 			try {
 	            Project project = projectDAO.selectProjectByProjectCode(projectId);
+		        System.out.println("getbyid");
+
 	            if (project == null) {
 	                jsonResponse = new JsonResponse<>(false, HttpServletResponse.SC_NOT_FOUND, "Đề tài không tồn tại", null);            
 
@@ -402,7 +404,10 @@ public class ProjectController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         JsonResponse<Project> jsonResponse = null;
     	try {
+            System.out.println("test update project");
+
             Project project = gson.fromJson(reader, Project.class);
+            System.out.println("test update project");
             if (projectDAO.selectProjectByProjectCode(project.getProjectCode()) != null)
             {
             	boolean succ = projectDAO.updateProject(project);

@@ -2,6 +2,7 @@ package com.nhom7.appqldt.Activitys.QuanLy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
         else
             holder.tvMaChuDe.setText("Chưa có chủ đề");
         holder.tvTinhTrang.setText(deTaiModel.isProposed() ? "Dang mo dang ky" : "Da dong");
+        //set onclick
+
     }
 
     @Override
@@ -62,8 +65,7 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (itemView.getContext() instanceof PheDuyetDeTaiActivity){
-                        Toast.makeText(context, "Day la view nam trong trang phe duyet de tai", Toast.LENGTH_SHORT).show();
+                    if (context instanceof PheDuyetDeTaiActivity){
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Intent intent = new Intent(context, ChiTietDTPheDuyetActivity.class);
@@ -81,9 +83,6 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
                         if (position != RecyclerView.NO_POSITION) {
                             Intent intent = new Intent(context, ChiTietDTQuanLyActivity.class);
                             intent.putExtra("maDeTai", listDeTai.get(position).getProjectCode());
-                            intent.putExtra("tenDeTai", listDeTai.get(position).getName());
-                            intent.putExtra("tenChuDe", listDeTai.get(position).getTopic().getName());
-                            intent.putExtra("tinhTrang", listDeTai.get(position).isProposed());
                             context.startActivity(intent);
                         }
                     }

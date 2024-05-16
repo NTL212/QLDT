@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="5dp"
-    android:padding="10dp"
+    android:padding="5dp"
     android:layout_margin="15dp"
     android:background="@drawable/item_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/tvMaDeTai"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Ma de tai"
@@ -22,12 +22,12 @@
 
     <TextView
         android:id="@+id/tvTenDeTai"
-        android:layout_width="277dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Ten de tai"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvMaDeTai"
         app:layout_constraintTop_toTopOf="parent" />
 

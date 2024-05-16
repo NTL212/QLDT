@@ -6,6 +6,7 @@ import com.nhom7.appqldt.Models.Lecturer;
 import com.nhom7.appqldt.Models.MessageResponse;
 import com.nhom7.appqldt.Models.Notification;
 import com.nhom7.appqldt.Models.Project;
+import com.nhom7.appqldt.Models.ProjectChiTietQL;
 import com.nhom7.appqldt.Models.Registration;
 import com.nhom7.appqldt.Models.Topic;
 
@@ -102,24 +103,15 @@ public interface APIService {
     @GET("project/api/getAll")
     Call<APIResponse<List<Project>>> getAllProjectManager();
 
-        @POST("project/api/createProject")
+    @POST("project/api/createProject")
     Call<APIResponse<Project>> createProject(@Body Project project);
-//                                             @Query("isProposed") boolean isProposed);ect/api/createProject")
-//    @GET("project/api/createProject")
-//    Call<APIResponse<Project>> createProject(@Query("projectCode") String projectCode,
-//                                             @Query("name") String name,
-//                                             @Query("createDate") String createDate,
-//                                             @Query("description") String description,
-//                                             @Query("maxMember") int maxMember,
-//                                             @Query("openRegDate") String openRegDate,
-//                                             @Query("closeRegDate") String closeRegDate,
-//                                             @Query("startDate") String startDate,
-//                                             @Query("endDate") String endDate,
-//                                             @Query("acceptanceDate") String acceptanceDate,
-//                                             @Query("estBudget") String estBudget,
-//                                             @Query("result") String result,
-//                                             @Query("topic") Topic topic,
-//                                             @Query("lecturer") Lecturer lecturer,
-//                                             @Query("isProposed") boolean isProposed);
 
+
+    @FormUrlEncoded
+    @POST("project/api/getById/")
+    Call<APIResponse<ProjectChiTietQL>> getProjectById(@Field("projectId") String projectId);
+
+
+    @POST("project/api/updateProject")
+    Call<APIResponse<Project>> updateProject(@Body Project project);
 }

@@ -118,21 +118,7 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="Người đăng: " />
-
-                    <TextView
-                        android:id="@+id/tvChiTietNguoiDang"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="De Tai 1" />
-                </TableRow>
+                    android:layout_weight="1"/>
 
                 <TableRow
                     android:layout_width="match_parent"
