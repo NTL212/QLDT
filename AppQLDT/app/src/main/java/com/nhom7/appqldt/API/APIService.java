@@ -2,6 +2,7 @@ package com.nhom7.appqldt.API;
 
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Account;
+import com.nhom7.appqldt.Models.DeTaiCanPheDuyet;
 import com.nhom7.appqldt.Models.Lecturer;
 import com.nhom7.appqldt.Models.MessageResponse;
 import com.nhom7.appqldt.Models.Notification;
@@ -111,7 +112,8 @@ public interface APIService {
     @POST("project/api/getById/")
     Call<APIResponse<ProjectChiTietQL>> getProjectById(@Field("projectId") String projectId);
 
-
     @POST("project/api/updateProject")
     Call<APIResponse<Project>> updateProject(@Body Project project);
+    @POST("project/api/getPendingApproval")
+    Call<APIResponse<List<DeTaiCanPheDuyet>>> getPendingApproval();
 }
