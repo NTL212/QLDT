@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="5dp"
-    android:padding="10dp"
     android:layout_margin="15dp"
     android:background="@drawable/item_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:elevation="5dp"
+    android:orientation="vertical"
+    android:padding="10dp">
+
     <TextView
         android:id="@+id/tv_TB_TieuDe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:textStyle="bold"
         android:gravity="center"
-        android:text="Tiêu đề"/>
+        android:text="Tiêu đề"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:layout_weight="1"
             android:id="@+id/tv_TB_NguoiGui"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Người gửi"/>
-        <TextView
             android:layout_weight="1"
+            android:gravity="center"
+            android:text="Người gửi" />
+
+        <TextView
             android:id="@+id/tv_TB_NgayGui"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="Ngày gửi"/>
+            android:text="Ngày gửi" />
 
     </LinearLayout>
 </LinearLayout>

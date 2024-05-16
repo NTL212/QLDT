@@ -129,8 +129,12 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text="Chủ đề: " />
-
+                    <Spinner
+                        android:id="@+id/spinnerChuDe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/tvChiTietChuDe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -157,6 +161,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text=""
+                        android:hint="2022-12-31"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                 </TableRow>
 
@@ -177,26 +182,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text=""
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="Ngày nghiệm thu: " />
-
-                    <TextView
-                        android:id="@+id/tvChiTietNgayNghiemThu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text=""
+                        android:hint="2022-12-31"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                 </TableRow>
 
@@ -269,7 +255,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnChiTietDangKy"
+                    android:id="@+id/btnDeXuat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="40dp"

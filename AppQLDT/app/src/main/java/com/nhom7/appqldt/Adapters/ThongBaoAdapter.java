@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom7.appqldt.Helpers.DialogHelper;
+import com.nhom7.appqldt.Models.Notification;
 import com.nhom7.appqldt.Models.ThanhVien;
 import com.nhom7.appqldt.Models.ThongBao;
 import com.nhom7.appqldt.R;
@@ -21,12 +22,14 @@ import java.util.List;
 
 public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ViewHolder> {
 
-    List<ThongBao> listTB;
+    List<Notification> listTB;
     Context context;
 
-    public ThongBaoAdapter(List<ThongBao> listTB, Context context) {
+    boolean sendFlag;
+    public ThongBaoAdapter(List<Notification> listTB, Context context, boolean sendFlag) {
         this.listTB = listTB;
         this.context = context;
+        this.sendFlag = sendFlag;
     }
 
 
@@ -39,10 +42,16 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ThongBaoAdapter.ViewHolder holder, int position) {
-        ThongBao thongBao = this.listTB.get(position);
-        holder.tv_TB_TieuDe.setText((CharSequence) thongBao.getTieuDe());
-        holder.tv_TB_NguoiGui.setText((CharSequence) thongBao.getNguoiGui());
-        holder.tv_TB_NgayGui.setText((CharSequence) thongBao.getNgayGui());
+        Notification thongBao = this.listTB.get(position);
+        holder.tv_TB_TieuDe.setText((CharSequence) thongBao.getTitle());
+
+        if(!sendFlag){
+            holder.tv_TB_NguoiGui.setText((CharSequence) "Người gửi: "+ thongBao.getSender().getUsername());
+        }else {
+            holder.tv_TB_NguoiGui.setText((CharSequence) "Người nhận: "+ thongBao.getReceiver().getUsername());
+        }
+
+        holder.tv_TB_NgayGui.setText((CharSequence)"Ngày gửi: "+ thongBao.getSentTime());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +61,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ViewHo
 //                context.startActivity(intent);
                 DialogHelper.showDialog(context, // Context của Activity hiện tại
                         "Nội dung thông báo", // Tiêu đề của dialog
-                        thongBao.getNoiDung(), // Nội dung của dialog
+                        thongBao.getContent(), // Nội dung của dialog
                         "OK", // Text của nút Positive
                         new DialogInterface.OnClickListener() {
                             @Override
