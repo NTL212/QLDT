@@ -118,21 +118,7 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="Người đăng: " />
-
-                    <TextView
-                        android:id="@+id/tvChiTietNguoiDang"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="De Tai 1" />
-                </TableRow>
+                    android:layout_weight="1"/>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -153,7 +139,62 @@
                         android:text="De Tai 1" />
                 </TableRow>
 
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Ngày đăng: " />
+
+                    <TextView
+                        android:id="@+id/tvChiTietNgayDang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="De Tai 1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Ngày mở đăng ký: " />
+
+                    <TextView
+                        android:id="@+id/tvChiTietNgayMoDang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="De Tai 1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Ngày kết thúc đăng ký: " />
+
+                    <TextView
+                        android:id="@+id/tvChiTietNgayKetThucDang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="De Tai 1" />
+                </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -183,10 +224,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày hết hạn: " />
+                        android:text="Ngày kết thúc: " />
 
                     <TextView
-                        android:id="@+id/tvChiTietNgayHetHan"
+                        android:id="@+id/tvChiTietNgayKetThuc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
@@ -277,32 +318,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Chủ nhiệm: " />
+                        android:text="Mô tả: " />
 
                     <TextView
-                        android:id="@+id/tvChiTietChuNhiem"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvLecture"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="De Tai 1" />
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="Ghi chú " />
-
-                    <TextView
-                        android:id="@+id/tvChiTietGhiChu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="De Tai 1" />
+                        android:text="Lecture" />
                 </TableRow>
                 <TableRow
                     android:layout_width="match_parent"
@@ -317,6 +340,7 @@
                         android:text="Xem thành viên"
                         tools:layout_editor_absoluteY="645dp" />
                 </TableRow>
+
             </TableLayout>
 
             <LinearLayout
@@ -333,7 +357,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:text="Đăng ký"
+                    android:text="Phê duyệt"
                     tools:layout_editor_absoluteY="645dp" />
 
                 <Button
@@ -342,7 +366,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:text="Hủy đăng ký"
+                    android:text="Ko phê duyệt"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="645dp" />
             </LinearLayout>

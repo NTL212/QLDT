@@ -1,7 +1,11 @@
 package com.nhom7.appqldt.Adapters;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -71,6 +75,10 @@ public class DeTaiCanPheDuyetAdapter extends RecyclerView.Adapter<DeTaiCanPheDuy
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ChiTietDTPheDuyetActivity.class);
+                    intent.putExtra("maDeTai", listDeTai.get(getAdapterPosition()).getId());
+                    intent.putExtra("nameLec", listDeTai.get(getAdapterPosition()).getLecturer().getName());
+                    intent.putExtra("LecturerCode", listDeTai.get(getAdapterPosition()).getLecturer().getId());
+                    Log.e("TAG", "onClick: " + listDeTai.get(getAdapterPosition()).getLecturer().getId() );
                     context.startActivity(intent);
 
                 }

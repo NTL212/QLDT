@@ -81,7 +81,12 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
                         tvChiTietNgayNghiemThu.setText(project.getAcceptanceDate());
                         tvChiTietKinhPhi.setText(String.valueOf(project.getEstBudget()));
                         tvChiTieSoThanhVien.setText(String.valueOf(project.getMaxMember()));
-                        tvChiTietNguoiDang.setText(project.getResult());
+                        if(project.getLecturer() != null){
+                            tvChiTietNguoiDang.setText(project.getLecturer().getName());
+                        }
+                        else {
+                            tvChiTietNguoiDang.setText("Chưa có chủ nhiệm");
+                        }
                         tvChiTietNgayMoDang.setText(project.getOpenRegDate());
                         tvChiTietMoTa.setText(project.getDescription());
                         btnChiTietHuyDangKy.setVisibility(View.GONE);

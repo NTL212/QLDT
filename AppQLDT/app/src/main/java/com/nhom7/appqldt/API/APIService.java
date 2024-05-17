@@ -1,5 +1,7 @@
 package com.nhom7.appqldt.API;
 
+import com.nhom7.appqldt.Activitys.DTO.FileDTO;
+import com.nhom7.appqldt.Activitys.DTO.ProjectDTO;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Account;
 import com.nhom7.appqldt.Models.DeTaiCanPheDuyet;
@@ -13,13 +15,16 @@ import com.nhom7.appqldt.Models.Topic;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface APIService {
@@ -47,7 +52,7 @@ public interface APIService {
     Call<APIResponse<Lecturer>> getLecturerByID(@Query("id") String id);
 
     @GET("lecturer-project/myproj")
-    Call<APIResponse<List<Project>>> getAllMyProjectForLecturer(@Query("id") String id);
+    Call<APIResponse<List<ProjectDTO>>> getAllMyProjectForLecturer(@Query("id") String id);
 
     @POST("lecturer-project/propose")
     Call<APIResponse<Project>> proposeProjectForLecturer(@Body Project project);
@@ -68,6 +73,14 @@ public interface APIService {
 
     @GET("project/showdetailform")
     Call<APIResponse<Project>> getDetailProject(@Query("id") String id);
+    @POST("lecturer-project/submit")
+    @Multipart
+    Call<APIResponse<FileDTO>> submitFileLecture(
+            @Part MultipartBody.Part file,
+            @Query("projCode") String projCode,
+            @Query("lectCode") String lectCode
+    );
+
 
     @GET("topic")
     Call<APIResponse<List<Topic>>> getAllTopic();
@@ -101,6 +114,8 @@ public interface APIService {
 //        "aCouncil": {},
 //        "isProposed": false
 //    }
+
+
     @GET("project/api/getAll")
     Call<APIResponse<List<Project>>> getAllProjectManager();
 
@@ -116,4 +131,9 @@ public interface APIService {
     Call<APIResponse<Project>> updateProject(@Body Project project);
     @POST("project/api/getPendingApproval")
     Call<APIResponse<List<DeTaiCanPheDuyet>>> getPendingApproval();
+    @FormUrlEncoded
+    @POST("project/api/approveproject")
+    Call<APIResponse<MessageResponse>> approveProject(@Field("managerCode") String managerCode,
+                                                      @Field("idLec") String idLec,
+                                                      @Field("pro") String pro);
 }

@@ -8,15 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Activitys.DTO.ProjectDTO;
 import com.nhom7.appqldt.Adapters.DeTaiAdapter;
 
 import android.content.SharedPreferences;
@@ -44,7 +42,6 @@ import retrofit2.Response;
 public class ListDeTaiActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<Project> listDeTai;
 
 
 

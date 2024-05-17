@@ -57,6 +57,8 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
         deTaiAdapter.notifyDataSetChanged();
         getData();
 
+        
+
     }
 
     void getData() {

@@ -6,7 +6,7 @@ public class DeTaiCanPheDuyet implements Serializable {
     private String id;
     private String name;
     private Topic topic;
-    private Lecturer lecturer;
+    private LecturerSimple lecturer;
 //    private boolean status;
     private String status;
     public String getId() {
@@ -33,11 +33,11 @@ public class DeTaiCanPheDuyet implements Serializable {
         this.topic = topic;
     }
 
-    public Lecturer getLecturer() {
+    public LecturerSimple getLecturer() {
         return lecturer;
     }
 
-    public void setLecturer(Lecturer lecturer) {
+    public void setLecturer(LecturerSimple lecturer) {
         this.lecturer = lecturer;
     }
 
@@ -65,7 +65,7 @@ public class DeTaiCanPheDuyet implements Serializable {
         this.status = status;
     }
 
-    public DeTaiCanPheDuyet(String id, String name, Topic topic, Lecturer lecturer, String status) {
+    public DeTaiCanPheDuyet(String id, String name, Topic topic, LecturerSimple lecturer, String status) {
         this.id = id;
         this.name = name;
         this.topic = topic;
