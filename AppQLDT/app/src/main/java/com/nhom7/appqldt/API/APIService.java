@@ -136,4 +136,9 @@ public interface APIService {
     Call<APIResponse<MessageResponse>> approveProject(@Field("managerCode") String managerCode,
                                                       @Field("idLec") String idLec,
                                                       @Field("pro") String pro);
+    @FormUrlEncoded
+    @POST("project/api/disagreeproject")
+    Call<APIResponse<MessageResponse>> disagreeProject(@Field("managerCode") String managerCode,
+                                                      @Field("idLec") String idLec,
+                                                      @Field("pro") String pro);
 }

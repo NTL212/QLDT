@@ -96,7 +96,32 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
 
         });
         btnKhongPheDuyet.setOnClickListener(v ->{
+            APIService apiService = RetrofitClient.getRetrofitInstance2().create(APIService.class);
+//            Log.e("TAG", "onResponse: " + managerCode+" "+LecturerCode+" "+maDeTai);
+            Call<APIResponse<MessageResponse>> call = apiService.disagreeProject(managerCode,LecturerCode,maDeTai);
+            call.enqueue(new retrofit2.Callback<APIResponse<MessageResponse>>() {
+                @Override
+                public void onResponse(Call<APIResponse<MessageResponse>> call, retrofit2.Response<APIResponse<MessageResponse>> response) {
+//                    Log.e("TAG", "onResponse: " + response.body() );
+                    if (response.isSuccessful()) {
+                        if (response.body().isSuccess()) {
+//                            Log.e("TAG", "onResponse: " + response.body().getResult() );
+                            Toast.makeText(ChiTietDTPheDuyetActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else {
+                            Log.e("TAG", "onResponse: " + response.body().getMessage() );
+                        }
+                    } else {
+                        Log.e("TAG", "onResponse: " + response.message());
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<APIResponse<MessageResponse>> call, Throwable t) {
+                    //Xử lý lỗi
+                }
+            });
         });
 
     }
