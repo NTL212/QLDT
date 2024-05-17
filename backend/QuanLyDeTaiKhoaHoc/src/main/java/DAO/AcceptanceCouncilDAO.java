@@ -20,7 +20,7 @@ public class AcceptanceCouncilDAO {
 			preparedStatement.setString(1, aCouncilCode);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				String name = rs.getString("tennganh");
+				String name = rs.getString("tenhoidong");
 				String falcCode = rs.getString("khoa");
 				aCouncil = new AcceptanceCouncil(aCouncilCode, name, falcCode);
 			}

@@ -35,17 +35,19 @@ public class ProjectMemberDAO {
 		return lstProjMems;
 	}
     
-	public void insertProjectMember (ProjectMember projMem) {
+	public boolean insertProjectMember (ProjectMember projMem) {
 		Connection connection = JDBCUtil.getConnection();
+		boolean rowUpdated = false;
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PROJECT_MEMBER);
 			preparedStatement.setString(1, projMem.getStudent().getStudentCode());
 			preparedStatement.setString(2, projMem.getProject().getProjectCode());
-			preparedStatement.executeUpdate();
+			rowUpdated = preparedStatement.executeUpdate() > 0;
 		} catch (SQLException exception) {
 			HandleException.printSQLException(exception);
 		}
 		JDBCUtil.closeConnection(connection);
+		return rowUpdated;
 	}
 	
 	public boolean deleteProjectMember(ProjectMember projMem) throws SQLException {

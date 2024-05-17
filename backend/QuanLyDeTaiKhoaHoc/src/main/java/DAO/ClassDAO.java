@@ -22,7 +22,7 @@ public class ClassDAO {
 
 			while (rs.next()) {
 				String name = rs.getString("tenlop");
-				String majorCode = rs.getString("khoa");
+				String majorCode = rs.getString("manganh");
 				classDTO = new Class(classCode, name, majorCode);
 			}
 		} catch (SQLException exception) {
