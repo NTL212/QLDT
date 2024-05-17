@@ -73,6 +73,7 @@ public interface APIService {
 
     @GET("project/showdetailform")
     Call<APIResponse<Project>> getDetailProject(@Query("id") String id);
+
     @POST("lecturer-project/submit")
     @Multipart
     Call<APIResponse<FileDTO>> submitFileLecture(
@@ -129,16 +130,27 @@ public interface APIService {
 
     @POST("project/api/updateProject")
     Call<APIResponse<Project>> updateProject(@Body Project project);
+
     @POST("project/api/getPendingApproval")
     Call<APIResponse<List<DeTaiCanPheDuyet>>> getPendingApproval();
+
     @FormUrlEncoded
     @POST("project/api/approveproject")
     Call<APIResponse<MessageResponse>> approveProject(@Field("managerCode") String managerCode,
                                                       @Field("idLec") String idLec,
                                                       @Field("pro") String pro);
+
     @FormUrlEncoded
     @POST("project/api/disagreeproject")
     Call<APIResponse<MessageResponse>> disagreeProject(@Field("managerCode") String managerCode,
-                                                      @Field("idLec") String idLec,
-                                                      @Field("pro") String pro);
+                                                       @Field("idLec") String idLec,
+                                                       @Field("pro") String pro);
+
+    @POST("manager-notification/api/sendMessage")
+    @FormUrlEncoded
+    Call<APIResponse<Notification>> sendMessageManager(@Field("managerId") String managerCode,
+                                                       @Field("recieveId") String receiveId,
+                                                       @Field("messagetitle") String title,
+                                                       @Field("messagecontent") String content);
+
 }

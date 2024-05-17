@@ -70,7 +70,10 @@ public class NotificationDAO {
 			preparedStatement.setString(1, noti.getSender().getUsername());
 			preparedStatement.setString(2, noti.getReceiver().getUsername());
 			preparedStatement.setString(3, noti.getTitle());
+			System.out.println("danhdau1");
 			preparedStatement.setString(4, noti.getContent());
+			System.out.println("danhdau2");
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException exception) {
 			HandleException.printSQLException(exception);

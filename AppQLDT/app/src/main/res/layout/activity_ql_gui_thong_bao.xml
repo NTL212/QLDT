@@ -72,23 +72,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Người gửi: "
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtNguoiGui"
-                android:hint="Nhập người gửi"
-                android:inputType="text"
-                android:textSize="16sp" />
-        </TableRow>
+            android:layout_height="wrap_content"/>
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -105,6 +89,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtNguoiNhan"
             android:hint="Nhập người nhận"
+            android:layout_weight="1"
+
             android:inputType="text"
             android:textSize="16sp" />
     </TableRow>
@@ -122,6 +108,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+
             android:id="@+id/edtTieuDe"
             android:hint="Nhập tiêu đề"
             android:inputType="text"
@@ -142,6 +130,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_margin="16dp"
             android:id="@+id/edtNoiDung"
             android:hint="Nhập nội dung"

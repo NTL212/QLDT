@@ -65,6 +65,8 @@ public class ManagerNotifycationController extends HttpServlet {
 				getRecieveMessage(request, response);
 				break;
 			case "/api/sendMessage":
+				System.out.println("Send Message");
+
 				sendMessage(request, response);
 				break;
 			case "/api/sendApproveProjectMessage":
@@ -163,8 +165,14 @@ public class ManagerNotifycationController extends HttpServlet {
         JsonResponse<NoticeDTO> jsonResponse = null;
     	try {
     		Notification noti = new Notification(managerId,recievePerson, messageTitle, messageContent,LocalDateTime.now());
+    		System.out.println("gui");
+
     		notificationDAO.insertNotification(noti);
+    		System.out.println("gu2");
+
     		NoticeDTO noticeDTO = new NoticeDTO(noti);
+    		System.out.println("gui3");
+
     		jsonResponse = new JsonResponse<NoticeDTO>(true, HttpServletResponse.SC_CREATED, "Thông báo đã gửi thành công", noticeDTO);
 
         } catch (Exception e) {
