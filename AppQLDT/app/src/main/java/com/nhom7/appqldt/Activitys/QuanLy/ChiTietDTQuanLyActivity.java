@@ -97,7 +97,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
                         ProjectChiTietQL project = response.body().getResult();
                         Log.e("TAG", "onResponse: " + project);
                         tvChiTietMaDeTai.setText(project.getId());
-                        tvChiTietTenDeTai.setText(project.getTopic().getName());
+                        tvChiTietTenDeTai.setText(project.getName());
                         tvChiTietChuDe.setText(project.getTopic().getName());
                         tvChiTietNgayDang.setText(project.getCreateDate());
                         tvChiTietNgayMoDang.setText(project.getStartDate());
