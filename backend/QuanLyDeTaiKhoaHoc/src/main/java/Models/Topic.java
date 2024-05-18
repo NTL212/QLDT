@@ -15,6 +15,7 @@ public class Topic {
 		super();
 		this.topicCode = topicCode;
 		this.name = name;
+		this.isEnabled=isEnabled;
 	}
 
 	public String getTopicCode() {

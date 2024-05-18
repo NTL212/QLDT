@@ -40,6 +40,7 @@ public class TopicDAO {
 	public List<Topic> selectAllTopic() {
 		Connection connection = JDBCUtil.getConnection();
 		List<Topic> listtopic = new ArrayList<Topic>();
+		System.out.println("tai day");
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TOPIC);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -47,7 +48,10 @@ public class TopicDAO {
 				Topic topic = new Topic();
 				String ms = rs.getString("maso");
 				String name = rs.getString("ten");
-				boolean isEnabled = rs.getBoolean("status");
+//				boolean isEnabled = rs.getBoolean("status");
+			    byte[] statusBytes = rs.getBytes("status");
+			    boolean isEnabled = (statusBytes != null && statusBytes.length > 0 && statusBytes[0] != 0);
+
 				topic = new Topic(ms, name, isEnabled);
 				listtopic.add(topic);
 			}
