@@ -32,7 +32,48 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
+        <activity
+            android:name=".Activitys.Admin.ChinhSuaAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ChiTietAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ChinhSuaHocSinhAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ChiTietHocSinhAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ThemHocSinhAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.DanhSachHocSinhAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ChinhSuaQuanLyAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ChinhSuaGiangVienAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ChiTietQuanLyAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ChiTietGiangVienAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ThemQuanLyAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.ThemGiangVienAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.DanhSachQuanLyAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.Admin.DanhSachGiangVienAdminActivity"
+            android:exported="false" />
         <activity
             android:name=".Activitys.GiangVien.GVGuiThongBaoActivity"
             android:exported="false" />

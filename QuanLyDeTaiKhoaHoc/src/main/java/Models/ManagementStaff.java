@@ -19,6 +19,7 @@ public class ManagementStaff extends User {
 		this.phoneNum = phoneNum;
 		this.email = email;
 		this.sex = sex;
+		this.address = address;
 	}
 
 	public String getEmpCode() {

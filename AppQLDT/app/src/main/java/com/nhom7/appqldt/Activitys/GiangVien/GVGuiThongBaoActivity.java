@@ -158,7 +158,10 @@ public class GVGuiThongBaoActivity extends AppCompatActivity {
                         List<Account> listAcc = response.body().getResult();
                         List<String> accNames = new ArrayList<>();
                         for (Account acc : listAcc) {
-                            accNames.add(acc.getUsername());
+                            if(!acc.getRole().contains("ROLE_ADMIN")){
+                                accNames.add(acc.getUsername());
+                            }
+
                         }
                         // Tạo adapter cho Spinner
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(GVGuiThongBaoActivity.this, android.R.layout.simple_spinner_item, accNames);

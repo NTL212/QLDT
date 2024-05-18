@@ -6,6 +6,16 @@ import Models.Lecturer;
 public class LectureDTO {
 	private Lecturer lecturer;
 	private Account account;
+	
+	
+	public LectureDTO() {
+		super();
+	}
+	public LectureDTO(Lecturer lecturer, Account account) {
+		super();
+		this.lecturer = lecturer;
+		this.account = account;
+	}
 	public Lecturer getLecturer() {
 		return lecturer;
 	}

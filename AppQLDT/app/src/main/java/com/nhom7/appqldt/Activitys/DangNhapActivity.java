@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +26,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Activitys.Admin.DanhSachQuanLyAdminActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ChiTietDeTaiActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.DeXuatDTActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ListDeTaiActivity;
+import com.nhom7.appqldt.Activitys.GiangVien.ThongTinCaNhanActivity;
 import com.nhom7.appqldt.Activitys.QuanLy.ListChuDeActivity;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Account;
@@ -115,6 +119,12 @@ public class DangNhapActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
         Call<APIResponse<Account>> call = apiService.login(username, password);
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang đăng nhập");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         call.enqueue(new Callback<APIResponse<Account>>() {
             @Override
             public void onResponse(Call<APIResponse<Account>> call, Response<APIResponse<Account>> response) {
@@ -134,11 +144,17 @@ public class DangNhapActivity extends AppCompatActivity {
                             editor.remove("checked");
                             editor.commit();
                         }
+
+                        progressDialog.dismiss();
+
                         if (loginResponse.getResult().getRole().contains("ROLE_LECT")) {
                             intent = new Intent(DangNhapActivity.this, ListDeTaiActivity.class);
                             startActivity(intent);
                         } else if (loginResponse.getResult().getRole().contains("ROLE_MGT_STAFF")) {
                             intent = new Intent(DangNhapActivity.this, ListChuDeActivity.class);
+                            startActivity(intent);
+                        }else if (loginResponse.getResult().getRole().contains("ROLE_ADMIN")) {
+                            intent = new Intent(DangNhapActivity.this, DanhSachQuanLyAdminActivity.class);
                             startActivity(intent);
                         }
                     } else {
@@ -147,11 +163,14 @@ public class DangNhapActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(DangNhapActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
 
             @Override
             public void onFailure(Call<APIResponse<Account>> call, Throwable t) {
                 Toast.makeText(DangNhapActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
     }

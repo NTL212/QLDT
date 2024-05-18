@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,7 +60,7 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
     Button btnChiTietFileBaoCao,btnNopBaoCao, btnXemThanhVien;
     String projectCode;
     String username;
-
+    ProgressDialog progressDialog;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     byte[] data;
@@ -106,43 +107,52 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<APIResponse<Project>> call, Response<APIResponse<Project>> response) {
                     if(response.isSuccessful()){
+                        try{
+                            Project project = response.body().getResult();
+                            DecimalFormat decimalFormat = new DecimalFormat("#");
+                            tvChiTietMaDeTai.setText(project.getProjectCode());
+                            tvChiTietTenDeTai.setText(project.getName());
+                            tvChiTietChuDe.setText(project.getTopic().getName());
+                            tvChiTietNgayDang.setText(project.getCreateDate());
+                            tvChiTietNgayKetThucDang.setText(project.getCloseRegDate());
+                            tvChiTietNgayBatDau.setText(project.getStartDate());
+                            tvChiTietNgayKetThuc.setText(project.getEndDate());
+                            tvChiTietNgayNghiemThu.setText(project.getAcceptanceDate());
+                            tvChiTietKinhPhi.setText(decimalFormat.format(project.getEstBudget()) +" VNĐ");
+                            tvChiTieSoThanhVien.setText(String.valueOf(project.getMaxMember()));
+                            tvChiTietNguoiDang.setText(project.getLecturer().getName());
+                            tvChiTietNgayMoDang.setText(project.getOpenRegDate());
+                            tvChiTietMoTa.setText(project.getDescription());
 
-                        Project project = response.body().getResult();
-                        DecimalFormat decimalFormat = new DecimalFormat("#");
-                        tvChiTietMaDeTai.setText(project.getProjectCode());
-                        tvChiTietTenDeTai.setText(project.getName());
-                        tvChiTietChuDe.setText(project.getTopic().getName());
-                        tvChiTietNgayDang.setText(project.getCreateDate());
-                        tvChiTietNgayKetThucDang.setText(project.getCloseRegDate());
-                        tvChiTietNgayBatDau.setText(project.getStartDate());
-                        tvChiTietNgayKetThuc.setText(project.getEndDate());
-                        tvChiTietNgayNghiemThu.setText(project.getAcceptanceDate());
-                        tvChiTietKinhPhi.setText(decimalFormat.format(project.getEstBudget()) +" VNĐ");
-                        tvChiTieSoThanhVien.setText(String.valueOf(project.getMaxMember()));
-                        tvChiTietNguoiDang.setText(project.getLecturer().getName());
-                        tvChiTietNgayMoDang.setText(project.getOpenRegDate());
-                        tvChiTietMoTa.setText(project.getDescription());
-
-                        btnXemThanhVien.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ListThanhVienDialog dialogFragment = new ListThanhVienDialog(ChiTietDTDaLamActivity.this, projectCode, null, project.getMaxMember());
-                                dialogFragment.show(getSupportFragmentManager(), "dialog_fragment_tag");
-                            }
-                        });
+                            btnXemThanhVien.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ListThanhVienDialog dialogFragment = new ListThanhVienDialog(ChiTietDTDaLamActivity.this, projectCode, null, project.getMaxMember());
+                                    dialogFragment.show(getSupportFragmentManager(), "dialog_fragment_tag");
+                                }
+                            });
+                        }catch (Exception e){
+                            DialogHelper.showFailedDialog(getApplicationContext(), e.getMessage());
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<APIResponse<Project>> call, Throwable t) {
-
+                    DialogHelper.showFailedDialog(getApplicationContext(), t.getMessage());
                 }
             });
         }
 
         tvChiTietFileBaoCao.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(ChiTietDTDaLamActivity.this);
+                progressDialog.setMessage("Đang tải...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 if(tvChiTietFileBaoCao.getText().toString().contains("Không có file")){
                     return;
                 }else {
@@ -328,7 +338,6 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
 
 
     private void downloadAndSaveFile(String fileUrl, String filename) {
-        tvDangTai.setVisibility(View.VISIBLE);
         // Kiểm tra xem URL tệp có hợp lệ không
         if (fileUrl != null && !fileUrl.isEmpty()) {
             // Tạo một tham chiếu tới Firebase Storage với URL tệp
@@ -353,7 +362,7 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 // Đóng luồng đầu ra sau khi ghi xong
                                 try {
-                                    tvDangTai.setVisibility(View.GONE);
+                                    progressDialog.dismiss();
                                     outputStream.close();
                                     DialogHelper.showSuccessDialog(ChiTietDTDaLamActivity.this, "Tải file thành công");
                                     // Hiển thị thông báo khi tệp đã được lưu thành công

@@ -9,7 +9,6 @@
     android:background="@drawable/item_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <TextView
         android:id="@+id/tvMaDeTai"
         android:layout_width="70dp"

@@ -6,10 +6,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import DTO.AccountDTO;
 import Models.Account;
 import Models.Project;
 import Models.Admin;
@@ -68,8 +68,6 @@ public class AccountDAO {
 		JDBCUtil.closeConnection(conn);
 		return accountList;
 	}
-	
-
 
 	public Account selectByUsername(String username) {
 		Account acc = null;
@@ -203,5 +201,25 @@ public class AccountDAO {
 		}
 		JDBCUtil.closeConnection(connection);
 		return rowUpdated;
+	}
+	public Account selectAccountByUsername(String Username) {
+		Connection connection = JDBCUtil.getConnection();
+		Account account = null;
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
+			preparedStatement.setString(1, Username);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				String username = rs.getString("username");
+				String pass = rs.getString("pass");
+				String role = rs.getString("role");
+				account = new Account(username, pass, role);
+			}
+		} catch (SQLException exception) {
+			HandleException.printSQLException(exception);
+		}
+		JDBCUtil.closeConnection(connection);
+		return account;
 	}
 }

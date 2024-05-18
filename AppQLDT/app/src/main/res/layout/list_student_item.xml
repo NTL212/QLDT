@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="5dp"
-    android:padding="10dp"
     android:layout_margin="15dp"
     android:background="@drawable/item_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="10dp">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="MissingConstraints">
         <TextView
-            android:id="@+id/tv_TV_MSSV"
-            android:layout_marginRight="10dp"
+            android:id="@+id/tv_DSHS_Admin_STT"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MSSV" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="STT">
+
+        </TextView>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +40,7 @@
                 tools:ignore="MissingConstraints">
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/tv_TV_HoTen"
+                    android:id="@+id/tv_DSHS_Admin_HoTen"
                     android:layout_width="242dp"
                     android:layout_height="match_parent"
                     android:text="Họ tên" />
@@ -50,17 +54,10 @@
                 tools:ignore="MissingConstraints">
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/tv_TV_NamSinh"
+                    android:id="@+id/tv_DSHS_Admin_NamSinh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ngày sinh" />
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/tv_TV_Lop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lớp" />
             </LinearLayout>
 
             <LinearLayout
@@ -70,30 +67,26 @@
                 android:orientation="horizontal"
                 tools:ignore="MissingConstraints">
                 <TextView
-                    android:id="@+id/tv_TV_Khoa"
+                    android:id="@+id/tv_DSHS_Admin_Khoa"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Khoa" />
-
-
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+                <TextView
+                    android:id="@+id/tv_DSHS_Admin_Lop"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lớp" />
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="end"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/btnXoaThanhVien"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#F44336"
-                android:padding="-100dp"
-                android:text="X"
-                tools:layout_editor_absoluteY="645dp" />
-        </LinearLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.nhom7.appqldt.Activitys.GiangVien;
 import static android.R.layout.simple_spinner_dropdown_item;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -10,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,6 +31,8 @@ import android.widget.Toast;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Activitys.Admin.ChiTietGiangVienAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.DanhSachGiangVienAdminActivity;
 import com.nhom7.appqldt.Helpers.DangNhapHelper;
 import com.nhom7.appqldt.Helpers.DateHelper;
 import com.nhom7.appqldt.Helpers.DialogHelper;
@@ -88,60 +92,72 @@ public class DeXuatDTActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                try{
-                    Project project = new Project();
-                    project.setProjectCode(tvChiTietMaDeTai.getText().toString());
-                    project.setName(tvChiTietTenDeTai.getText().toString());
-                    project.setDescription(tvChiTietMoTa.getText().toString());
-                    project.setMaxMember(Integer.valueOf(tvChiTieSoThanhVien.getText().toString()));
-                    project.setStartDate(DateHelper.convertToStandardDate(tvChiTietNgayBatDau.getText().toString().trim()));
-                    project.setEndDate(DateHelper.convertToStandardDate(tvChiTietNgayKetThuc.getText().toString().trim()));
-                    project.setEstBudget(Double.valueOf(tvChiTietKinhPhi.getText().toString()));
+                new AlertDialog.Builder(DeXuatDTActivity.this)
+                        .setTitle("Đề xuất đề tài")
+                        .setMessage("Bạn có chắc chắn muốn đề xuất đề tài này không ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try{
+                                    Project project = new Project();
+                                    project.setProjectCode(tvChiTietMaDeTai.getText().toString());
+                                    project.setName(tvChiTietTenDeTai.getText().toString());
+                                    project.setDescription(tvChiTietMoTa.getText().toString());
+                                    project.setMaxMember(Integer.valueOf(tvChiTieSoThanhVien.getText().toString()));
+                                    project.setStartDate(DateHelper.convertToStandardDate(tvChiTietNgayBatDau.getText().toString().trim()));
+                                    project.setEndDate(DateHelper.convertToStandardDate(tvChiTietNgayKetThuc.getText().toString().trim()));
+                                    project.setEstBudget(Double.valueOf(tvChiTietKinhPhi.getText().toString()));
 
-                    project.setTopic(topic);
-                    project.setLecturer(lecturer);
+                                    project.setTopic(topic);
+                                    project.setLecturer(lecturer);
 
-                    project.setProposed(false);
+                                    project.setProposed(false);
 
-                    APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
-                    Call<APIResponse<Project>> call = apiService.proposeProjectForLecturer(project);
+                                    APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+                                    Call<APIResponse<Project>> call = apiService.proposeProjectForLecturer(project);
 
-                    call.enqueue(new Callback<APIResponse<Project>>() {
-                        @Override
-                        public void onResponse(Call<APIResponse<Project>> call, Response<APIResponse<Project>> response) {
-                            if (response.isSuccessful()) {
-                                APIResponse<Project> projectAPIResponse = response.body();
-                                if (projectAPIResponse.isSuccess()) {
-                                    DialogHelper.showDialog(DeXuatDTActivity.this, // Context của Activity hiện tại
-                                            "Thông báo", // Tiêu đề của dialog
-                                            "Đề xuất đề tài " + project.getProjectCode() + " thành công", // Nội dung của dialog
-                                            "OK", // Text của nút Positive
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    // Xử lý sự kiện khi người dùng nhấn nút Positive
-                                                    dialog.dismiss(); // Đóng dialog sau khi người dùng nhấn nút Positive (tùy chọn)
-                                                    Intent intent = new Intent(DeXuatDTActivity.this, ListDeTaiCuaToiActivity.class);
-                                                    startActivity(intent);
+                                    call.enqueue(new Callback<APIResponse<Project>>() {
+                                        @Override
+                                        public void onResponse(Call<APIResponse<Project>> call, Response<APIResponse<Project>> response) {
+                                            if (response.isSuccessful()) {
+                                                APIResponse<Project> projectAPIResponse = response.body();
+                                                if (projectAPIResponse.isSuccess()) {
+                                                    DialogHelper.showDialog(DeXuatDTActivity.this, // Context của Activity hiện tại
+                                                            "Thông báo", // Tiêu đề của dialog
+                                                            "Đề xuất đề tài " + project.getProjectCode() + " thành công", // Nội dung của dialog
+                                                            "OK", // Text của nút Positive
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    // Xử lý sự kiện khi người dùng nhấn nút Positive
+                                                                    dialog.dismiss(); // Đóng dialog sau khi người dùng nhấn nút Positive (tùy chọn)
+                                                                    Intent intent = new Intent(DeXuatDTActivity.this, ListDeTaiCuaToiActivity.class);
+                                                                    startActivity(intent);
+                                                                }
+                                                            });
+                                                } else {
+                                                    DialogHelper.showFailedDialog(DeXuatDTActivity.this, projectAPIResponse.getMessage());
                                                 }
-                                            });
-                                } else {
-                                    DialogHelper.showFailedDialog(DeXuatDTActivity.this, projectAPIResponse.getMessage());
-                                }
-                                ;
-                            } else {
-                                DialogHelper.showFailedDialog(DeXuatDTActivity.this, "Thất bại");
-                            }
-                        }
+                                                ;
+                                            } else {
+                                                DialogHelper.showFailedDialog(DeXuatDTActivity.this, "Thất bại");
+                                            }
+                                        }
 
-                        @Override
-                        public void onFailure(Call<APIResponse<Project>> call, Throwable t) {
-                            DialogHelper.showFailedDialog(DeXuatDTActivity.this, "Không gọi được API");
-                        }
-                    });
-                }catch (Exception e){
-                    DialogHelper.showFailedDialog(DeXuatDTActivity.this, "Vui lòng nhập đủ thông tin");
-                }
+                                        @Override
+                                        public void onFailure(Call<APIResponse<Project>> call, Throwable t) {
+                                            DialogHelper.showFailedDialog(DeXuatDTActivity.this, "Không gọi được API");
+                                        }
+                                    });
+                                }catch (Exception e){
+                                    DialogHelper.showFailedDialog(DeXuatDTActivity.this, "Vui lòng nhập đủ thông tin");
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null) // Không làm gì khi nhấn "No"
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
             }
         });
 

@@ -85,8 +85,8 @@ public class StudentDAO {
 			preparedStatement.setString(5, student.getIdNum());
 			preparedStatement.setString(6, student.getPhoneNum());
 			preparedStatement.setString(7, student.getEmail());
-			boolean sex = student.getSex().equals("Nam") ? true : false;
-			preparedStatement.setBoolean(8, sex);
+			boolean sex = student.getSex().equals("Nam");
+	        preparedStatement.setBoolean(8, sex);
 			preparedStatement.setString(9, student.getClassDTO().getClassCode());
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 		} catch (SQLException exception) {
@@ -108,8 +108,8 @@ public class StudentDAO {
 			preparedStatement.setString(4, student.getIdNum());
 			preparedStatement.setString(5, student.getPhoneNum());
 			preparedStatement.setString(6, student.getEmail());
-			boolean sex = student.getSex().equals("Nam") ? true : false;
-			preparedStatement.setBoolean(7, sex);
+			boolean sex = student.getSex().equals("Nam");
+		    preparedStatement.setBoolean(7, sex);
 			preparedStatement.setString(8, student.getClassDTO().getClassCode());
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 		} catch (SQLException exception) {
@@ -118,4 +118,21 @@ public class StudentDAO {
 		JDBCUtil.closeConnection(connection);
 		return rowUpdated;
 	}
+    public boolean deleteStudent(String studentCode) throws SQLException {
+        Connection connection = JDBCUtil.getConnection();
+        boolean rowDeleted = false;
+        String DELETE_STUDENT = "DELETE FROM sinhvien WHERE mssv = ?"; // Assuming table name is 'Students' and primary key is 'studentCode'
+        
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_STUDENT);
+            preparedStatement.setString(1, studentCode);
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            HandleException.printSQLException(exception);
+        } finally {
+            JDBCUtil.closeConnection(connection);
+        }
+        return rowDeleted;
+    }
+
 }

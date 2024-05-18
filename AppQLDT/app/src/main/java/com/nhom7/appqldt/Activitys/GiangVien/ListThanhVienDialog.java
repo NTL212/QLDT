@@ -82,10 +82,8 @@ public class ListThanhVienDialog extends DialogFragment {
                         // Khởi tạo RecyclerView
                         RecyclerView recyclerView = view.findViewById(R.id.dialog_recyclerView);
                         recyclerView.setLayoutManager(linearLayoutManager);
-                        ThanhVienAdapter adapter = new ThanhVienAdapter(students, context, projectCode, getActivity().getSupportFragmentManager());
+                        ThanhVienAdapter adapter = new ThanhVienAdapter(students, context, projectCode, getActivity().getSupportFragmentManager(), ListThanhVienDialog.this);
                         recyclerView.setAdapter(adapter);
-
-
 
                     }
                 }
@@ -96,8 +94,6 @@ public class ListThanhVienDialog extends DialogFragment {
 
             }
         });
-
-
 
         btnThemThanhVien = view.findViewById(R.id.btnThemThanhVien);
         if(role==null){
@@ -110,6 +106,7 @@ public class ListThanhVienDialog extends DialogFragment {
                 Intent intent = new Intent(context, ThemTVActivity.class);
                 intent.putExtra("projectCode", projectCode); // Gắn dữ liệu vào Intent
                 context.startActivity(intent);
+                dismiss();
             }
         });
 

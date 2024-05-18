@@ -85,11 +85,13 @@
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <Spinner
-                android:layout_weight="1"
                 android:id="@+id/spinnerNguoiNhan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </TableRow>
         <TableRow
@@ -104,13 +106,14 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:layout_weight="1"
+                android:id="@+id/edtTieuDe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/edtTieuDe"
+                android:layout_weight="1"
                 android:hint="Nhập tiêu đề"
                 android:inputType="text"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="TouchTargetSizeCheck" />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
@@ -128,7 +131,6 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 android:id="@+id/edtNoiDung"
                 android:hint="Nhập nội dung"
                 android:inputType="textMultiLine"

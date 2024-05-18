@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_chitietadmin_admin"
+        android:title="Thông tin admin"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_listlecturer_admin"
+        android:title="Danh sách giảng viên"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_addlecturer_admin"
+        android:title="Thêm giảng viên"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_listmanager_admin"
+        android:title="Danh sách quản lý"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_addmanager_admin"
+        android:title="Thêm quản lý"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_liststudent_admin"
+        android:title="Danh sách học sinh"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_addstudent_admin"
+        android:title="Thêm học sinh"
+        app:showAsAction="never" />
+</menu>

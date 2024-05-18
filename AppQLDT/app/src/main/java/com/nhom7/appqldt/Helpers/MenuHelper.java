@@ -5,6 +5,13 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nhom7.appqldt.Activitys.Admin.ChiTietAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.DanhSachGiangVienAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.DanhSachHocSinhAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.DanhSachQuanLyAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.ThemGiangVienAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.ThemHocSinhAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.ThemQuanLyAdminActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ChiTietDTDaLamActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.DanhSachTVActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.DeXuatDTActivity;
@@ -53,6 +60,36 @@ public class MenuHelper {
         }
         else if (id == R.id.action_inform_send) {
             intent = new Intent(context, GVGuiThongBaoActivity.class);
+            context.startActivity(intent);
+            return true;
+        }else if (id == R.id.action_listlecturer_admin) {
+            intent = new Intent(context, DanhSachGiangVienAdminActivity.class);
+            context.startActivity(intent);
+            return true;
+        } else if (id == R.id.action_addlecturer_admin) {
+            intent = new Intent(context, ThemGiangVienAdminActivity.class);
+            context.startActivity(intent);
+            return true;
+        } else if (id == R.id.action_listmanager_admin) {
+            intent = new Intent(context, DanhSachQuanLyAdminActivity.class);
+            context.startActivity(intent);
+            return true;
+        } else if (id == R.id.action_addmanager_admin) {
+            intent = new Intent(context, ThemQuanLyAdminActivity.class);
+            context.startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.action_liststudent_admin) {
+            intent = new Intent(context, DanhSachHocSinhAdminActivity.class);
+            context.startActivity(intent);
+            return true;
+        }else if (id == R.id.action_addstudent_admin) {
+            intent = new Intent(context, ThemHocSinhAdminActivity.class);
+            context.startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.action_chitietadmin_admin) {
+            intent = new Intent(context, ChiTietAdminActivity.class);
             context.startActivity(intent);
             return true;
         }

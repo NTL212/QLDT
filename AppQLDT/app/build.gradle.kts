@@ -52,6 +52,7 @@ dependencies {
 
     //Circle
     implementation("me.relex:circleindicator:2.1.6")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
     /**firebase dependencies*/
     implementation("com.google.firebase:firebase-auth:21.1.0")
