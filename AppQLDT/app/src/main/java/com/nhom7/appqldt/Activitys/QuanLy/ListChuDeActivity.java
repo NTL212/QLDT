@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +38,11 @@ import java.util.List;
 
 public class ListChuDeActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-List<ChuDe> chuDeList;
-ChuDeAdapter chuDeAdapter;
+    List<Topic> chuDeList;
+    ChuDeAdapter chuDeAdapter;
+    ImageButton edit, delete;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +61,9 @@ ChuDeAdapter chuDeAdapter;
         SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 //Lấy giá trị được lưu giữ ra
         TextView tvUserName = (TextView) findViewById(R.id.toolbar_title2);
-        tvUserName.setText(sharedPreferences.getString("username",""));
+        tvUserName.setText(sharedPreferences.getString("username", ""));
         chuDeList = new ArrayList<>();
-//        chuDeList.add(new ChuDe(1, "Chủ đề 1", 10, true));
-//        chuDeList.add(new ChuDe(2, "Chủ đề 2", 10, false));
-//        chuDeList.add(new ChuDe(3, "Chủ đề 3", 10, true));
+
         showListChuDe();
 
         recyclerView = findViewById(R.id.recycler_view_chudes);
@@ -75,11 +78,14 @@ ChuDeAdapter chuDeAdapter;
             showListChuDe();
 
         });
+//        lay ra button edit trong item chu de
+//        Button edit = findViewById(R.id.edit);
 
     }
+
     List<Topic> topicList = new ArrayList<>();
 
-    void showListChuDe(){
+    void showListChuDe() {
         topicList.clear();
         chuDeList.clear();
         APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
@@ -90,17 +96,19 @@ ChuDeAdapter chuDeAdapter;
                     Log.e("TAG", "onResponse: " + response.body().getResult());
                     topicList = response.body().getResult();
                     for (Topic topic : topicList) {
-                        chuDeList.add(new ChuDe(1, topic.getName(), 0, topic.isEnabled()));
+                        chuDeList.add(new Topic(topic.getTopicCode(), topic.getName(),topic.isEnabled()));
                     }
                     chuDeAdapter.notifyDataSetChanged();
-                    }
+                }
             }
+
             @Override
             public void onFailure(retrofit2.Call<APIResponse<List<Topic>>> call, Throwable t) {
                 t.printStackTrace();
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_quanly, menu);
@@ -144,11 +152,11 @@ ChuDeAdapter chuDeAdapter;
                         Log.e("TAG", "onResponse: " + response.body().getStatusCode());
                         showListChuDe();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(ListChuDeActivity.this, "Thêm chủ đề thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(retrofit2.Call<APIResponse<Topic>> call, Throwable t) {
                 t.printStackTrace();
@@ -157,7 +165,36 @@ ChuDeAdapter chuDeAdapter;
     }
 
 
-    public void loadListChuDe(){
+    public void loadListChuDe() {
 
+    }
+
+    public void showeditChuDe(Topic chuDe) {
+        UpdateChuDeDialog updateChuDeDialog = new UpdateChuDeDialog(chuDe);
+        updateChuDeDialog.show(getFragmentManager(), "Update Chu De");
+        showListChuDe();
+
+    }
+
+
+    public void removeChuDe(Topic chuDe) {
+    }
+
+    public void editCD(Topic chuDe) {
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        apiService.updateTopic(chuDe).enqueue(new retrofit2.Callback<APIResponse<Topic>>() {
+            @Override
+            public void onResponse(retrofit2.Call<APIResponse<Topic>> call, retrofit2.Response<APIResponse<Topic>> response) {
+                if (response.body() != null) {
+                    Toast.makeText(ListChuDeActivity.this, "Sửa chủ đề thành công", Toast.LENGTH_SHORT).show();
+                    showListChuDe();
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<APIResponse<Topic>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

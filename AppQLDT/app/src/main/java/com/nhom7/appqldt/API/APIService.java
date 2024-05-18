@@ -153,4 +153,9 @@ public interface APIService {
                                                        @Field("messagetitle") String title,
                                                        @Field("messagecontent") String content);
 
+
+    @PUT("api/topic")
+    Call<APIResponse<Topic>> updateTopic(@Body Topic tp);
+
+
 }
