@@ -116,8 +116,12 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
                     Log.e(TAG, "onResponse: " + listDeTai.size());
                     deTaiAdapter = new DeTaiAdapter(QuanLyDeTaiActivity.this, listDeTai);
                     recyclerView.setAdapter(deTaiAdapter);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(QuanLyDeTaiActivity.this, LinearLayoutManager.VERTICAL, false);
                     recyclerView.setLayoutManager(linearLayoutManager);
+                    SpaceItemDecoration dividerItemDecoration = new SpaceItemDecoration(20);
+                    recyclerView.addItemDecoration(dividerItemDecoration);
+
+//                    set margin
                     deTaiAdapter.notifyDataSetChanged();
                 } else {
                     Log.e(TAG, "onResponse: " + response.message());
