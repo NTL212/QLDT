@@ -52,7 +52,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
 
         tvChiTietKinhPhi = findViewById(R.id.tvChiTietKinhPhi);
         tvChiTieSoThanhVien = findViewById(R.id.tvChiTieSoThanhVien);
-        tvChiTietMoTa = findViewById(R.id.tvChiTietMoTa);
+//        tvChiTietMoTa = findViewById(R.id.tvChiTietMoTa);
         displayData(maDeTai);
         btnSuaDeTai = (Button) findViewById(R.id.btnSuaChiTietDeTai);
 
@@ -108,7 +108,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
                         String doubleString = String.valueOf(project.getEstBudget());
                         tvChiTietKinhPhi.setText(doubleString);
                         tvChiTieSoThanhVien.setText(project.getMaxMember()+"");
-                        tvChiTietMoTa.setText(project.getDescription());
+//                        tvChiTietMoTa.setText(project.getDescription());
 
                     }
                     else {
