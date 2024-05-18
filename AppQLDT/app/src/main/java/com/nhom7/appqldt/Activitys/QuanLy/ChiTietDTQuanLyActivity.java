@@ -68,6 +68,9 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
                 SuaDeTaiDiaLog suaDeTaiDiaLog = new SuaDeTaiDiaLog();
                 suaDeTaiDiaLog.setProject(project);
                 suaDeTaiDiaLog.show(getSupportFragmentManager(), "SuaDeTaiDiaLog");
+//                full screen
+
+
             }
         });
 //        btnxoadeTai.setOnClickListener(new View.OnClickListener() {

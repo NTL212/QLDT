@@ -24,6 +24,7 @@
                 android:id="@+id/editTextMaDeTai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:inputType="text" />
         </TableRow>
 
@@ -38,6 +39,7 @@
                 android:id="@+id/editTextTenDeTai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:inputType="text" />
         </TableRow>
 
@@ -52,19 +54,20 @@
                 android:id="@+id/spinnerCD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_weight="1" />
         </TableRow>
         <TableRow>
             <TextView
                 android:id="@+id/textViewNgayMoDangKy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ngày mở đăng ký:" />
+                android:text="Ngày mở ĐK:" />
 
             <EditText
                 android:id="@+id/editTextNgayMoDangKy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:inputType="date" />
         </TableRow>
 
@@ -73,12 +76,13 @@
                 android:id="@+id/textViewNgayKetThucDangKy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ngày kết thúc đăng ký:" />
+                android:text="Ngày kết thúc ĐK:" />
 
             <EditText
                 android:id="@+id/editTextNgayKetThucDangKy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:inputType="date" />
         </TableRow>
 
@@ -93,6 +97,7 @@
                 android:id="@+id/editTextNgayBatDau"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:inputType="date" />
         </TableRow>
 
@@ -107,6 +112,7 @@
                 android:id="@+id/editTextNgayHetHan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:inputType="date" />
         </TableRow>
 
@@ -121,6 +127,7 @@
                 android:id="@+id/editTextNgayNghiemThu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:inputType="date" />
         </TableRow>
 
@@ -135,6 +142,7 @@
                 android:id="@+id/editTextKinhPhiDuKien"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:autofillHints="money"
                 android:inputType="numberDecimal" />
         </TableRow>
@@ -144,12 +152,13 @@
                 android:id="@+id/textViewSoLuongTVToiDa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số lượng thành viên tối đa:" />
+                android:text="Số lượng TV tối đa:" />
 
             <EditText
                 android:id="@+id/editTextSoLuongTVToiDa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:autofillHints=""
                 android:inputType="number" />
         </TableRow>

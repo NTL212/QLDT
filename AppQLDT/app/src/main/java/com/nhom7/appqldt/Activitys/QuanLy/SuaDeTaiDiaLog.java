@@ -2,6 +2,7 @@ package com.nhom7.appqldt.Activitys.QuanLy;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,6 +43,26 @@ import java.util.List;
 public class SuaDeTaiDiaLog extends DialogFragment {
 
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // Loại bỏ tiêu đề của Dialog
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        return dialog;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Lấy kích thước hiện tại của cửa sổ
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        // Đặt chiều rộng và chiều cao cho Dialog
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+    }
 
     public SuaDeTaiDiaLog() {
         // Required empty public constructor
