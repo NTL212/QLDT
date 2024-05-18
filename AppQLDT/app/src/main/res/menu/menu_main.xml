@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_registerProject"
+        android:title="Đăng ký đề tài"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_suggestedProject"
+        android:title="Đề xuất đề tài"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_doneProject"
+        android:title="Đề tài của tôi"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_projectMember"
+        android:title="Thành viên"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_profile"
+        android:title="Thông tin cá nhân"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_inform_sended"
+        android:title="Thông báo đã gửi"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_inform_received"
+        android:title="Thông báo đã nhận"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_inform_send"
+        android:title="Gửi thông báo"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Đăng xuất"
+        app:showAsAction="never" />
+
+</menu>
