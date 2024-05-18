@@ -328,15 +328,6 @@
                     android:text="Sửa"
                     tools:layout_editor_absoluteY="645dp" />
 
-                <Button
-                    android:id="@+id/btnXoaDeTai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:text="Xoá"
-                    tools:layout_editor_absoluteX="216dp"
-                    tools:layout_editor_absoluteY="645dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -27,6 +27,8 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
 
     TextView tvChiTietMaDeTai, tvChiTietTenDeTai, tvChiTietChuDe, tvChiTietNgayDang, tvChiTietNgayMoDang, tvChiTietNgayKetThucDang, tvChiTietNgayBatDau, tvChiTietNgayKetThuc, tvChiTietNgayNghiemThu, tvChiTietKinhPhi, tvChiTieSoThanhVien, tvChiTietMoTa;
 
+
+    ProjectChiTietQL project;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,28 +55,30 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
         tvChiTietMoTa = findViewById(R.id.tvChiTietMoTa);
         displayData(maDeTai);
         btnSuaDeTai = (Button) findViewById(R.id.btnSuaChiTietDeTai);
-        btnxoadeTai = (Button) findViewById(R.id.btnXoaDeTai);
 
-
+        project = new ProjectChiTietQL();
         btnSuaDeTai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(ChiTietDTQuanLyActivity.this, SuaDeTaiActivity.class);
-                intent.putExtra("maDeTai", deTai.getId());
-                startActivity(intent);
-                displayData(maDeTai);
+//                Intent intent = new Intent(ChiTietDTQuanLyActivity.this, SuaDeTaiActivity.class);
+//                intent.putExtra("maDeTai", deTai.getId());
+//                startActivity(intent);
+//                displayData(maDeTai);
+                SuaDeTaiDiaLog suaDeTaiDiaLog = new SuaDeTaiDiaLog();
+                suaDeTaiDiaLog.setProject(project);
+                suaDeTaiDiaLog.show(getSupportFragmentManager(), "SuaDeTaiDiaLog");
             }
         });
-        btnxoadeTai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Xử lý sự kiện khi người dùng click vào nút xóa
-
-                Toast.makeText(ChiTietDTQuanLyActivity.this, "Xóa đề tài thành công", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
+//        btnxoadeTai.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Xử lý sự kiện khi người dùng click vào nút xóa
+//
+//                Toast.makeText(ChiTietDTQuanLyActivity.this, "Xóa đề tài thành công", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//        });
     }
 
     void displayData(String maDeTai) {
@@ -85,6 +89,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
             public void onResponse(Call<APIResponse<ProjectChiTietQL>> call, retrofit2.Response<APIResponse<ProjectChiTietQL>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().isSuccess()) {
+                        project = response.body().getResult();
                         Log.e("TAG", "onResponse: " + response.body().getResult() );
                         ProjectChiTietQL project = response.body().getResult();
                         Log.e("TAG", "onResponse: " + project);
@@ -101,6 +106,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
                         tvChiTietKinhPhi.setText(doubleString);
                         tvChiTieSoThanhVien.setText(project.getMaxMember()+"");
                         tvChiTietMoTa.setText(project.getDescription());
+
                     }
                     else {
 //                        Log.e("TAG", "onResponse: " + response.body().getMessage() );
@@ -119,5 +125,26 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
                 //Xử lý lỗi
             }
         });
+    }
+    void suadetai(Project project){
+        APIService apiService = RetrofitClient.getRetrofitInstance2().create(APIService.class);
+        apiService.updateProject(project).enqueue(new retrofit2.Callback<APIResponse<Project>>() {
+            @Override
+            public void onResponse(retrofit2.Call<APIResponse<Project>> call, retrofit2.Response<APIResponse<Project>> response) {
+                if (response.body().isSuccess()) {
+                    Toast.makeText(ChiTietDTQuanLyActivity.this, "Sửa đề tài thành công", Toast.LENGTH_SHORT).show();
+                    displayData(maDeTai);
+
+                } else {
+                    Toast.makeText(ChiTietDTQuanLyActivity.this, "Sửa đề tài thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<APIResponse<Project>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
     }
 }

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activitys.QuanLy.ChiTietDTQuanLyActivity">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1"
+        android:id="@+id/thendetai"
+        android:padding="16dp">
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewMaDeTai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã đề tài:" />
+
+            <EditText
+                android:id="@+id/editTextMaDeTai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewTenDeTai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên đề tài:" />
+
+            <EditText
+                android:id="@+id/editTextTenDeTai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewChuDe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chủ đề:" />
+
+            <Spinner
+                android:id="@+id/spinnerCD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewNgayMoDangKy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày mở đăng ký:" />
+
+            <EditText
+                android:id="@+id/editTextNgayMoDangKy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewNgayKetThucDangKy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày kết thúc đăng ký:" />
+
+            <EditText
+                android:id="@+id/editTextNgayKetThucDangKy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewNgayBatDau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày bắt đầu:" />
+
+            <EditText
+                android:id="@+id/editTextNgayBatDau"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewNgayHetHan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày hết hạn:" />
+
+            <EditText
+                android:id="@+id/editTextNgayHetHan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewNgayNghiemThu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày nghiệm thu:" />
+
+            <EditText
+                android:id="@+id/editTextNgayNghiemThu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewKinhPhiDuKien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kinh phí dự kiến:" />
+
+            <EditText
+                android:id="@+id/editTextKinhPhiDuKien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="money"
+                android:inputType="numberDecimal" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/textViewSoLuongTVToiDa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số lượng thành viên tối đa:" />
+
+            <EditText
+                android:id="@+id/editTextSoLuongTVToiDa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:inputType="number" />
+        </TableRow>
+
+        <Button
+            android:id="@+id/btnSuaDeTai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sữa đề tài" />
+
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
