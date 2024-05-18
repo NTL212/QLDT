@@ -154,7 +154,7 @@ public interface APIService {
                                                        @Field("messagecontent") String content);
 
 
-    @PUT("api/topic")
+    @PUT("topic")
     Call<APIResponse<Topic>> updateTopic(@Body Topic tp);
 
 

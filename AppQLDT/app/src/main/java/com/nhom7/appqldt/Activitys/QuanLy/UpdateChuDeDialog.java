@@ -81,7 +81,7 @@ public class UpdateChuDeDialog extends DialogFragment {
                 apiService.updateTopic(chuDe).enqueue(new retrofit2.Callback<APIResponse<Topic>>() {
                     @Override
                     public void onResponse(retrofit2.Call<APIResponse<Topic>> call, retrofit2.Response<APIResponse<Topic>> response) {
-                        Log.e("",response.body().toString());
+//                        Log.e("",response.body().toString());
                         Log.e("",response.toString());
 
                         if (response.body() != null) {
