@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_manageProject"
+        android:title="Quản lý đề tài"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_approveProject"
+        android:title="Phê duyệt đề tài"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_projectTopic"
+        android:title="Danh sách chủ đề"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sendNotification"
+        android:title="Gửi thông báo"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Đăng xuất"
+        app:showAsAction="never" />
+</menu>

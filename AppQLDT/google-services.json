@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "811027255127",
+    "project_id": "videoshort-9cefe",
+    "storage_bucket": "videoshort-9cefe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811027255127:android:e0f1a52022811fa06df812",
+        "android_client_info": {
+          "package_name": "com.thanhloi.videoshort_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG2sN_4-8pjFS-66w_D_NKKBX_C3rTmL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
