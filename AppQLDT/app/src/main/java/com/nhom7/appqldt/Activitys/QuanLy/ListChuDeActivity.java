@@ -6,30 +6,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Adapters.ChuDeAdapter;
 import com.nhom7.appqldt.Models.APIResponse;
-import com.nhom7.appqldt.Models.ChuDe;
-import com.nhom7.appqldt.Models.DeTai;
 import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
@@ -135,9 +124,9 @@ public class ListChuDeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void themChuDe(String maSo, String tenChuDe) {
+    public void themChuDe(String maSo, String tenChuDe, boolean isEnabled) {
         APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
-        Topic topic = new Topic(maSo, tenChuDe, true);
+        Topic topic = new Topic(maSo, tenChuDe, isEnabled);
         apiService.insertTopic(topic).enqueue(new retrofit2.Callback<APIResponse<Topic>>() {
             @Override
             public void onResponse(retrofit2.Call<APIResponse<Topic>> call, retrofit2.Response<APIResponse<Topic>> response) {

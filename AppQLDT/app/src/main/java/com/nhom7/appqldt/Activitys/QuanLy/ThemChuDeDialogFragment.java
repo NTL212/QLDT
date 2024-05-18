@@ -1,5 +1,6 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nhom7.appqldt.R;
@@ -18,6 +20,8 @@ public class ThemChuDeDialogFragment extends DialogFragment {
 
 
     EditText edtMaSo, edtTenChuDe;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch switchIsEnabled;
 
     public ThemChuDeDialogFragment() {
         // Required empty public constructor
@@ -42,14 +46,18 @@ public class ThemChuDeDialogFragment extends DialogFragment {
 
         edtMaSo = view.findViewById(R.id.edtMaSo);
         edtTenChuDe = view.findViewById(R.id.edtTenChuDe);
+        switchIsEnabled= view.findViewById(R.id.switchIsEnabled);
+
 
         view.findViewById(R.id.btnThem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String maSo = edtMaSo.getText().toString();
                 String tenChuDe = edtTenChuDe.getText().toString();
+                boolean isEnabled = switchIsEnabled.isChecked();
+
                 ListChuDeActivity activity = (ListChuDeActivity) getActivity();
-                activity.themChuDe(maSo, tenChuDe);
+                activity.themChuDe(maSo, tenChuDe,isEnabled);
                 dismiss();
 
             }

@@ -39,6 +39,12 @@
                 android:hint="Nhập tên chủ đề"
                 android:padding="10dp"/>
         </TableRow>
+        <Switch
+            android:id="@+id/switchIsEnabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Đang mở đăng Ký?"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
         <Button
             android:id="@+id/btnThem"
             android:layout_width="wrap_content"
