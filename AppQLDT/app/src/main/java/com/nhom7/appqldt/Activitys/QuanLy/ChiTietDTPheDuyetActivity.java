@@ -1,5 +1,6 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,13 +33,9 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chi_tiet_dtphe_duyet);
-        btnXemThanhVien = findViewById(R.id.btnXemThanhVien);
         btnPheDuyet = findViewById(R.id.btnPheDuyet);
         btnKhongPheDuyet = findViewById(R.id.btnKhongPheDuyet);
-        btnXemThanhVien.setOnClickListener(v -> {
-            XemThanhVienDeTaiDialogFragment dialogFragment = new XemThanhVienDeTaiDialogFragment();
-            dialogFragment.show(getSupportFragmentManager(), "XemThanhVienDeTaiDialogFragment");
-        });
+
         maDeTai = getIntent().getStringExtra("maDeTai");
         Toast.makeText(this, maDeTai, Toast.LENGTH_SHORT).show();
         ProjectChiTietQL deTai = new ProjectChiTietQL();
@@ -78,7 +75,9 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
                         if (response.body().isSuccess()) {
                             Log.e("TAG", "onResponse: " + response.body().getResult() );
                             Toast.makeText(ChiTietDTPheDuyetActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+//                            finish();
+                            Intent intent = new Intent(ChiTietDTPheDuyetActivity.this, PheDuyetDeTaiActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             Log.e("TAG", "onResponse: " + response.body().getMessage() );
@@ -107,7 +106,10 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
                         if (response.body().isSuccess()) {
 //                            Log.e("TAG", "onResponse: " + response.body().getResult() );
                             Toast.makeText(ChiTietDTPheDuyetActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+
+//                            finish();
+                            Intent intent = new Intent(ChiTietDTPheDuyetActivity.this, PheDuyetDeTaiActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             Log.e("TAG", "onResponse: " + response.body().getMessage() );
@@ -169,4 +171,5 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
             }
         });
     }
+
 }

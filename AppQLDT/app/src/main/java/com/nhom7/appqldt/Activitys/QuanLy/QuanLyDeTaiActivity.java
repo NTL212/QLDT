@@ -3,12 +3,14 @@ package com.nhom7.appqldt.Activitys.QuanLy;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -69,6 +71,10 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+//Lấy giá trị được lưu giữ ra
+        TextView tvUserName = (TextView) findViewById(R.id.toolbar_title2);
+        tvUserName.setText(sharedPreferences.getString("username", ""));
         anhxa();
         initializeData();
         recyclerView = findViewById(R.id.recycler_view_detais);
@@ -87,6 +93,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
 
 
     }
+//onBackPressed
 
     void anhxa() {
         btnThemDeTai = findViewById(R.id.btnThemDeTai);
@@ -98,7 +105,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initializeData() {
+    public void initializeData() {
 
         listDeTai = new ArrayList<>();
         Log.e(TAG, "onResponse: " + listDeTai.size());
@@ -141,7 +148,11 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if (id == R.id.action_sendNotification) {
+       if (id == R.id.action_projectTopic) {
+            intent = new Intent(this, ListChuDeActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id == R.id.action_sendNotification) {
             intent = new Intent(this, GuiThongBaoActivity.class);
             startActivity(intent);
             return true;
@@ -149,8 +160,12 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
             intent = new Intent(this, PheDuyetDeTaiActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_projectTopic) {
-            intent = new Intent(this, ListChuDeActivity.class);
+        }else if (id ==R.id.action_sendedNotification){
+            intent = new Intent(this, ThongBaoDaGui_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_receivedNotification){
+            intent = new Intent(this, ThongBaoNhan_QLActivity.class);
             startActivity(intent);
             return true;
         }

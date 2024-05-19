@@ -53,6 +53,10 @@
         <activity
             android:name=".Activitys.QuanLy.QuanLyDeTaiActivity"
             android:exported="false" />
+        <activity android:name=".Activitys.QuanLy.ThongBaoDaGui_QLActivity"
+            android:exported="false"/>
+        <activity android:name=".Activitys.QuanLy.ThongBaoNhan_QLActivity"
+            android:exported="false"/>
         <activity
             android:name=".Activitys.GiangVien.ThongBaoNhanActivity"
             android:exported="false" />

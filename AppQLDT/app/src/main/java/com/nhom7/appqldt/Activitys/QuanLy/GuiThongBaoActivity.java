@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Activitys.DangNhapActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.GVGuiThongBaoActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ThongBaoDaGuiActivity;
 import com.nhom7.appqldt.Helpers.DialogHelper;
@@ -32,7 +33,7 @@ public class GuiThongBaoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ql_gui_thong_bao);
+        setContentView(R.layout.activity_gui_thong_bao);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);// Gắn Toolbar vào ActionBar
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -42,6 +43,7 @@ public class GuiThongBaoActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
+
         nguoinhan = findViewById(R.id.edtNguoiNhan);
         tieude = findViewById(R.id.edtTieuDe);
         noidung = findViewById(R.id.edtNoiDung);
@@ -95,16 +97,29 @@ public class GuiThongBaoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if (id == R.id.action_projectTopic) {
-            intent = new Intent(this, ListChuDeActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_approveProject) {
+        if (id == R.id.action_approveProject) {
             intent = new Intent(this, PheDuyetDeTaiActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_manageProject) {
             intent = new Intent(this, QuanLyDeTaiActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_sendedNotification){
+            intent = new Intent(this, ThongBaoDaGui_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_receivedNotification){
+            intent = new Intent(this, ThongBaoNhan_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else
+        if (id == R.id.action_projectTopic) {
+            intent = new Intent(this, ListChuDeActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_logout) {
+            intent = new Intent(this, DangNhapActivity.class);
             startActivity(intent);
             return true;
         }

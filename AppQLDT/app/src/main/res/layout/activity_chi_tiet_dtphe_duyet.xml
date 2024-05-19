@@ -330,16 +330,7 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <Button
-                        android:id="@+id/btnXemThanhVien"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:layout_weight="1"
-                        android:text="Xem thành viên"
-                        tools:layout_editor_absoluteY="645dp" />
-                </TableRow>
+                    android:layout_weight="1"/>
 
             </TableLayout>
 

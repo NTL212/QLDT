@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Activitys.DangNhapActivity;
 import com.nhom7.appqldt.Adapters.ChuDeAdapter;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Topic;
@@ -118,6 +119,18 @@ public class ListChuDeActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_manageProject) {
             intent = new Intent(this, QuanLyDeTaiActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_sendedNotification){
+            intent = new Intent(this, ThongBaoDaGui_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_receivedNotification){
+            intent = new Intent(this, ThongBaoNhan_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_logout){
+            intent = new Intent(this, DangNhapActivity.class);
             startActivity(intent);
             return true;
         }

@@ -1,6 +1,6 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
-import android.app.Dialog;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Models.APIResponse;
-import com.nhom7.appqldt.Models.DeTai;
 import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.Models.ProjectChiTietQL;
 import com.nhom7.appqldt.R;
+
+import java.text.DecimalFormat;
 
 import retrofit2.Call;
 
@@ -82,6 +83,14 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
+
+        findViewById(R.id.btnreturn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChiTietDTQuanLyActivity.this, QuanLyDeTaiActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     void displayData(String maDeTai) {
@@ -92,20 +101,19 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
             public void onResponse(Call<APIResponse<ProjectChiTietQL>> call, retrofit2.Response<APIResponse<ProjectChiTietQL>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().isSuccess()) {
+                        DecimalFormat decimalFormat = new DecimalFormat("#");
                         project = response.body().getResult();
-                        Log.e("TAG", "onResponse: " + response.body().getResult() );
                         ProjectChiTietQL project = response.body().getResult();
-                        Log.e("TAG", "onResponse: " + project);
                         tvChiTietMaDeTai.setText(project.getId());
                         tvChiTietTenDeTai.setText(project.getName());
                         tvChiTietChuDe.setText(project.getTopic().getName());
                         tvChiTietNgayDang.setText(project.getCreateDate());
-                        tvChiTietNgayMoDang.setText(project.getStartDate());
-                        tvChiTietNgayKetThucDang.setText(project.getEndDate());
-                        tvChiTietNgayBatDau.setText(project.getOpenRegDate());
-                        tvChiTietNgayKetThuc.setText(project.getCloseRegDate());
+                        tvChiTietNgayMoDang.setText(project.getOpenRegDate());
+                        tvChiTietNgayKetThucDang.setText(project.getCloseRegDate());
+                        tvChiTietNgayBatDau.setText(project.getStartDate());
+                        tvChiTietNgayKetThuc.setText(project.getEndDate());
                         tvChiTietNgayNghiemThu.setText(project.getAcceptanceDate());
-                        String doubleString = String.valueOf(project.getEstBudget());
+                        String doubleString = decimalFormat.format(project.getEstBudget()) + " VNĐ";
                         tvChiTietKinhPhi.setText(doubleString);
                         tvChiTieSoThanhVien.setText(project.getMaxMember()+"");
 //                        tvChiTietMoTa.setText(project.getDescription());

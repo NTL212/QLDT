@@ -1,16 +1,24 @@
 package com.nhom7.appqldt.API;
 
+import com.nhom7.appqldt.Activitys.DTO.AdminDTO;
 import com.nhom7.appqldt.Activitys.DTO.FileDTO;
 import com.nhom7.appqldt.Activitys.DTO.ProjectDTO;
+import com.nhom7.appqldt.Activitys.DTO.StudentDTO;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Account;
+import com.nhom7.appqldt.Models.Class;
 import com.nhom7.appqldt.Models.DeTaiCanPheDuyet;
+import com.nhom7.appqldt.Models.Faculty;
 import com.nhom7.appqldt.Models.Lecturer;
+import com.nhom7.appqldt.Models.LecturerAccount;
+import com.nhom7.appqldt.Models.Major;
+import com.nhom7.appqldt.Models.ManagerAccount;
 import com.nhom7.appqldt.Models.MessageResponse;
 import com.nhom7.appqldt.Models.Notification;
 import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.Models.ProjectChiTietQL;
 import com.nhom7.appqldt.Models.Registration;
+import com.nhom7.appqldt.Models.Student;
 import com.nhom7.appqldt.Models.Topic;
 
 import java.util.List;
@@ -28,53 +36,52 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface APIService {
-    @GET("topic")
-    Call<APIResponse> getHelloWorld();
 
 
     // Lớp phản hồi để ánh xạ dữ liệu JSON
-    @POST("login")
+    @POST("api/login")
     @FormUrlEncoded
     Call<APIResponse<Account>> login(@Field("username") String username, @Field("password") String password);
     // Lớp phản hồi để ánh xạ dữ liệu JSON
 
 
-    @GET("project")
+    @GET("api/project")
     Call<APIResponse<List<Project>>> getAllProject();
 
-    @GET("lecturer-project/list")
+    @GET("lecturer-project/api/list")
     Call<APIResponse<List<Project>>> getAllProjectActiveProjectForLecturer();
 
-    @GET("lecturer-project/detail")
+    @GET("lecturer-project/api/listsearch")
+    Call<APIResponse<List<Project>>> getAllSearchProjectActiveProjectForLecturer(@Query("searchText") String searchText);
+
+    @GET("lecturer-project/api/detail")
     Call<APIResponse<Project>> getProjectDetailForLecturer(@Query("id") String id);
 
-    @GET("lecturer-project/get-lecture")
+    @GET("lecturer-project/api/get-lecture")
     Call<APIResponse<Lecturer>> getLecturerByID(@Query("id") String id);
 
-    @GET("lecturer-project/myproj")
-    Call<APIResponse<List<ProjectDTO>>> getAllMyProjectForLecturer(@Query("id") String id);
+    @GET("lecturer-project/api/myproj")
+    Call<APIResponse<List<ProjectDTO>>> getAllMyProjectForLecturer(@Query("id") String id, @Query("searchText") String searchText);
 
-    @POST("lecturer-project/propose")
+    @POST("lecturer-project/api/propose")
     Call<APIResponse<Project>> proposeProjectForLecturer(@Body Project project);
 
-    @POST("lecturer-project/register-project")
+    @POST("lecturer-project/api/register-project")
     @FormUrlEncoded
     Call<APIResponse<Registration>> regisProjectLecture(@Field("lectCode") String lectCode, @Field("projCode") String projectCode);
-
-    @GET("lecturer-notification/getSendMessage")
-    Call<APIResponse<List<Notification>>> getAllSendedMessageLecture(@Query("id") String id);
-
-    @GET("lecturer-notification/getNotify")
-    Call<APIResponse<List<Notification>>> getAllReceiveMessageLecture(@Query("id") String id);
-
-    @POST("lecturer-notification/sendMessage")
+    @POST("lecturer-project/api/editlecture")
     @FormUrlEncoded
-    Call<APIResponse<Notification>> sendMessageLecture(@Field("lectCode") String id, @Field("recieveperson") String receiveId, @Field("messagetitle") String title, @Field("messagecontent") String content);
+    Call<APIResponse<String>> editProfieLecture(@Field("adCode") String code,
+                                                @Field("name") String name,
+                                                @Field("birthday") String birthday,
+                                                @Field("address") String address,
+                                                @Field("idNum") String idNum,
+                                                @Field("phoneNum") String phoneNum,
+                                                @Field("email") String email,
+                                                @Field("sex") String sex,
+                                                @Field("falculityCode") String falculityCode);
 
-    @GET("project/showdetailform")
-    Call<APIResponse<Project>> getDetailProject(@Query("id") String id);
-
-    @POST("lecturer-project/submit")
+    @POST("lecturer-project/api/submit")
     @Multipart
     Call<APIResponse<FileDTO>> submitFileLecture(
             @Part MultipartBody.Part file,
@@ -82,9 +89,46 @@ public interface APIService {
             @Query("lectCode") String lectCode
     );
 
+    @GET("lecturer-project/api/getfile")
+    Call<APIResponse<FileDTO>> getFileByIdProAndLect(@Query("projCode") String projCode, @Query("lectCode") String lectCode);
 
-    @GET("topic")
+    @GET("lecturer-notification/api/getSendMessage")
+    Call<APIResponse<List<Notification>>> getAllSendedMessageLecture(@Query("id") String id);
+    @POST("manager-notification/api/getSendMessage")
+    Call<APIResponse<List<Notification>>> getAllSendedMessageManager(@Query("managerId") String managerId);
+
+    @GET("lecturer-notification/api/getNotify")
+    Call<APIResponse<List<Notification>>> getAllReceiveMessageLecture(@Query("id") String id);
+
+    @POST("lecturer-notification/api/sendMessage")
+    @FormUrlEncoded
+    Call<APIResponse<Notification>> sendMessageLecture(@Field("lectCode") String id, @Field("recieveperson") String receiveId, @Field("messagetitle") String title, @Field("messagecontent") String content);
+
+    @GET("project/api/showdetailform")
+    Call<APIResponse<Project>> getDetailProject(@Query("id") String id);
+
+    @GET("lecturer-notification/api/getAllAcc")
+    Call<APIResponse<List<Account>>> getAllAcc();
+
+    @GET("api/student/getAll")
+    Call<APIResponse<List<StudentDTO>>> getAllStudent1();
+
+    @GET("api/member/searchStudentByKeyword")
+    Call<APIResponse<List<StudentDTO>>> getAllStudentByKeyword(@Query("keyword") String keyword);
+
+    @GET("api/member/listMember")
+    Call<APIResponse<List<StudentDTO>>> getAllMemberOfProject(@Query("projectId") String projectId);
+    @POST("api/member/addMember")
+    @FormUrlEncoded
+    Call<APIResponse<String>> addMemberToProject(@Field("projectId") String projectId, @Field("studentId") String studentId);
+    @POST("api/member/removeMember")
+    @FormUrlEncoded
+    Call<APIResponse<String>> deleteMemberToProject(@Field("projectId") String projectId, @Field("studentId") String studentId);
+
+    @GET("api/topic")
     Call<APIResponse<List<Topic>>> getAllTopic();
+    @GET("api/topic/active")
+    Call<APIResponse<List<Topic>>> getAllActiveTopic();
 
     //    @POST("topic")
 //    @FormUrlEncoded
@@ -92,7 +136,7 @@ public interface APIService {
 //                                         @Field("name") String name,
 //                                         @Field("isEnabled") boolean isEnabled);
 ////    gui dang json
-    @POST("topic")
+    @POST("api/topic")
     Call<APIResponse<Topic>> insertTopic(@Body Topic topic);
 
 
@@ -115,8 +159,6 @@ public interface APIService {
 //        "aCouncil": {},
 //        "isProposed": false
 //    }
-
-
     @GET("project/api/getAll")
     Call<APIResponse<List<Project>>> getAllProjectManager();
 
@@ -130,7 +172,9 @@ public interface APIService {
 
     @POST("project/api/updateProject")
     Call<APIResponse<Project>> updateProject(@Body Project project);
-
+    @POST("project/api/deleteproject")
+    @FormUrlEncoded
+    Call<APIResponse<String>> deleteProject(@Field("projectId") String projectId);
     @POST("project/api/getPendingApproval")
     Call<APIResponse<List<DeTaiCanPheDuyet>>> getPendingApproval();
 
@@ -152,10 +196,130 @@ public interface APIService {
                                                        @Field("recieveId") String receiveId,
                                                        @Field("messagetitle") String title,
                                                        @Field("messagecontent") String content);
-
-
-    @PUT("topic")
+    @PUT("api/topic")
     Call<APIResponse<Topic>> updateTopic(@Body Topic tp);
+
+
+    @GET("admincontroller/api/listlecturer")
+    Call<APIResponse<List<LecturerAccount>>> getAllLecturer();
+
+    @GET("admincontroller/api/listmanager")
+    Call<APIResponse<List<ManagerAccount>>> getAllManager();
+
+    @GET("admincontroller/api/getlecturerbyid")
+    Call<APIResponse<LecturerAccount>> getLecturerById(@Query("magv") String id);
+
+    @GET("admincontroller/api/getmanagerbyid")
+    Call<APIResponse<ManagerAccount>> getManagerById(@Query("manv") String id);
+
+    @POST("admincontroller/api/insertlecturer")
+    @FormUrlEncoded
+    Call<APIResponse<String>> insertLecturer(
+            @Field("magv") String lecturerCode,
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("birthday") String birthday,
+            @Field("address") String address,
+            @Field("idNum") String idNum,
+            @Field("phoneNum") String phoneNum,
+            @Field("email") String email,
+            @Field("sex") String sex,
+            @Field("falculityCode") String falculityCode
+    );
+    @POST("admincontroller/api/deleteacc")
+    @FormUrlEncoded
+    Call<APIResponse<String>> deleteAccount(
+            @Field("accCode") String accCode
+    );
+
+    @POST("admincontroller/api/editacc")
+    @FormUrlEncoded
+    Call<APIResponse<String>> editAccount(
+            @Field("adCode") String username,
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("birthday") String birthday,
+            @Field("address") String address,
+            @Field("idNum") String idNum,
+            @Field("phoneNum") String phoneNum,
+            @Field("email") String email,
+            @Field("sex") String sex,
+            @Field("falculityCode") String falculityCode
+    );
+
+    @GET("admincontroller/api/allfalculities")
+    Call<APIResponse<List<Faculty>>> getAllFalculities();
+
+    @POST("admincontroller/api/insertmanager")
+    @FormUrlEncoded
+    Call<APIResponse<String>> insertManager(
+            @Field("empCode") String empCode,
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("birthday") String birthday,
+            @Field("address") String address,
+            @Field("idNum") String idNum,
+            @Field("phoneNum") String phoneNum,
+            @Field("email") String email,
+            @Field("sex") String sex
+    );
+
+    @GET("admincontroller/api/liststudent")
+    Call<APIResponse<List<StudentDTO>>> getAllStudent();
+
+    @POST("admincontroller/api/getstudentbyid")
+    @FormUrlEncoded
+    Call<APIResponse<Student>> getStudentByid(
+            @Field("studentId") String studentId);
+
+    @GET("admincontroller/api/getmajorbyfalculityid")
+    Call<APIResponse<List<Major>>> getMajorByFalculityCode(
+            @Query("khoa") String khoa
+    );
+
+    @GET("admincontroller/api/getclassbymajorcode")
+    Call<APIResponse<List<Class>>> getClassByMajorCode(
+            @Query("manganh") String manganh
+    );
+
+    @POST("admincontroller/api/insertstudent")
+    @FormUrlEncoded
+    Call<APIResponse<String>> insertStudent(
+            @Field("studentCode") String studentCode,
+            @Field("name") String name,
+            @Field("birthday") String birthday,
+            @Field("address") String address,
+            @Field("idNum") String idNum,
+            @Field("phoneNum") String phoneNum,
+            @Field("email") String email,
+            @Field("sex") String sex,
+            @Field("classCode") String classCode
+    );
+    @POST("admincontroller/api/deletestudent")
+    @FormUrlEncoded
+    Call<APIResponse<String>> deleteStudent(
+            @Field("studentCode") String studentCode
+    );
+
+    @POST("admincontroller/api/updatestudent")
+    @FormUrlEncoded
+    Call<APIResponse<String>> updateStudent(
+            @Field("studentCode") String studentCode,
+            @Field("name") String name,
+            @Field("birthday") String birthday,
+            @Field("address") String address,
+            @Field("idNum") String idNum,
+            @Field("phoneNum") String phoneNum,
+            @Field("email") String email,
+            @Field("sex") String sex,
+            @Field("classCode") String classCode
+    );
+    @GET("admincontroller/api/getadminbyid")
+    Call<APIResponse<AdminDTO>> getAdminByAdCode(
+            @Query("adCode") String adCode
+    );
 
 
 }

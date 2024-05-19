@@ -81,6 +81,7 @@ public class DeTaiCanPheDuyetAdapter extends RecyclerView.Adapter<DeTaiCanPheDuy
                     Log.e("TAG", "onClick: " + listDeTai.get(getAdapterPosition()).getLecturer().getId() );
                     context.startActivity(intent);
 
+
                 }
             });
         }
