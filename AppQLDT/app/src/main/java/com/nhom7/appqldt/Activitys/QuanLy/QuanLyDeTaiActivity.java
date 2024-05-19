@@ -142,7 +142,11 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if (id == R.id.action_sendNotification) {
+       if (id == R.id.action_projectTopic) {
+            intent = new Intent(this, ListChuDeActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id == R.id.action_sendNotification) {
             intent = new Intent(this, GuiThongBaoActivity.class);
             startActivity(intent);
             return true;
@@ -150,8 +154,12 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
             intent = new Intent(this, PheDuyetDeTaiActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_projectTopic) {
-            intent = new Intent(this, ListChuDeActivity.class);
+        }else if (id ==R.id.action_sendedNotification){
+            intent = new Intent(this, ThongBaoDaGui_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_receivedNotification){
+            intent = new Intent(this, ThongBaoNhan_QLActivity.class);
             startActivity(intent);
             return true;
         }else if (id == R.id.action_logout) {

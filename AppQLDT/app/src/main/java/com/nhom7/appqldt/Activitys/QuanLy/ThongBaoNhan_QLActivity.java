@@ -1,48 +1,47 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
-import static com.nhom7.appqldt.R.layout.activity_phe_duyet_de_tai;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Activitys.DangNhapActivity;
-import com.nhom7.appqldt.Adapters.DeTaiCanPheDuyetAdapter;
+import com.nhom7.appqldt.Adapters.ThongBaoAdapter;
+import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.APIResponse;
-import com.nhom7.appqldt.Models.DeTai;
-import com.nhom7.appqldt.Models.DeTaiCanPheDuyet;
-import com.nhom7.appqldt.Models.Project;
+import com.nhom7.appqldt.Models.Notification;
 import com.nhom7.appqldt.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class PheDuyetDeTaiActivity extends AppCompatActivity {
+public class ThongBaoNhan_QLActivity extends AppCompatActivity {
+
     RecyclerView recyclerView;
-    List<DeTaiCanPheDuyet> listDeTai;
-    DeTaiCanPheDuyetAdapter deTaiAdapter;
+    List<Notification> thongBaoList;
 
-
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(activity_phe_duyet_de_tai);
+        setContentView(R.layout.activity_thong_bao_nhan_ql);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);// Gắn Toolbar vào ActionBar
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -51,47 +50,44 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
             }
         });
 
-        listDeTai = new ArrayList<>();
+        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+//Lấy giá trị được lưu giữ ra
+        username = sharedPreferences.getString("username","");
+        TextView tvUserName = (TextView) findViewById(R.id.toolbar_username);
+        tvUserName.setText(username);
 
-        recyclerView = findViewById(R.id.recycler_view_detais);
-        deTaiAdapter = new DeTaiCanPheDuyetAdapter(this, listDeTai);
-        recyclerView.setAdapter(deTaiAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        deTaiAdapter.notifyDataSetChanged();
-        getData();
 
+        AnhXa();
+        loadRecyclerView();
 
     }
-
-    void getData() {
-        APIService apiService = RetrofitClient.getRetrofitInstance2().create(APIService.class);
-        Call<APIResponse<List<DeTaiCanPheDuyet>>> call = apiService.getPendingApproval();
-        call.enqueue(new retrofit2.Callback<APIResponse<List<DeTaiCanPheDuyet>>>() {
+    private  void AnhXa() {
+        recyclerView = findViewById(R.id.recycler_view_thongbao);
+    }
+    private void loadRecyclerView() {
+        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+        Call<APIResponse<List<Notification>>> call = apiService.getAllReceiveMessageLecture(username);
+        call.enqueue(new Callback<APIResponse<List<Notification>>>() {
             @Override
-            public void onResponse(Call<APIResponse<List<DeTaiCanPheDuyet>>> call, retrofit2.Response<APIResponse<List<DeTaiCanPheDuyet>>> response) {
-                if (response.isSuccessful()) {
-
-                    APIResponse<List<DeTaiCanPheDuyet>> apiResponse = response.body();
-                    if (apiResponse != null) {
-                        List<DeTaiCanPheDuyet> deTaiCanPheDuyets = apiResponse.getResult();
-                        for (DeTaiCanPheDuyet deTaiCanPheDuyet : deTaiCanPheDuyets) {
-                            listDeTai.add(deTaiCanPheDuyet);
-                            deTaiAdapter.notifyDataSetChanged();
-
-                        }
-
-                    }
-                } else {
+            public void onResponse(Call<APIResponse<List<Notification>>> call, Response<APIResponse<List<Notification>>> response) {
+                if(response.isSuccessful()){
+                    thongBaoList = (List<Notification>) response.body().getResult();
+                    ThongBaoAdapter thongBaoAdapter = new ThongBaoAdapter(thongBaoList, ThongBaoNhan_QLActivity.this, false);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ThongBaoNhan_QLActivity.this, LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(thongBaoAdapter);
+                }
+                else{
+                    Log.d("API", "List tb rong");
                 }
             }
 
             @Override
-            public void onFailure(Call<APIResponse<List<DeTaiCanPheDuyet>>> call, Throwable t) {
-
+            public void onFailure(Call<APIResponse<List<Notification>>> call, Throwable t) {
+                Log.d("API", "Failed call");
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,10 +111,6 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
             intent = new Intent(this, ThongBaoDaGui_QLActivity.class);
             startActivity(intent);
             return true;
-        }else if (id ==R.id.action_receivedNotification){
-            intent = new Intent(this, ThongBaoNhan_QLActivity.class);
-            startActivity(intent);
-            return true;
         }else if (id ==R.id.action_logout){
             intent = new Intent(this, DangNhapActivity.class);
             startActivity(intent);
@@ -127,8 +119,12 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
             intent = new Intent(this, ListChuDeActivity.class);
             startActivity(intent);
             return true;
-        }
-            return super.onOptionsItemSelected(item);
+        } else if (id==R.id.action_approveProject) {
+            intent = new Intent(this, PheDuyetDeTaiActivity.class);
+            startActivity(intent);
+            return true;
         }
 
+        return super.onOptionsItemSelected(item);
     }
+}

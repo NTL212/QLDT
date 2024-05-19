@@ -94,6 +94,8 @@ public interface APIService {
 
     @GET("lecturer-notification/api/getSendMessage")
     Call<APIResponse<List<Notification>>> getAllSendedMessageLecture(@Query("id") String id);
+    @POST("manager-notification/api/getSendMessage")
+    Call<APIResponse<List<Notification>>> getAllSendedMessageManager(@Query("managerId") String managerId);
 
     @GET("lecturer-notification/api/getNotify")
     Call<APIResponse<List<Notification>>> getAllReceiveMessageLecture(@Query("id") String id);

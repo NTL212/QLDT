@@ -96,11 +96,7 @@ public class GuiThongBaoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if (id == R.id.action_projectTopic) {
-            intent = new Intent(this, ListChuDeActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_approveProject) {
+        if (id == R.id.action_approveProject) {
             intent = new Intent(this, PheDuyetDeTaiActivity.class);
             startActivity(intent);
             return true;
@@ -108,7 +104,20 @@ public class GuiThongBaoActivity extends AppCompatActivity {
             intent = new Intent(this, QuanLyDeTaiActivity.class);
             startActivity(intent);
             return true;
-        }else if (id == R.id.action_logout) {
+        }else if (id ==R.id.action_sendedNotification){
+            intent = new Intent(this, ThongBaoDaGui_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id ==R.id.action_receivedNotification){
+            intent = new Intent(this, ThongBaoNhan_QLActivity.class);
+            startActivity(intent);
+            return true;
+        }else
+        if (id == R.id.action_projectTopic) {
+            intent = new Intent(this, ListChuDeActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_logout) {
             intent = new Intent(this, DangNhapActivity.class);
             startActivity(intent);
             return true;
