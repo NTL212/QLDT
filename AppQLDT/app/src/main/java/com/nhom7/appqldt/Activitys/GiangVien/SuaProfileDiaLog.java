@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,11 +24,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Activitys.Admin.ChinhSuaGiangVienAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.ChinhSuaHocSinhAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.DanhSachGiangVienAdminActivity;
 import com.nhom7.appqldt.Activitys.DTO.StudentDTO;
 import com.nhom7.appqldt.Activitys.QuanLy.ChiTietDTQuanLyActivity;
 import com.nhom7.appqldt.Helpers.DateHelper;
@@ -122,47 +128,61 @@ public class SuaProfileDiaLog extends DialogFragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                try {
-                    String hoten = tv_CN_HoTen.getText().toString();
-                    String id = tv_CN_MaSo.getText().toString();
-                    String cccd = tv_CN_CCCD.getText().toString();
-                    String diachi = tv_CN_DiaChi.getText().toString();
-                    String email = tv_CN_Email.getText().toString();
-                    String sex = tv_CN_GioiTinh.getText().toString();
-                    String khoa = tv_CN_MaKhoa.getText().toString();
-                    String ngaysinh = tv_CN_NgaySinh.getText().toString();
-                    String sdt = tv_CN_SDT.getText().toString();
+                new AlertDialog.Builder(context)
+                        .setTitle("Xác nhận chỉnh sửa")
+                        .setMessage("Bạn có chắc chắn muốn chỉnh sửa thông tin không?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    String hoten = tv_CN_HoTen.getText().toString();
+                                    String id = tv_CN_MaSo.getText().toString();
+                                    String cccd = tv_CN_CCCD.getText().toString();
+                                    String diachi = tv_CN_DiaChi.getText().toString();
+                                    String email = tv_CN_Email.getText().toString();
+                                    String sex = tv_CN_GioiTinh.getText().toString();
+                                    String khoa = tv_CN_MaKhoa.getText().toString();
+                                    String ngaysinh = tv_CN_NgaySinh.getText().toString();
+                                    String sdt = tv_CN_SDT.getText().toString();
 
-                    if (hoten.isEmpty() || id.isEmpty() || cccd.isEmpty() || diachi.isEmpty() ||
-                            email.isEmpty() || sex.isEmpty() || khoa.isEmpty() || ngaysinh.isEmpty() || sdt.isEmpty()) {
-                        throw new IllegalArgumentException("Vui lòng nhập đầy đủ thông tin");
-                    }
+                                    if (hoten.isEmpty() || id.isEmpty() || cccd.isEmpty() || diachi.isEmpty() ||
+                                            email.isEmpty() || sex.isEmpty() || khoa.isEmpty() || ngaysinh.isEmpty() || sdt.isEmpty()) {
+                                        throw new IllegalArgumentException("Vui lòng nhập đầy đủ thông tin");
+                                    }
 
-                    APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
-                    Call<APIResponse<String>> call = apiService.editProfieLecture(id, hoten, DateHelper.convertToStandardDate(ngaysinh), diachi, cccd, sdt, email, sex, khoa);
-                    call.enqueue(new Callback<APIResponse<String>>() {
-                        @Override
-                        public void onResponse(Call<APIResponse<String>> call, Response<APIResponse<String>> response) {
-                            if (response.body().isSuccess()) {
-                                DialogHelper.showSuccessDialog(context, response.body().getMessage());
+                                    APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+                                    Call<APIResponse<String>> call = apiService.editProfieLecture(id, hoten, DateHelper.convertToStandardDate(ngaysinh), diachi, cccd, sdt, email, sex, khoa);
+                                    call.enqueue(new Callback<APIResponse<String>>() {
+                                        @Override
+                                        public void onResponse(Call<APIResponse<String>> call, Response<APIResponse<String>> response) {
+                                            if (response.body().isSuccess()) {
+                                                Toast.makeText(context, "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(context, ThongTinCaNhanActivity.class);
+                                                startActivity(intent);
 
-                            } else {
-                                DialogHelper.showFailedDialog(context, response.body().getMessage());
+                                            } else {
+                                                DialogHelper.showFailedDialog(context, response.body().getMessage());
+                                            }
+                                            dismiss();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<APIResponse<String>> call, Throwable t) {
+                                            DialogHelper.showFailedDialog(context, "Không gọi API được");
+                                            dismiss();
+                                        }
+                                    });
+                                } catch (IllegalArgumentException e) {
+                                    DialogHelper.showFailedDialog(context, e.getMessage());
+                                } catch (Exception e) {
+                                    DialogHelper.showFailedDialog(context, "Vui lòng nhập đúng");
+                                }
+
                             }
-                            dismiss();
-                        }
-
-                        @Override
-                        public void onFailure(Call<APIResponse<String>> call, Throwable t) {
-                            DialogHelper.showFailedDialog(context, "Không gọi API được");
-                            dismiss();
-                        }
-                    });
-                } catch (IllegalArgumentException e) {
-                    DialogHelper.showFailedDialog(context, e.getMessage());
-                } catch (Exception e) {
-                    DialogHelper.showFailedDialog(context, "Vui lòng nhập đúng");
-                }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();;
 
 
             }

@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -168,9 +170,10 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
         btnChiTietFileBaoCao.setVisibility(View.GONE);
         tvChiTietFileBaoCao.setVisibility(View.VISIBLE);
 
-        btnChiTietFileBaoCao.setOnClickListener(new View.OnClickListener() {
+        btnNopBaoCao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("*/*"); // Loại file
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -227,13 +230,25 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
 
         if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (data != null && data.getData() != null) {
-                Uri fileUri = data.getData();
-                if (fileUri != null) {
-                    // Gọi phương thức để upload tệp tin đã chọn
-                    uploadFileToFirebase(fileUri, projectCode, username);
-                } else {
-                    Toast.makeText(this, "Không thể truy cập tệp tin đã chọn", Toast.LENGTH_SHORT).show();
-                }
+                new AlertDialog.Builder(ChiTietDTDaLamActivity.this)
+                        .setTitle("Xác nhận nộp báo cáo")
+                        .setMessage("Bạn có chắc chắn muốn nộp file báo cáo?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Uri fileUri = data.getData();
+                                if (fileUri != null) {
+                                    // Gọi phương thức để upload tệp tin đã chọn
+                                    uploadFileToFirebase(fileUri, projectCode, username);
+                                } else {
+                                    Toast.makeText(ChiTietDTDaLamActivity.this, "Không thể truy cập tệp tin đã chọn", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();;
+
             } else {
                 Toast.makeText(this, "Không có tệp tin nào được chọn", Toast.LENGTH_SHORT).show();
             }
