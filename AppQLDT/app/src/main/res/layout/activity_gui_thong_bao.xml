@@ -90,9 +90,16 @@
                 android:id="@+id/edtNguoiNhan"
                 android:hint="Nhập người nhận"
                 android:layout_weight="1"
-
                 android:inputType="text"
                 android:textSize="16sp" />
+            <Button
+                android:id="@+id/btnChonNguoiNhan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn"
+                android:textSize="16sp"
+                />
+
         </TableRow>
         <TableRow
             android:layout_width="match_parent"

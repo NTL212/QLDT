@@ -43,7 +43,14 @@ public class GuiThongBaoActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
+        findViewById(R.id.btnChonNguoiNhan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChonNguoiNhanDialog dialog = new ChonNguoiNhanDialog();
+                dialog.show(getSupportFragmentManager(), "ChonNguoiNhanDialog");
 
+            }
+        });
         nguoinhan = findViewById(R.id.edtNguoiNhan);
         tieude = findViewById(R.id.edtTieuDe);
         noidung = findViewById(R.id.edtNoiDung);
@@ -126,4 +133,8 @@ public class GuiThongBaoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void setNguoiNhan(String id) {
+
+        nguoinhan.setText(id);
+    }
 }
