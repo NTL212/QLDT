@@ -43,6 +43,7 @@ public class GuiThongBaoActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
+
         nguoinhan = findViewById(R.id.edtNguoiNhan);
         tieude = findViewById(R.id.edtTieuDe);
         noidung = findViewById(R.id.edtNoiDung);

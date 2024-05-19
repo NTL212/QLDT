@@ -32,6 +32,7 @@ import com.nhom7.appqldt.Activitys.GiangVien.DeXuatDTActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ListDeTaiActivity;
 import com.nhom7.appqldt.Activitys.GiangVien.ThongTinCaNhanActivity;
 import com.nhom7.appqldt.Activitys.QuanLy.ListChuDeActivity;
+import com.nhom7.appqldt.Activitys.QuanLy.QuanLyDeTaiActivity;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Account;
 import com.nhom7.appqldt.Models.Video1Model;
@@ -151,7 +152,7 @@ public class DangNhapActivity extends AppCompatActivity {
                             intent = new Intent(DangNhapActivity.this, ListDeTaiActivity.class);
                             startActivity(intent);
                         } else if (loginResponse.getResult().getRole().contains("ROLE_MGT_STAFF")) {
-                            intent = new Intent(DangNhapActivity.this, ListChuDeActivity.class);
+                            intent = new Intent(DangNhapActivity.this, QuanLyDeTaiActivity.class);
                             startActivity(intent);
                         }else if (loginResponse.getResult().getRole().contains("ROLE_ADMIN")) {
                             intent = new Intent(DangNhapActivity.this, DanhSachQuanLyAdminActivity.class);
