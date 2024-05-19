@@ -1,6 +1,7 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -82,6 +83,14 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
+
+        findViewById(R.id.btnreturn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChiTietDTQuanLyActivity.this, QuanLyDeTaiActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     void displayData(String maDeTai) {
@@ -132,7 +141,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
         APIService apiService = RetrofitClient.getRetrofitInstance2().create(APIService.class);
         apiService.updateProject(project).enqueue(new retrofit2.Callback<APIResponse<Project>>() {
             @Override
-            public void onResponse(retrofit2.Call<APIResponse<Project>> call, retrofit2.Response<APIResponse<Project>> response) {
+            public void onResponse(Call<APIResponse<Project>> call, retrofit2.Response<APIResponse<Project>> response) {
                 if (response.body().isSuccess()) {
                     Toast.makeText(ChiTietDTQuanLyActivity.this, "Sửa đề tài thành công", Toast.LENGTH_SHORT).show();
                     displayData(maDeTai);
@@ -143,7 +152,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<APIResponse<Project>> call, Throwable t) {
+            public void onFailure(Call<APIResponse<Project>> call, Throwable t) {
                 t.printStackTrace();
             }
         });

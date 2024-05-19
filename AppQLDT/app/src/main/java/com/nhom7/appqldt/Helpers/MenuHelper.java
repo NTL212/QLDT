@@ -42,9 +42,6 @@ public class MenuHelper {
         } else if (id == R.id.action_logout) {
             DangNhapHelper.DangXuat(context);
             return true;
-        } else if (id == R.id.action_logout_quanly) {
-            DangNhapHelper.DangXuat(context);
-            return true;
         }
         else if (id == R.id.action_profile) {
             intent = new Intent(context, ThongTinCaNhanActivity.class);

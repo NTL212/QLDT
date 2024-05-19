@@ -25,13 +25,13 @@ public class ThanhVienDeTaiAdapter extends RecyclerView.Adapter<ThanhVienDeTaiAd
 
     @NonNull
     @Override
-    public ThanhVienDeTaiAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_thanhvien_item_dialogfragment, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ThanhVienDeTaiAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ThanhVienDeTai tv = listTV.get(position);
         holder.tvStt.setText(String.valueOf(position+1));
         holder.tvHoTen.setText(tv.getHoTen());

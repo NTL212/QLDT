@@ -1,5 +1,6 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,9 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
@@ -17,8 +20,6 @@ import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.MessageResponse;
 import com.nhom7.appqldt.Models.ProjectChiTietQL;
 import com.nhom7.appqldt.R;
-
-import java.text.DecimalFormat;
 
 import retrofit2.Call;
 
@@ -32,13 +33,9 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chi_tiet_dtphe_duyet);
-        btnXemThanhVien = findViewById(R.id.btnXemThanhVien);
         btnPheDuyet = findViewById(R.id.btnPheDuyet);
         btnKhongPheDuyet = findViewById(R.id.btnKhongPheDuyet);
-        btnXemThanhVien.setOnClickListener(v -> {
-            XemThanhVienDeTaiDialogFragment dialogFragment = new XemThanhVienDeTaiDialogFragment();
-            dialogFragment.show(getSupportFragmentManager(), "XemThanhVienDeTaiDialogFragment");
-        });
+
         maDeTai = getIntent().getStringExtra("maDeTai");
         Toast.makeText(this, maDeTai, Toast.LENGTH_SHORT).show();
         ProjectChiTietQL deTai = new ProjectChiTietQL();
@@ -58,9 +55,8 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
 
         tvChiTietKinhPhi = findViewById(R.id.tvChiTietKinhPhi);
         tvChiTieSoThanhVien = findViewById(R.id.tvChiTieSoThanhVien);
-        tvLecture = findViewById(R.id.tvLecture);
 //        tvChiTietMoTa = findViewById(R.id.tvChiTietMoTa);
-//        tvLecture = findViewById(R.id.tvLecture);
+        tvLecture = findViewById(R.id.tvLecture);
         displayData(maDeTai);
         String LecturerCode=getIntent().getStringExtra("LecturerCode");
         SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
@@ -79,7 +75,9 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
                         if (response.body().isSuccess()) {
                             Log.e("TAG", "onResponse: " + response.body().getResult() );
                             Toast.makeText(ChiTietDTPheDuyetActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+//                            finish();
+                            Intent intent = new Intent(ChiTietDTPheDuyetActivity.this, PheDuyetDeTaiActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             Log.e("TAG", "onResponse: " + response.body().getMessage() );
@@ -108,7 +106,10 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
                         if (response.body().isSuccess()) {
 //                            Log.e("TAG", "onResponse: " + response.body().getResult() );
                             Toast.makeText(ChiTietDTPheDuyetActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+
+//                            finish();
+                            Intent intent = new Intent(ChiTietDTPheDuyetActivity.this, PheDuyetDeTaiActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             Log.e("TAG", "onResponse: " + response.body().getMessage() );
@@ -134,28 +135,23 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
             public void onResponse(Call<APIResponse<ProjectChiTietQL>> call, retrofit2.Response<APIResponse<ProjectChiTietQL>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().isSuccess()) {
-                        DecimalFormat decimalFormat = new DecimalFormat("#");
+                        Log.e("TAG", "onResponse: " + response.body().getResult() );
                         ProjectChiTietQL project = response.body().getResult();
+                        Log.e("TAG", "onResponse: " + project);
                         tvChiTietMaDeTai.setText(project.getId());
-                        tvChiTietTenDeTai.setText(project.getTopic().getName());
+                        tvChiTietTenDeTai.setText(project.getName());
                         tvChiTietChuDe.setText(project.getTopic().getName());
                         tvChiTietNgayDang.setText(project.getCreateDate());
-                        tvChiTietNgayMoDang.setText(project.getOpenRegDate());
-                        tvChiTietNgayKetThucDang.setText(project.getCloseRegDate());
-                        tvChiTietNgayBatDau.setText(project.getStartDate());
-                        tvChiTietNgayKetThuc.setText(project.getEndDate());
+                        tvChiTietNgayMoDang.setText(project.getStartDate());
+                        tvChiTietNgayKetThucDang.setText(project.getEndDate());
+                        tvChiTietNgayBatDau.setText(project.getOpenRegDate());
+                        tvChiTietNgayKetThuc.setText(project.getCloseRegDate());
                         tvChiTietNgayNghiemThu.setText(project.getAcceptanceDate());
-                        String doubleString = decimalFormat.format(project.getEstBudget()) + " VNĐ";
+                        String doubleString = String.valueOf(project.getEstBudget());
                         tvChiTietKinhPhi.setText(doubleString);
                         tvChiTieSoThanhVien.setText(project.getMaxMember()+"");
 //                        tvChiTietMoTa.setText(project.getDescription());
-                        String nameLec = getIntent().getStringExtra("nameLec");
-                        if(nameLec!=null){
-                            tvLecture.setText(nameLec);
-                        }else {
-                            tvLecture.setText("Chưa có giảng viên chủ nhiệm");
-                        }
-
+                        tvLecture.setText(getIntent().getStringExtra("nameLec"));
                     }
                     else {
 //                        Log.e("TAG", "onResponse: " + response.body().getMessage() );
@@ -175,4 +171,5 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -4,6 +4,12 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
-
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Models.APIResponse;
@@ -30,12 +31,15 @@ import com.nhom7.appqldt.Models.ProjectChiTietQL;
 import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link SuaDeTaiDiaLog#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class SuaDeTaiDiaLog extends DialogFragment {
 
 
@@ -179,8 +183,7 @@ public class SuaDeTaiDiaLog extends DialogFragment {
         editTextNgayBatDau.setText(project.getStartDate());
         ngayHetHan.setText(project.getEndDate());
         ngayNghiemThu.setText(project.getAcceptanceDate());
-        DecimalFormat decimalFormat = new DecimalFormat("#");
-        kinhPhiDuKien.setText(decimalFormat.format(project.getEstBudget()));
+        kinhPhiDuKien.setText(project.getEstBudget()+"");
         soLuongThanhVienToiDa.setText(project.getMaxMember()+"");
         //set spinner
 //        for (int i = 0; i < list.size(); i++) {

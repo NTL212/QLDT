@@ -58,8 +58,6 @@ public class XemThanhVienDeTaiDialogFragment extends DialogFragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         thanhVienDeTaiAdapter.notifyDataSetChanged();
 
-
-
         return view;
     }
 }

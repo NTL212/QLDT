@@ -40,7 +40,7 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
         holder.tvMaDeTai.setText(deTaiModel.getProjectCode());
         holder.tvTenDeTai.setText(deTaiModel.getName());
         if (deTaiModel.getTopic() != null)
-            holder.tvMaChuDe.setText(deTaiModel.getTopic().getName());
+        holder.tvMaChuDe.setText(deTaiModel.getTopic().getName());
         else
             holder.tvMaChuDe.setText("Chưa có chủ đề");
         holder.tvTinhTrang.setText(deTaiModel.isProposed() ? "Dang mo dang ky" : "Da dong");
@@ -78,11 +78,15 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
 
                     }
                     else if (itemView.getContext() instanceof QuanLyDeTaiActivity){
+                        Toast.makeText(context, "Day la view nam trong trang quan ly de tai", Toast.LENGTH_SHORT).show();
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Intent intent = new Intent(context, ChiTietDTQuanLyActivity.class);
                             intent.putExtra("maDeTai", listDeTai.get(position).getProjectCode());
                             context.startActivity(intent);
+//                            DeTaiAdapter.this.notifyDataSetChanged();
+//                            QuanLyDeTaiActivity quanLyDeTaiActivity = (QuanLyDeTaiActivity) context;
+//                            quanLyDeTaiActivity.initializeData();
                         }
                     }
 

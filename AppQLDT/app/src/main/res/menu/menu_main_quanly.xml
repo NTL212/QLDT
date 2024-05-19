@@ -18,7 +18,15 @@
         android:title="Gửi thông báo"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_logout_quanly"
+        android:id="@+id/action_sendedNotification"
+        android:title="Thông báo đã gửi"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_receivedNotification"
+        android:title="Thông báo đã nhận"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
         android:title="Đăng xuất"
         app:showAsAction="never" />
 </menu>

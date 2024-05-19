@@ -75,10 +75,13 @@ public class UpdateChuDeDialog extends DialogFragment {
                 String name = editTextName.getText().toString();
                 boolean isEnabled = switchIsEnabled.isChecked();
                 Topic chuDe = new Topic(topicCode, name, isEnabled);
+                Log.e("dacl", topicCode + " " + name + " " + isEnabled);
                 APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+                Log.e("dacl", "daclick");
                 apiService.updateTopic(chuDe).enqueue(new retrofit2.Callback<APIResponse<Topic>>() {
                     @Override
                     public void onResponse(retrofit2.Call<APIResponse<Topic>> call, retrofit2.Response<APIResponse<Topic>> response) {
+//                        Log.e("",response.body().toString());
                         Log.e("",response.toString());
 
                         if (response.body() != null) {
@@ -88,7 +91,7 @@ public class UpdateChuDeDialog extends DialogFragment {
                                 dismiss();
                             }
                         } else
-                            Log.e("TopicError", "daclickloi");
+                            Log.e("dac", "daclickloi");
 
                     }
 
