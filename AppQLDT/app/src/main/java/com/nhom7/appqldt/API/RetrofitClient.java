@@ -16,6 +16,8 @@ public class RetrofitClient {
 
 //    private static final String BASE_URL_PROJ = "http://26.162.156.25:8080/QuanLyDeTaiKhoaHoc_tmp/";
     // Tạo đối tượng Gson tùy chỉnh với setLenient(true)
+
+//    private static final String BASE_URL_PROJ = "http://26.172.196.40:8080/QuanLyDeTaiKhoaHoc_tmp/";
     private static final String BASE_URL_PROJ = "http://10.0.2.2:8080/QuanLyDeTaiKhoaHoc_tmp/";
     // Tạo đối tượng Gson tùy chỉnh với setLenient(true)
 
