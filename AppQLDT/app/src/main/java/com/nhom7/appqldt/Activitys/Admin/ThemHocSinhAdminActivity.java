@@ -90,7 +90,7 @@ public class ThemHocSinhAdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(ThemHocSinhAdminActivity.this)
                         .setTitle("Xác nhận Thêm")
-                        .setMessage("Bạn có chắc chắn muốn thêm giảng viên này không?")
+                        .setMessage("Bạn có chắc chắn muốn thêm sinh viên này không?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

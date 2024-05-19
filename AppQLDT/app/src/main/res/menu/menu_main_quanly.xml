@@ -18,7 +18,7 @@
         android:title="Gửi thông báo"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_logout"
+        android:id="@+id/action_logout_quanly"
         android:title="Đăng xuất"
         app:showAsAction="never" />
 </menu>

@@ -117,7 +117,7 @@ public class ChinhSuaHocSinhAdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(ChinhSuaHocSinhAdminActivity.this)
                         .setTitle("Xác nhận chỉnh sửa")
-                        .setMessage("Bạn có chắc chắn muốn chỉnh sửa quản lý này không?")
+                        .setMessage("Bạn có chắc chắn muốn chỉnh sửa học sinh này không?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
