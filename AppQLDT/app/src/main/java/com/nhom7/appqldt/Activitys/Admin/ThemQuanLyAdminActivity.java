@@ -73,7 +73,7 @@ public class ThemQuanLyAdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(ThemQuanLyAdminActivity.this)
                         .setTitle("Xác nhận thêm")
-                        .setMessage("Bạn có chắc chắn muốn thêm giảng viên này không?")
+                        .setMessage("Bạn có chắc chắn muốn thêm quản lý này không?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

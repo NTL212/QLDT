@@ -101,7 +101,7 @@ public class ChiTietHocSinhAdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(ChiTietHocSinhAdminActivity.this)
                         .setTitle("Xác nhận xoá")
-                        .setMessage("Bạn có chắc chắn muốn xóa giảng viên này không?")
+                        .setMessage("Bạn có chắc chắn muốn xóa sinh viên này không?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
