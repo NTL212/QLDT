@@ -1,6 +1,7 @@
 package com.nhom7.appqldt.Activitys.QuanLy;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -82,6 +83,14 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
+
+        findViewById(R.id.btnreturn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChiTietDTQuanLyActivity.this, QuanLyDeTaiActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     void displayData(String maDeTai) {

@@ -83,6 +83,9 @@ public class DeTaiAdapter extends RecyclerView.Adapter<DeTaiAdapter.DeTaiViewHol
                             Intent intent = new Intent(context, ChiTietDTQuanLyActivity.class);
                             intent.putExtra("maDeTai", listDeTai.get(position).getProjectCode());
                             context.startActivity(intent);
+//                            DeTaiAdapter.this.notifyDataSetChanged();
+//                            QuanLyDeTaiActivity quanLyDeTaiActivity = (QuanLyDeTaiActivity) context;
+//                            quanLyDeTaiActivity.initializeData();
                         }
                     }
 

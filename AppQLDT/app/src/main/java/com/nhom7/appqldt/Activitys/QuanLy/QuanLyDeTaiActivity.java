@@ -94,6 +94,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
 
 
     }
+//onBackPressed
 
     void anhxa() {
         btnThemDeTai = findViewById(R.id.btnThemDeTai);
@@ -105,7 +106,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initializeData() {
+    public void initializeData() {
 
         listDeTai = new ArrayList<>();
         Log.e(TAG, "onResponse: " + listDeTai.size());

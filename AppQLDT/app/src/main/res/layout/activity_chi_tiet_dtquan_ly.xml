@@ -86,7 +86,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Mã số: " />
+                        android:text="Mã số: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietMaDeTai"
@@ -105,7 +106,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Tên đề tài: " />
+                        android:text="Tên đề tài: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietTenDeTai"
@@ -129,7 +131,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Chủ đề: " />
+                        android:text="Chủ đề: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietChuDe"
@@ -148,7 +151,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày đăng: " />
+                        android:text="Ngày đăng: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietNgayDang"
@@ -167,7 +171,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày mở đăng ký: " />
+                        android:text="Ngày mở đăng ký: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietNgayMoDang"
@@ -186,7 +191,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày kết thúc đăng ký: " />
+                        android:text="Ngày kết thúc đăng ký: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietNgayKetThucDang"
@@ -205,7 +211,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày bắt đàu làm: " />
+                        android:text="Ngày bắt đàu làm: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietNgayBatDau"
@@ -224,7 +231,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày kết thúc: " />
+                        android:text="Ngày kết thúc: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietNgayKetThuc"
@@ -243,7 +251,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Ngày nghiệm thu: " />
+                        android:text="Ngày nghiệm thu: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietNgayNghiemThu"
@@ -262,7 +271,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Kinh phi dự kiến: " />
+                        android:text="Kinh phi dự kiến: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTietKinhPhi"
@@ -281,7 +291,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Số thành viên tối đa: " />
+                        android:text="Số thành viên tối đa: "
+                        android:textColor="#4900FF" />
 
                     <TextView
                         android:id="@+id/tvChiTieSoThanhVien"
@@ -303,6 +314,14 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btnreturn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:text="Quay lại"
+                    tools:layout_editor_absoluteY="645dp" />
+                <Button
                     android:id="@+id/btnSuaChiTietDeTai"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -310,6 +329,8 @@
                     android:layout_weight="1"
                     android:text="Sửa"
                     tools:layout_editor_absoluteY="645dp" />
+<!--                return-->
+
 
             </LinearLayout>
         </LinearLayout>

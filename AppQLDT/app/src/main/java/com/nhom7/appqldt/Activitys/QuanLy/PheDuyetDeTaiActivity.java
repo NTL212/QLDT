@@ -57,12 +57,14 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
         TextView tvUserName = (TextView) findViewById(R.id.toolbar_title2);
         tvUserName.setText(sharedPreferences.getString("username", ""));
         listDeTai = new ArrayList<>();
-
+        SpaceItemDecoration spaceItemDecoration = new SpaceItemDecoration(10);
         recyclerView = findViewById(R.id.recycler_view_detais);
         deTaiAdapter = new DeTaiCanPheDuyetAdapter(this, listDeTai);
         recyclerView.setAdapter(deTaiAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         deTaiAdapter.notifyDataSetChanged();
+        recyclerView.addItemDecoration(spaceItemDecoration);
+
         getData();
 
 
@@ -79,6 +81,9 @@ public class PheDuyetDeTaiActivity extends AppCompatActivity {
                     APIResponse<List<DeTaiCanPheDuyet>> apiResponse = response.body();
                     if (apiResponse != null) {
                         List<DeTaiCanPheDuyet> deTaiCanPheDuyets = apiResponse.getResult();
+                        if (deTaiCanPheDuyets == null) {
+                            return;
+                        }
                         for (DeTaiCanPheDuyet deTaiCanPheDuyet : deTaiCanPheDuyets) {
                             listDeTai.add(deTaiCanPheDuyet);
                             deTaiAdapter.notifyDataSetChanged();
