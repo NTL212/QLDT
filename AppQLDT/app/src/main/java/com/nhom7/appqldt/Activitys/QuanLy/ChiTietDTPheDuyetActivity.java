@@ -55,7 +55,7 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
 
         tvChiTietKinhPhi = findViewById(R.id.tvChiTietKinhPhi);
         tvChiTieSoThanhVien = findViewById(R.id.tvChiTieSoThanhVien);
-//        tvChiTietMoTa = findViewById(R.id.tvChiTietMoTa);
+        tvChiTietMoTa = findViewById(R.id.tvChiTietMoTa);
         tvLecture = findViewById(R.id.tvLecture);
         displayData(maDeTai);
         String LecturerCode=getIntent().getStringExtra("LecturerCode");
@@ -150,7 +150,7 @@ public class ChiTietDTPheDuyetActivity extends AppCompatActivity {
                         String doubleString = String.valueOf(project.getEstBudget());
                         tvChiTietKinhPhi.setText(doubleString);
                         tvChiTieSoThanhVien.setText(project.getMaxMember()+"");
-//                        tvChiTietMoTa.setText(project.getDescription());
+                        tvChiTietMoTa.setText(project.getDescription());
                         tvLecture.setText(getIntent().getStringExtra("nameLec"));
                     }
                     else {
