@@ -53,7 +53,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
 
         tvChiTietKinhPhi = findViewById(R.id.tvChiTietKinhPhi);
         tvChiTieSoThanhVien = findViewById(R.id.tvChiTieSoThanhVien);
-//        tvChiTietMoTa = findViewById(R.id.tvChiTietMoTa);
+        tvChiTietMoTa = findViewById(R.id.tvmota);
         displayData(maDeTai);
         btnSuaDeTai = (Button) findViewById(R.id.btnSuaChiTietDeTai);
 
@@ -116,7 +116,7 @@ public class ChiTietDTQuanLyActivity extends AppCompatActivity {
                         String doubleString = decimalFormat.format(project.getEstBudget()) + " VNĐ";
                         tvChiTietKinhPhi.setText(doubleString);
                         tvChiTieSoThanhVien.setText(project.getMaxMember()+"");
-//                        tvChiTietMoTa.setText(project.getDescription());
+                        tvChiTietMoTa.setText(project.getDescription());
 
                     }
                     else {

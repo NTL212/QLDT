@@ -304,9 +304,10 @@
 
                     <TextView
                         android:id="@+id/tvChiTietMoTa"
-                        android:layout_width="250dp"
+                        android:layout_width="216dp"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
+                        android:lines="10"
                         android:text="De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1 De Tai 1" />
                 </TableRow>
                 <TableRow

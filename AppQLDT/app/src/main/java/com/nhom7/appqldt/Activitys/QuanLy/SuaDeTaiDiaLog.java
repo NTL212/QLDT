@@ -84,6 +84,7 @@ public class SuaDeTaiDiaLog extends DialogFragment {
     Spinner spnChude;
     List<Topic> list ;
     ProjectChiTietQL pro;
+    EditText mota;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class SuaDeTaiDiaLog extends DialogFragment {
         kinhPhiDuKien = view.findViewById(R.id.editTextKinhPhiDuKien);
         soLuongThanhVienToiDa =view. findViewById(R.id.editTextSoLuongTVToiDa);
         btnsuaDeTai = view.findViewById(R.id.btnSuaDeTai);
+        mota = view.findViewById(R.id.tvChiTietMoTa);
         loadintoSpinChude();
         displayProject(pro);
 
@@ -109,6 +111,7 @@ public class SuaDeTaiDiaLog extends DialogFragment {
             public void onClick(View v) {
                 String maDeTai_str = maDeTai.getText().toString();
                 String tenDeTai_str = tenDeTai.getText().toString();
+                String mota_str = mota.getText().toString();
                 String ngayMoDangKy_str = ngayMoDangKy.getText().toString();
                 String ngayKetThucDangKy_str = ngayKetThucDangKy.getText().toString();
 
@@ -138,7 +141,7 @@ public class SuaDeTaiDiaLog extends DialogFragment {
                     Toast.makeText(getContext(), "Nhập ngày theo định dạng yyyy-mm-dd", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Project project = new Project(maDeTai_str,tenDeTai_str,datenow,null,soLuongThanhVienToiDa_int,ngayMoDangKy_str,ngayKetThucDangKy_str,ngayBatDau_str,ngayHetHan_str,ngayNghiemThu_str,kinhPhiDuKien_db,null,tp,null,false);
+                Project project = new Project(maDeTai_str,tenDeTai_str,datenow,mota_str,soLuongThanhVienToiDa_int,ngayMoDangKy_str,ngayKetThucDangKy_str,ngayBatDau_str,ngayHetHan_str,ngayNghiemThu_str,kinhPhiDuKien_db,null,tp,null,false);
 //                APIService apiService = RetrofitClient.getRetrofitInstance2().create(APIService.class);
 //                apiService.updateProject(project).enqueue(new retrofit2.Callback<APIResponse<Project>>() {
 //                    @Override
@@ -178,6 +181,7 @@ public class SuaDeTaiDiaLog extends DialogFragment {
 //        Log.e("TAG", "onResponse: " + project );
         maDeTai.setText(project.getProjectCode());
         tenDeTai.setText(project.getName());
+        mota.setText(project.getDescription());
         ngayMoDangKy.setText(project.getOpenRegDate());
         ngayKetThucDangKy.setText(project.getCloseRegDate());
         editTextNgayBatDau.setText(project.getStartDate());
