@@ -40,7 +40,27 @@
                 android:layout_height="wrap_content"
                 android:inputType="text" />
         </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Mô tả: " />
+
+            <EditText
+                android:id="@+id/tvChiTietMoTa"
+                android:layout_width="216dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:lines="10"
+                android:text="De T"
+                />
+        </TableRow>
         <TableRow>
             <TextView
                 android:id="@+id/textViewChuDe"

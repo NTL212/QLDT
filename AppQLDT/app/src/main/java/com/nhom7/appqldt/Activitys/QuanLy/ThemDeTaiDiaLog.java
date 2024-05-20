@@ -2,6 +2,7 @@ package com.nhom7.appqldt.Activitys.QuanLy;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,8 @@ import com.nhom7.appqldt.Models.Project;
 import com.nhom7.appqldt.Models.Topic;
 import com.nhom7.appqldt.R;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +50,7 @@ public class ThemDeTaiDiaLog extends DialogFragment {
 
         return dialog;
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -57,6 +61,7 @@ public class ThemDeTaiDiaLog extends DialogFragment {
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
+
     public ThemDeTaiDiaLog() {
     }
 
@@ -77,6 +82,7 @@ public class ThemDeTaiDiaLog extends DialogFragment {
             tvngansach, tvsoluongtvmax;
     Spinner spnChude;
     List<Topic> list;
+    EditText editmota;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,34 +98,42 @@ public class ThemDeTaiDiaLog extends DialogFragment {
         tvngansach = view.findViewById(R.id.editTextKinhPhiDuKien);
         tvsoluongtvmax = view.findViewById(R.id.editTextSoLuongTVToiDa);
         spnChude = view.findViewById(R.id.spinnerChuDe);
+        editmota = view.findViewById(R.id.tvChiTietMoTa);
 
         loadintoSpinChude();
         view.findViewById(R.id.buttonThemDeTai).setOnClickListener(v -> {
-            String datenow= "2024-01-01";
+            String datenow = "2024-01-01";
             String maDeTai = tvMaDeTai.getText().toString();
             String tenDeTai = tvTenDeTai.getText().toString();
-            String ngayMoDangKy = tvngaymodangky.getText().toString().equals("") ? datenow:tvngaymodangky.getText().toString();
-            String ngayKetThucDangKy = tvngayketthucdangky.getText().toString().equals("") ? datenow:tvngayketthucdangky.getText().toString();
+            String mota = editmota.getText().toString();
+            String ngayMoDangKy = tvngaymodangky.getText().toString().equals("") ? datenow : tvngaymodangky.getText().toString();
+            String ngayKetThucDangKy = tvngayketthucdangky.getText().toString().equals("") ? datenow : tvngayketthucdangky.getText().toString();
 
-            String ngayBatDau = tvngaybatdau.getText().toString().equals("") ? datenow:tvngaybatdau.getText().toString();
-            String ngayKetThuc = tvngayketthuc.getText().toString().equals("") ? datenow:tvngayketthuc.getText().toString();
-            String ngayNghiemThu = tvngaynghiemthu.getText().toString().equals("") ? datenow:tvngaynghiemthu.getText().toString();
-            double nganSach=0;
-            int soLuongTVMax=0;
+            String ngayBatDau = tvngaybatdau.getText().toString().equals("") ? datenow : tvngaybatdau.getText().toString();
+            String ngayKetThuc = tvngayketthuc.getText().toString().equals("") ? datenow : tvngayketthuc.getText().toString();
+            String ngayNghiemThu = tvngaynghiemthu.getText().toString().equals("") ? datenow : tvngaynghiemthu.getText().toString();
+            double nganSach = 0;
+            int soLuongTVMax = 0;
             try {
                 nganSach = Double.parseDouble(tvngansach.getText().toString());
                 soLuongTVMax = Integer.parseInt(tvsoluongtvmax.getText().toString());
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 Toast.makeText(this.getContext(), "Nhập số hop le vào kinh phí hoặc số lượng thành viên", Toast.LENGTH_SHORT).show();
                 return;
+            }
+
+//                lay ngay hien tai
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                datenow = LocalDate.now().toString();
+            } else {
+                datenow = "2024-01-01";
             }
 
             Topic topic = (Topic) spnChude.getSelectedItem();
             Intent intent = new Intent();
             //neu nhap ngay hop le yyyy-mm-dd
             if (ngayMoDangKy.matches("\\d{4}-\\d{2}-\\d{2}") && ngayKetThucDangKy.matches("\\d{4}-\\d{2}-\\d{2}") && ngayBatDau.matches("\\d{4}-\\d{2}-\\d{2}") && ngayKetThuc.matches("\\d{4}-\\d{2}-\\d{2}") && ngayNghiemThu.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                Project project = new Project(maDeTai,tenDeTai,null,"",soLuongTVMax,ngayMoDangKy,ngayKetThucDangKy,ngayBatDau,ngayKetThuc,ngayNghiemThu,nganSach,null,topic,null,true);
+                Project project = new Project(maDeTai, tenDeTai, datenow, mota, soLuongTVMax, ngayMoDangKy, ngayKetThucDangKy, ngayBatDau, ngayKetThuc, ngayNghiemThu, nganSach, null, topic, null, true);
                 QuanLyDeTaiActivity activity = (QuanLyDeTaiActivity) getActivity();
                 activity.addDeTai(project);
                 dismiss();
