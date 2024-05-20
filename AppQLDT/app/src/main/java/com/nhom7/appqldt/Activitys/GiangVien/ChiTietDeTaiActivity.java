@@ -35,7 +35,7 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
     TextView tvChiTietMaDeTai, tvChiTietTenDeTai, tvChiTietNguoiDang, tvChiTietChuDe, tvChiTietNgayDang, tvChiTietNgayMoDang, tvChiTietNgayKetThucDang;
     TextView tvChiTietNgayBatDau, tvChiTietNgayKetThuc, tvChiTietNgayNghiemThu, tvChiTietKinhPhi, tvChiTieSoThanhVien, tvChiTietMoTa;
     String username;
-    Button btnChiTietDangKy, btnChiTietHuyDangKy;
+    Button btnChiTietDangKy, btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +91,12 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
                         }
                         tvChiTietNgayMoDang.setText(project.getOpenRegDate());
                         tvChiTietMoTa.setText(project.getDescription());
-                        btnChiTietHuyDangKy.setVisibility(View.GONE);
+                        btnBack.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                            }
+                        });
                         btnChiTietDangKy.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -126,7 +131,7 @@ public class ChiTietDeTaiActivity extends AppCompatActivity {
         tvChiTietNgayMoDang = (TextView) findViewById(R.id.tvChiTietNgayMoDang);
         tvChiTietMoTa = (TextView) findViewById(R.id.tvChiTietMoTa);
         btnChiTietDangKy = (Button) findViewById(R.id.btnChiTietDangKy);
-        btnChiTietHuyDangKy = (Button) findViewById(R.id.btnChiTietHuyDangKy);
+        btnBack = (Button) findViewById(R.id.btnBack);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -416,13 +416,26 @@
                 </TableRow>
 
             </TableLayout>
-            <Button
-                android:id="@+id/btnNopBaoCao"
-                android:layout_margin="30dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nộp báo cáo">
-            </Button>
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/btnNopBaoCao"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nộp báo cáo">
+                </Button>
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Quay lại" />
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

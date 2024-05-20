@@ -59,7 +59,7 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST_CODE = 1;
     TextView tvChiTietMaDeTai, tvChiTietTenDeTai, tvChiTietNguoiDang, tvChiTietChuDe, tvChiTietNgayDang, tvChiTietNgayMoDang, tvChiTietNgayKetThucDang, getTvChiTietFileBaoCaoURL, tvDangTai;
     TextView tvChiTietNgayBatDau, tvChiTietNgayKetThuc, tvChiTietNgayNghiemThu, tvChiTietKinhPhi, tvChiTieSoThanhVien, tvChiTietMoTa, tvChiTietFileDinhKem, tvChiTietFileBaoCao,tvChiTietKetQua,tvChiTietHoiDong, tvChiTietNhanXet  ;
-    Button btnChiTietFileBaoCao,btnNopBaoCao, btnXemThanhVien;
+    Button btnChiTietFileBaoCao,btnNopBaoCao, btnXemThanhVien, btnBack;
     String projectCode;
     String username;
     ProgressDialog progressDialog;
@@ -169,6 +169,12 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
 
         btnChiTietFileBaoCao.setVisibility(View.GONE);
         tvChiTietFileBaoCao.setVisibility(View.VISIBLE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnNopBaoCao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +214,7 @@ public class ChiTietDTDaLamActivity extends AppCompatActivity {
         btnXemThanhVien = (Button) findViewById(R.id.btnXemThanhVien);
         getTvChiTietFileBaoCaoURL = (TextView) findViewById(R.id.tvChiTietFileBaoCaoURL);
         tvDangTai = (TextView) findViewById(R.id.tvDangTai);
+        btnBack = findViewById(R.id.btnBack);
     }
 
     @Override

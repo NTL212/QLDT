@@ -363,12 +363,12 @@
                     tools:layout_editor_absoluteY="645dp" />
 
                 <Button
-                    android:id="@+id/btnChiTietHuyDangKy"
+                    android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:text="Hủy đăng ký"
+                    android:text="Quay lại"
                     tools:layout_editor_absoluteX="216dp"
                     tools:layout_editor_absoluteY="645dp" />
             </LinearLayout>

@@ -59,8 +59,10 @@ public class ListDeTaiActivity extends AppCompatActivity {
     }
     EditText tvSearch;
     Button btnSearch;
+    TextView tvLabel;
     private  void AnhXa() {
         recyclerView = findViewById(R.id.recycler_view_detais);
+        tvLabel = findViewById(R.id.tvLabelListSize);
     }
 
     @Override
@@ -121,6 +123,10 @@ public class ListDeTaiActivity extends AppCompatActivity {
                     if (projects != null) {
                         dataList.postValue(projects);
                     }
+                    if(projects.size()==0){
+                        tvLabel.setVisibility(View.VISIBLE);
+                        tvLabel.setText("Không có đề tài nào có thể đăng ký");
+                    }
                 }
             }
 
@@ -137,24 +143,30 @@ public class ListDeTaiActivity extends AppCompatActivity {
         if(tvSearch.getText().length()==0){
            loadRecyclerView();
         }
-        APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
-        Call<APIResponse<List<Project>>> call = apiService.getAllSearchProjectActiveProjectForLecturer(tvSearch.getText().toString().trim());
-        call.enqueue(new Callback<APIResponse<List<Project>>>() {
-            @Override
-            public void onResponse(Call<APIResponse<List<Project>>> call, Response<APIResponse<List<Project>>> response) {
-                if(response.isSuccessful()){
-                   if(response.body().isSuccess()){
-                       List<Project> projects = response.body().getResult();
-                       setData(projects);
-                   }
+        else {
+            APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
+            Call<APIResponse<List<Project>>> call = apiService.getAllSearchProjectActiveProjectForLecturer(tvSearch.getText().toString().trim());
+            call.enqueue(new Callback<APIResponse<List<Project>>>() {
+                @Override
+                public void onResponse(Call<APIResponse<List<Project>>> call, Response<APIResponse<List<Project>>> response) {
+                    if(response.isSuccessful()){
+                        if(response.body().isSuccess()){
+                            List<Project> projects = response.body().getResult();
+                            setData(projects);
+                            if(projects.size()==0){
+                                tvLabel.setVisibility(View.VISIBLE);
+                                tvLabel.setText("Không tìm thấy đề tài nào");
+                            }
+                        }
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<APIResponse<List<Project>>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<APIResponse<List<Project>>> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override

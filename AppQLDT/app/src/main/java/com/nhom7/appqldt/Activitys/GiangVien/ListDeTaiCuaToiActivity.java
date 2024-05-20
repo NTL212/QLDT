@@ -38,9 +38,11 @@ public class ListDeTaiCuaToiActivity extends AppCompatActivity {
     String username;
     EditText tvSearch;
     Button btnSearch;
+    TextView tvLabel;
 
     private  void AnhXa() {
         recyclerView = findViewById(R.id.recycler_view_detais);
+        tvLabel = findViewById(R.id.tvLabelListSize);
     }
 
     @Override
@@ -94,6 +96,12 @@ public class ListDeTaiCuaToiActivity extends AppCompatActivity {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDeTaiCuaToiActivity.this, LinearLayoutManager.VERTICAL, false);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(deTaiAdapter);
+                    if(projects.size()==0){
+                        tvLabel.setVisibility(View.VISIBLE);
+                        tvLabel.setText("Không có đề tài nào");
+                    }else {
+                        tvLabel.setVisibility(View.GONE);
+                    }
                 }
             }
 
