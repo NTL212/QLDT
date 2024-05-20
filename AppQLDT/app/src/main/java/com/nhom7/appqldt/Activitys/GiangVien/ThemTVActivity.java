@@ -86,18 +86,22 @@ public class ThemTVActivity extends AppCompatActivity {
 //        });
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);
-                Call<APIResponse<List<StudentDTO>>> call = apiService.getAllStudentByKeyword(tvSearch.getText().toString().trim());
-                call.enqueue(new Callback<APIResponse<List<StudentDTO>>>() {
+                Call<APIResponse<List<Student>>> call = apiService.getAllStudentByKeyword(tvSearch.getText().toString().trim());
+                call.enqueue(new Callback<APIResponse<List<Student>>>() {
                     @Override
-                    public void onResponse(Call<APIResponse<List<StudentDTO>>> call, Response<APIResponse<List<StudentDTO>>> response) {
+                    public void onResponse(Call<APIResponse<List<Student>>> call, Response<APIResponse<List<Student>>> response) {
                         if(response.isSuccessful()){
                             if(response.body().isSuccess()){
-                                List<StudentDTO> students = response.body().getResult();
-                                ThemSinhVienAdapter themSinhVienAdapter = new ThemSinhVienAdapter(students, ThemTVActivity.this, projectCode);
+                                List<Student> students = response.body().getResult();
+                                List<StudentDTO> list = new ArrayList<>();
+                                for (Student stu: students
+                                     ) {
+                                    list.add(new StudentDTO(stu));
+                                }
+                                ThemSinhVienAdapter themSinhVienAdapter = new ThemSinhVienAdapter(list, ThemTVActivity.this, projectCode);
                                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ThemTVActivity.this, LinearLayoutManager.VERTICAL, false);
                                 recyclerView.setLayoutManager(linearLayoutManager);
                                 recyclerView.setAdapter(themSinhVienAdapter);
@@ -108,7 +112,7 @@ public class ThemTVActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<APIResponse<List<StudentDTO>>> call, Throwable t) {
+                    public void onFailure(Call<APIResponse<List<Student>>> call, Throwable t) {
                         DialogHelper.showFailedDialog(ThemTVActivity.this, "Không gọi được API");
                     }
                 });

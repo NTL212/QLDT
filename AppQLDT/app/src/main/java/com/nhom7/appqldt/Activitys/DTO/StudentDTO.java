@@ -1,6 +1,7 @@
 package com.nhom7.appqldt.Activitys.DTO;
 
 import com.nhom7.appqldt.Models.Falculity;
+import com.nhom7.appqldt.Models.Student;
 
 public class StudentDTO {
     private String id;
@@ -10,6 +11,14 @@ public class StudentDTO {
     private ClassDTO classObj;
 
     public StudentDTO() {
+    }
+
+    public StudentDTO(Student student) {
+        this.id = student.getStudentCode();
+        this.name = student.getName();
+        this.birthday = student.getBirthday();
+        this.falculity = student.getClassDTO().getMajor().getFalculity();
+        this.classObj = student.getClassDTO();
     }
 
     public StudentDTO(String id, String name, String birthday, Falculity falculity, ClassDTO classObj) {

@@ -112,7 +112,7 @@ public interface APIService {
     Call<APIResponse<List<StudentDTO>>> getAllStudent1();
 
     @GET("api/member/searchStudentByKeyword")
-    Call<APIResponse<List<StudentDTO>>> getAllStudentByKeyword(@Query("keyword") String keyword);
+    Call<APIResponse<List<Student>>> getAllStudentByKeyword(@Query("keyword") String keyword);
 
     @GET("api/member/listMember")
     Call<APIResponse<List<StudentDTO>>> getAllMemberOfProject(@Query("projectId") String projectId);

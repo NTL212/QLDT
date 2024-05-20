@@ -159,9 +159,11 @@ public class DangNhapActivity extends AppCompatActivity {
                         }
                     } else {
                         Toast.makeText(DangNhapActivity.this, "Dang nhap that bai", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 } else {
                     Toast.makeText(DangNhapActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
 
 
