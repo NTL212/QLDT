@@ -98,6 +98,7 @@
                     android:text="Mã học sinh " />
 
                 <EditText
+                    android:editable="false"
                     android:id="@+id/et_chinhsuahocsinh_mahocsinh_Admin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

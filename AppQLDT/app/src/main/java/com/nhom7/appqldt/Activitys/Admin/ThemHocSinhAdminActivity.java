@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
+import com.nhom7.appqldt.Helpers.CheckHepler;
 import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.Models.Class;
@@ -100,6 +101,14 @@ public class ThemHocSinhAdminActivity extends AppCompatActivity {
                                 String address = etdiachi.getText().toString();
                                 String idNum = etcccd.getText().toString();
                                 String phoneNum = etsdt.getText().toString();
+                                if(CheckHepler.checkCCCD(idNum)){
+                                    Toast.makeText(ThemHocSinhAdminActivity.this, "Nhập lại cccd/cmnd 12 số", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                if(CheckHepler.checkPhone(phoneNum)){
+                                    Toast.makeText(ThemHocSinhAdminActivity.this, "Nhập lại so dien thoai 10 số", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 String email = etemail.getText().toString();
                                 String sex = spinnergioitinh.getSelectedItem().toString();
                                 String classCode = ThemHocSinhAdminActivity.this.classCode; // Sử dụng classCode từ spinner lớp

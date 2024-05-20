@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.nhom7.appqldt.API.APIService;
 import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Activitys.DTO.AdminDTO;
+import com.nhom7.appqldt.Helpers.CheckHepler;
 import com.nhom7.appqldt.Helpers.MenuHelper;
 import com.nhom7.appqldt.Models.APIResponse;
 import com.nhom7.appqldt.R;
@@ -114,7 +115,15 @@ public class ChinhSuaAdminActivity extends AppCompatActivity {
                                 String birthday = etngaysinh.getText().toString().trim();
                                 String address = etdiachi.getText().toString().trim();
                                 String idNum = etcccd.getText().toString().trim();
+                                if(CheckHepler.checkCCCD(idNum)){
+                                    Toast.makeText(ChinhSuaAdminActivity.this, "Nhập lại cccd/cmnd 12 số", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 String phoneNum = etsdt.getText().toString().trim();
+                                if(CheckHepler.checkPhone(phoneNum)){
+                                    Toast.makeText(ChinhSuaAdminActivity.this, "Nhập lại so dien thoai 10 số", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 String email = etemail.getText().toString().trim();
 
                                 APIService apiService = RetrofitClient.getRetrofitInstance().create(APIService.class);

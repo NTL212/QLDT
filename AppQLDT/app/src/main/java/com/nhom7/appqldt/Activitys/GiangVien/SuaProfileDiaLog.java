@@ -33,8 +33,10 @@ import com.nhom7.appqldt.API.RetrofitClient;
 import com.nhom7.appqldt.Activitys.Admin.ChinhSuaGiangVienAdminActivity;
 import com.nhom7.appqldt.Activitys.Admin.ChinhSuaHocSinhAdminActivity;
 import com.nhom7.appqldt.Activitys.Admin.DanhSachGiangVienAdminActivity;
+import com.nhom7.appqldt.Activitys.Admin.ThemGiangVienAdminActivity;
 import com.nhom7.appqldt.Activitys.DTO.StudentDTO;
 import com.nhom7.appqldt.Activitys.QuanLy.ChiTietDTQuanLyActivity;
+import com.nhom7.appqldt.Helpers.CheckHepler;
 import com.nhom7.appqldt.Helpers.DateHelper;
 import com.nhom7.appqldt.Helpers.DialogHelper;
 import com.nhom7.appqldt.Models.APIResponse;
@@ -144,6 +146,14 @@ public class SuaProfileDiaLog extends DialogFragment {
                                     String khoa = tv_CN_MaKhoa.getText().toString();
                                     String ngaysinh = tv_CN_NgaySinh.getText().toString();
                                     String sdt = tv_CN_SDT.getText().toString();
+                                    if(CheckHepler.checkCCCD(cccd)){
+                                        Toast.makeText(context, "Nhập lại cccd/cmnd 12 số", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    if(CheckHepler.checkPhone(sdt)){
+                                        Toast.makeText(context, "Nhập lại so dien thoai 10 số", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
 
                                     if (hoten.isEmpty() || id.isEmpty() || cccd.isEmpty() || diachi.isEmpty() ||
                                             email.isEmpty() || sex.isEmpty() || khoa.isEmpty() || ngaysinh.isEmpty() || sdt.isEmpty()) {
