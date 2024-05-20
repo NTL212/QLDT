@@ -191,7 +191,7 @@ public class QuanLyDeTaiActivity extends AppCompatActivity {
 //                        Log.e(TAG, "onResponse: " + response.body().toString());
                         Project project = response.body().getResult();
                         listDeTai.add(project);
-                        deTaiAdapter.notifyDataSetChanged();
+                        initializeData();
                         Toast.makeText(QuanLyDeTaiActivity.this, "Thêm đề tài thành công", Toast.LENGTH_SHORT).show();
 //                        Log.e("o day", "o day" + project);
 //                        Log.e(TAG, "onResponse: " + project.getProjectCode());
